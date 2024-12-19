@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop-up Window Example</title>
+    <style>
+        /* The Modal (background) */
+        body{
+            background-color:  black;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+            
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: rgba(128, 128, 128, 0.201);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #8888881c;
+            width: 80%; /* Could be any width */
+            max-width: 450px;
+            height: 450px;
+            color: white;
+           margin-left: auto;
+        }
+        
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+       
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Style for the button to open the modal */
+        .open-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+       
+        .update-btn {
+            background-color: rgb(0, 119, 255);
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            height: 40px;
+            width: 200px;
+            border-radius: 10px;
+            
+        }
+
+
+  
+    </style>
+</head>
+<body>
+
+    <!-- Button to Open the Modal -->
+    <button class="open-btn" id="openModalBtn">Create</button>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <h2>Make the new moment!!</h2>
+            <input placeholder="describe memory" type="text" id="comment" required minlength="4" maxlength="600"
+            size="40" />
+            
+                <input type="file" id="file" style="display: none;">
+                <br>
+                <br>
+                
+                <button class="update-btn"  onclick="myfile()" >Select photo</button>
+            
+           
+
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("openModalBtn");
+
+        // Get the <span> element that closes the modal
+        var closeBtn = document.getElementById("closeModalBtn");
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        function myfile(){
+        document.getElementById('file').click();
+    }
+        
+    </script>
+
+</body>
+</html>

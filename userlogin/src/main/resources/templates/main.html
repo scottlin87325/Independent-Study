@@ -1,0 +1,23 @@
+<meta charset="utf-8">
+<script></script>
+
+<h2>Main Page</h2>
+<div>Welcome, <span th:text="${member.realname != null ? member.realname : '匿名用户'}"></span></div>
+<hr />
+Product List
+<table border="1" width="100%">
+	<tr>
+		<th>Category</th>
+		<th>Name</th>
+		<th>Unit Price</th>
+	</tr>
+	<tr th:each="product : ${products}">
+		<td th:text="${product.categories.categoryname}"></td>
+		<td th:text="${product.productname}"></td>
+		<td th:text="${product.unitprice}"></td>
+	</tr>
+<a th:href="@{/logout}">Logout</a>
+</table>
+
+
+<hr />

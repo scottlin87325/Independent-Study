@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
     <!-- css -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/chat.css" rel="stylesheet">
 
     <title>聊天室</title>
 </head>
@@ -38,6 +38,7 @@
                 <!-- d-flex : display:flex align-items-center : 靠交錯軸置中對齊 w-100 : 確保寬度為100% -->
                 <div class="d-flex align-items-center w-100">
                     <!-- 聊天對象的頭像 -->
+                    <!-- <img th:src="${avatarBase64}" alt="member Avatar" /> -->
                     <div class="friend-avatar ms-3" id="chatAvatar"></div>
                     <!-- 聊天對象的名稱 -->
                     <div><h6 class="mb-0" id="chatName"></h6></div>

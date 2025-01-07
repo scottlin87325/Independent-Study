@@ -26,7 +26,7 @@ public class Member {
 	private String membername;
 	
 	// 大頭貼傳輸三階段變數
-	@Column(name = "Member_photo", columnDefinition = "MEDIUMBLOB")
+	@Column(name = "Member_photo")
 	private byte[] memberphoto;
 	@Transient
 	private MultipartFile memberphotofile;
@@ -37,6 +37,9 @@ public class Member {
 	private String telephone;
 	private String birthday;
 	private String introduce;
+	
+	// @Column(name = "Post_count")
+	// private Long postcount;
 	
 	//---------------------------------------------------------------------
 	public Long getMemberid() {
@@ -56,6 +59,12 @@ public class Member {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getRealname() {
+		return realname;
+	}
+	public void setRealname(String realname) {
+		this.realname = realname;
 	}
 	public String getMembername() {
 		return membername;
@@ -117,5 +126,11 @@ public class Member {
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
 	}
+	// public Long getPostcount() {
+	// 	return postcount;
+	// }
+	// public void setPostcount(Long postcount) {
+	// 	this.postcount = postcount;
+	// }
 
 }

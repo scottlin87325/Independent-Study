@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <div class="chatroom-container">
+    <div class="chatroom-container" th:with="currentUser=${session.member}">
         <!-- 左側：好友列表 -->
         <div class="friends-list">
             <!-- 內距3，border-bottom 在元素底部加上一條邊框線 -->

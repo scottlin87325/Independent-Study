@@ -1,5 +1,5 @@
 let stompClient = null;
-let currentUserId = 6; // 預設使用者
+let currentUserId = null;  // 改為從伺服器端取得當前登入的用戶ID
 let currentChatroomId = null;
 
 // WebSocket 連接
@@ -10,6 +10,18 @@ function connectWebSocket() {
         console.log('Connected: ' + frame);
         loadChatRooms();
     });
+}
+
+// 初始化時先取得當前用戶ID
+async function getCurrentUserId() {
+    try {
+      const response = await fetch('/api/chat/current-user');
+      const data = await response.json();
+      currentUserId = data.userId;
+      connectWebSocket(); // 取得ID後再連接WebSocket
+    } catch (error) {
+      console.error('Error getting current user:', error);
+    }
 }
 
 // 載入聊天室列表
@@ -164,7 +176,7 @@ function scrollToBottom() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// 初始化
+// 修改初始化部分
 document.addEventListener('DOMContentLoaded', function() {
-    connectWebSocket();
+    getCurrentUserId();
 });

@@ -38,8 +38,8 @@ public class Member {
 	private String birthday;
 	private String introduce;
 	
-	// @Column(name = "Post_count")
-	// private Long postcount;
+	@Column(name = "Post_count")
+	private Long postcount;
 	
 	//---------------------------------------------------------------------
 	public Long getMemberid() {
@@ -126,11 +126,11 @@ public class Member {
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
 	}
-	// public Long getPostcount() {
-	// 	return postcount;
-	// }
-	// public void setPostcount(Long postcount) {
-	// 	this.postcount = postcount;
-	// }
+	public Long getPostcount() {
+		return postcount;
+	}
+	public void setPostcount(Long postcount) {
+		this.postcount = postcount;
+	}
 
 }

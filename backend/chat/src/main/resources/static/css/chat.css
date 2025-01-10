@@ -155,6 +155,12 @@
     /* 允許在任何字符間換行 */
     overflow-wrap: break-word;
     /* 確保長單詞也能換行 */
+
+    /* 增加上下間距 */
+    margin-top: 15px;
+    /* 上方間距 */
+    margin-bottom: 25px;
+    /* 下方間距，稍微大一點以容納時間戳 */
 }
 
 /* 送訊息 */
@@ -240,4 +246,61 @@
 .chat-messages {
     padding: 20px 10px;
     /* 給訊息區域一些間距 */
+}
+
+/* 使用者自訂頭貼 */
+.friend-avatar {
+    width: 48px;
+    height: 48px;
+    /* 移除原本的背景色 */
+    /* background: BurlyWood; */
+    border-radius: 50%;
+    color: WhiteSmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right: 15px;
+    /* 新增: 確保圖片能完整顯示且不變形 */
+    overflow: hidden;
+    background: transparent;
+    /* 設定透明背景 */
+}
+
+.friend-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    /* 移除任何可能的邊框 */
+    border: none;
+    /* 確保圖片本身也沒有背景 */
+    background: transparent;
+}
+
+/* 針對聊天訊息區域的滾動條樣式 */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+    /* 滾動條寬度 */
+}
+
+/* 滾動條軌道 */
+.chat-messages::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    /* 半透明的軌道 */
+    border-radius: 4px;
+}
+
+/* 滾動條滑塊 */
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    /* 半透明的滑塊 */
+    border-radius: 4px;
+}
+
+/* 滾動條滑塊懸停效果 */
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+    /* 懸停時更明顯 */
 }

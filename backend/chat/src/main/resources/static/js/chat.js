@@ -50,7 +50,21 @@ async function displayChatRooms(chatrooms) {
 
         const avatar = document.createElement('div');
         avatar.className = 'friend-avatar';
-        avatar.textContent = otherUser.membername.charAt(0).toUpperCase();
+        
+        if (otherUser.memberphoto) {
+            // 如果有頭像，創建img元素
+            const img = document.createElement('img');
+            img.src = `data:image/jpeg;base64,${otherUser.memberphoto}`;
+            img.alt = otherUser.membername;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.borderRadius = '50%';
+            img.style.objectFit = 'cover';
+            avatar.appendChild(img);
+        } else {
+            // 如果沒有頭像，顯示名字首字
+            avatar.textContent = otherUser.membername.charAt(0).toUpperCase();
+        }
 
         const nameDiv = document.createElement('div');
         nameDiv.textContent = otherUser.membername;
@@ -82,7 +96,24 @@ async function selectChatRoom(chatroomId, otherUser) {
     
     // 更新聊天室標題
     document.getElementById('chatName').textContent = otherUser.membername;
-    document.getElementById('chatAvatar').textContent = otherUser.membername.charAt(0).toUpperCase();
+    
+    const chatAvatar = document.getElementById('chatAvatar');
+    chatAvatar.innerHTML = ''; // 清空現有內容
+    
+    if (otherUser.memberphoto) {
+        // 如果有頭像，創建img元素
+        const img = document.createElement('img');
+        img.src = `data:image/jpeg;base64,${otherUser.memberphoto}`;
+        img.alt = otherUser.membername;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.borderRadius = '50%';
+        img.style.objectFit = 'cover';
+        chatAvatar.appendChild(img);
+    } else {
+        // 如果沒有頭像，顯示名字首字
+        chatAvatar.textContent = otherUser.membername.charAt(0).toUpperCase();
+    }
 
     // 訂閱新的聊天室
     stompClient.subscribe(`/topic/messages/${chatroomId}`, onMessageReceived, { id: `sub-${chatroomId}` });

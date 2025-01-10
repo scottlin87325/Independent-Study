@@ -1,0 +1,7 @@
+---model to 資料表---
+Chatlog、Chatroom、Collect
+Member、Sticker
+Post、PostPhoto、MessageBoard、Messagelog
+
+---repository---
+MemberRepository

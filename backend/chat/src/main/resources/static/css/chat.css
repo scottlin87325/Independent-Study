@@ -304,3 +304,29 @@
     background: rgba(255, 255, 255, 0.5);
     /* 懸停時更明顯 */
 }
+
+/* 日期分隔線 */
+.date-separator {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.date-separator::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);  /* 淺色分隔線 */
+}
+
+.date-separator span {
+    background: #262626;  /* 與聊天室背景色相同 */
+    padding: 0 10px;
+    color: #8E8E8E;  /* 淺灰色文字 */
+    font-size: 12px;
+    position: relative;
+    z-index: 1;
+}

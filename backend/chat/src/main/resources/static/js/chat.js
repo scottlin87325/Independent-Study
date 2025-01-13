@@ -137,15 +137,68 @@ async function loadChatHistory(chatroomId) {
 function displayChatHistory(messages) {
     const chatMessages = document.getElementById('chatMessages');
     chatMessages.innerHTML = '';
+    
+    let currentDate = '';
+    
     messages.forEach(message => {
+        // 從時間戳獲取日期
+        const messageDate = new Date(message.inputtime);
+        const dateStr = formatDate(messageDate);
+        
+        // 如果日期改變，添加日期分隔
+        if (dateStr !== currentDate) {
+            currentDate = dateStr;
+            const dateDiv = document.createElement('div');
+            dateDiv.className = 'date-separator';
+            dateDiv.innerHTML = `<span>${dateStr}</span>`;
+            chatMessages.appendChild(dateDiv);
+        }
+        
         displayMessage(message);
     });
     scrollToBottom();
 }
 
+// 格式化日期的函數
+function formatDate(date) {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    // 格式化為 YYYY-MM-DD
+    const dateStr = date.toISOString().split('T')[0];
+    const todayStr = today.toISOString().split('T')[0];
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    
+    if (dateStr === todayStr) {
+        return '今天';
+    } else if (dateStr === yesterdayStr) {
+        return '昨天';
+    } else {
+        // 轉換為更友善的格式，例如：2025年1月10日
+        return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+    }
+}
+
 // 接收新訊息
 function onMessageReceived(payload) {
     const message = JSON.parse(payload.body);
+    const messageDate = new Date(message.inputtime);
+    const dateStr = formatDate(messageDate);
+    
+    // 獲取最後一個日期分隔線
+    const lastDateSeparator = document.querySelector('.date-separator:last-child span');
+    const lastDateStr = lastDateSeparator ? lastDateSeparator.textContent : '';
+    
+    // 如果日期不同，添加新的日期分隔線
+    if (dateStr !== lastDateStr) {
+        const chatMessages = document.getElementById('chatMessages');
+        const dateDiv = document.createElement('div');
+        dateDiv.className = 'date-separator';
+        dateDiv.innerHTML = `<span>${dateStr}</span>`;
+        chatMessages.appendChild(dateDiv);
+    }
+    
     displayMessage(message);
     scrollToBottom();
 }
@@ -168,12 +221,13 @@ function displayMessage(message) {
     chatMessages.appendChild(messageDiv);
 }
 
-// 格式化時間
+// 修改格式化時間的函數，只顯示時間部分
 function formatTime(timestamp) {
     const date = new Date(timestamp);
     return date.toLocaleTimeString('zh-TW', { 
         hour: '2-digit', 
-        minute: '2-digit'
+        minute: '2-digit',
+        hour12: false // 使用24小時制
     });
 }
 

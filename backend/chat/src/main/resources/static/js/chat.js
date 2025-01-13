@@ -186,11 +186,12 @@ function onMessageReceived(payload) {
     const messageDate = new Date(message.inputtime);
     const dateStr = formatDate(messageDate);
     
-    // 獲取最後一個日期分隔線
-    const lastDateSeparator = document.querySelector('.date-separator:last-child span');
-    const lastDateStr = lastDateSeparator ? lastDateSeparator.textContent : '';
+    // 修正: 獲取所有日期分隔線，取最後一個
+    const dateSeparators = document.querySelectorAll('.date-separator span');
+    const lastDateStr = dateSeparators.length > 0 ? 
+        dateSeparators[dateSeparators.length - 1].textContent : '';
     
-    // 如果日期不同，添加新的日期分隔線
+    // 只有當日期真的不同時才添加新的分隔線
     if (dateStr !== lastDateStr) {
         const chatMessages = document.getElementById('chatMessages');
         const dateDiv = document.createElement('div');

@@ -52,8 +52,6 @@ function timeSlip(inputTime) {  //inputTime輸入時間要抓資料庫
 
 //用戶留言區塊
 function userRespond(userName) {
-    let rs;
-    let rst;
     let a = $('#mytext').val();
     if (a != "") {
         if (a.match(/@\w+/g)) {
@@ -61,35 +59,40 @@ function userRespond(userName) {
         }
         if (rType === 'post') {
             drs='dfrespond';
-            rid='id=rs'+i++;
+            rid='rs'+i++;
             idsave='.divRight';
-        } else if (rType === 'dcrespond' || rType === 'dfrespond') {
+        } else{
             drs='dcrespond';
-            rid='';
+            rid=rid.replace('#','');
         }
         let x = new Date(); //時間要改
-        
-        $(`${idsave}`).append(`
-        <div ${rid} class="${drs}">
-        <table style="width: 100%;">
-            <tr>
-                <td class="username">${userName}</td>
-                <td> : ${a}</td>
-                <td class="love" style="text-align: right; font-size: 25px;">♡</td>
-            </tr>
-            <tr>
-                <td class="myTime" timeSet='${x}'></td>
-                <td class="respond">回覆</td>
-                <td style="width: 80%"></td>
-            </tr>
-        </table>
-        </div>`);
+		if(respondid==='.divRight'){
+        	$(`${respondid}`).append(`
+			<article id=${rid} iddata=${rid} class=${drs}>
+				<div class="memberphoto">頭像</div>
+			    <section class="username">${userName}</section>
+			    <section class="memberrespond">${a}</section>
+			    <div class="love">♡</div>
+			    <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
+			    <section class="respond">回覆</section>
+			</article>
+			`);
+			}else{
+				$(`${respondid}`).after(`
+			    <article iddata="${rid}" class=${drs}>
+			    	<div class="memberphoto">頭像</div>
+			        <section class="username">${userName}</section>
+			        <section class="memberrespond">${a}</section>
+			        <div class="love">♡</div>
+			        <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
+			        <section class="respond">回覆</section>
+			    </article>
+			`);}
     }
     $('#mytext').val('');
 }
 
 function mTag(mr) {
-    
     let links={};
     let matches = mr.match(/@\w+/g);
     for (let i=0;i<matches.length ;i++) {

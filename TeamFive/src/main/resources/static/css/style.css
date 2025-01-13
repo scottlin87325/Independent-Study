@@ -12,13 +12,10 @@ html{
 }
 .divRight{
 	position: relative;
-	top: -100%;
+    top: -100%;
     left: 50%;
-    height: 100%;
+    height: 600px;
     width: 50%;
-}
-
-td{
     color: white;
 }
 
@@ -34,9 +31,83 @@ body {
     position: absolute;
 }
 
+.post{
+    position: relative;
+    width: 100%;
+    height: 35%;
+    /* background-color: aqua; */
+}
+.dfrespond{
+    position: relative;
+    width: 100%;
+    height: 16%;
+    /* background-color: aqua; */
+}
 .dcrespond{
     position: relative;
     left: 10%;
     width: 90%;
-    color: white;
+    height: 16%;
+    /* background-color: aqua; */
+}
+
+.memberphoto{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    /* background-color: green; */
+}
+
+.username{
+    position: absolute;
+    left: 7%;
+    width: 75%;
+    height: 30px;
+    /* background-color: blue; */
+}
+
+.membertext{
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    height: 60%;
+    /* background-color: blueviolet; */
+}
+
+.love{
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+    width: 5%;
+    font-size: 25px;
+    /* background-color: pink; */
+}
+
+.myTime{
+    position: absolute;
+    bottom: 1px;
+    left: 6%;
+    height: 33px;
+    width: 10%;
+    font-size: 20px;
+    /* background-color: orange; */
+}
+
+.respond{
+    position: absolute;
+    bottom: 1px;
+    left: 17%;
+    height: 33px;
+    width: 10%;
+    font-size: 20px;
+    /* background-color: red; */
+}
+
+.memberrespond{
+    position: absolute;
+    top: 32%;
+    width: 100%;
+    height: 30%;
+    /* background-color: blueviolet; */
 }

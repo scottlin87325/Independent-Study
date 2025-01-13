@@ -15,34 +15,21 @@
     <input type="text" id="mytext" placeholder="輸入你的訊息">
     <button id="sendText">送出文字</button>
     <hr>
-    <main>
         <div class="divLeft">
             <img class="postImg" id="mypost" src="" alt="Image Preview" style="max-width: 98%;">
         </div>
-        <div class="divRight">
-            <div id="p1" class="post">
-                <br>
-                <table id="msg" style="width: 100%;" th:each="post:${posts}">
-                    <tr>
-                        <td>
-                        	<img class="imgSize" th:src="'data:image/png;base64,' + ${post.member.memberphotobase64}">
-                        </td>
-                        <td class="username" th:text="${post.member.membername}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="${post.postcontent}"></td>
-                    </tr>
-                    <tr>
-                        <td class="love" style="width: 5%; font-size: 25px;">♡</td>
-                        <td class="myTime" id="timeslip" style="width: 5%;" timeSet=""></td>
-                        <td class="respond" style="width: 5%;">回復</td>
-                        <td style="width: 70%;"></td>
-                    </tr>
-                </table>
-            </div>
-            <hr>
+        <div class="divRight" th:each="post:${posts}">
+            <article id="p1" iddata="p1" class="post">
+                <div class='memberphoto' id="msg" style="width: 100%;">
+                	<img class="imgSize" th:src="'data:image/png;base64,' + ${post.member.memberphotobase64}">
+                </div>
+                <section class="username" th:text="${post.member.membername}"></section>
+                <section class="membertext" th:text="${post.postcontent}"></section>
+                <div class="love">♡</div>
+                <section class="myTime" id="timeslip" timeSet=""></section>
+                <section class="respond">回復</section>
+            </article>
         </div>
-    </main>
 
     <script th:inline="javascript" th:each="post:${posts}">
         //變數區
@@ -111,19 +98,11 @@
             });
         }).on('click', '.respond', function () {
             $('#mytext').val('');
-            var resN = $(this).closest('table').find('.username').text();
+            var resN = $(this).parent().find('.username').text();
             let t = $('#mytext').val();
             $('#mytext').val(t + '@' + resN + ' ');
-            className = $(this).parent().parent().parent().parent().attr('class');
-            //console.log(className);
-            if(className==='dcrespond'){
-                idName = $(this).parent().parent().parent().parent().parent().attr('id');
-                //console.log(idName);
-            }else{
-                idName = $(this).parent().parent().parent().parent().attr('id');
-                //console.log(idName);
-            }
-            
+            className = $(this).parent().attr('class');
+            idName = $(this).parent().attr('iddata');
         });
         settime();
        	setInterval(settime, 1000);

@@ -161,22 +161,22 @@ function displayChatHistory(messages) {
 
 // 格式化日期的函數
 function formatDate(date) {
+    const localDate = new Date(date);
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-    
-    // 格式化為 YYYY-MM-DD
-    const dateStr = date.toISOString().split('T')[0];
-    const todayStr = today.toISOString().split('T')[0];
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
-    
-    if (dateStr === todayStr) {
+
+    // 比較年月日
+    if (localDate.getFullYear() === today.getFullYear() &&
+        localDate.getMonth() === today.getMonth() &&
+        localDate.getDate() === today.getDate()) {
         return '今天';
-    } else if (dateStr === yesterdayStr) {
+    } else if (localDate.getFullYear() === yesterday.getFullYear() &&
+               localDate.getMonth() === yesterday.getMonth() &&
+               localDate.getDate() === yesterday.getDate()) {
         return '昨天';
     } else {
-        // 轉換為更友善的格式，例如：2025年1月10日
-        return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+        return `${localDate.getFullYear()}年${localDate.getMonth() + 1}月${localDate.getDate()}日`;
     }
 }
 

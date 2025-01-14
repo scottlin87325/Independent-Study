@@ -1,0 +1,229 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.5s ease;
+    /* background-color: black; */
+    color: black;
+}
+
+section {
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+    /* margin: 20px auto; */
+    overflow: hidden;
+}
+
+section>div {
+    float: left;
+    background-color: transparent;
+    background-color: gainsboro;
+}
+
+.left {
+    width: 13vw;
+    height: 100vh;
+    background-color: antiquewhite;
+}
+
+.left-block{
+    width: 19vw;
+    height: 100vh;
+    background-color: burlywood;
+}
+
+.right-block{
+    width: 28vw;
+    height: 100vh;
+    background-color: cyan;
+}
+
+.middle {
+    width: 40vw;
+    height: 100vh;
+    background-color: rgb(238, 5, 5);
+    color: white;
+}
+
+.middle-top{
+    width: 40vw;
+    height: 5vh;
+    background-color: blueviolet;
+}
+
+.middle-bottom{
+    width: 40vw;
+    height: 95vh;
+    background-color: forestgreen;
+}
+/* ----------------------------------------- */
+
+/* ---------------------------------- */
+
+/* 滾動條造型 */
+/* body::-webkit-scrollbar{
+    width: 0.25rem;
+}
+
+body::-webkit-scrollbar-track{
+    background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb{
+    background: #6449b8;
+} */
+
+/* ---------------------- */
+
+/* -------左邊工具列造型-------------------- */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black background with opacity */
+    
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: rgba(128, 128, 128, 0.201);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #8888881c;
+    width: 80%; /* Could be any width */
+    max-width: 450px;
+    height: 450px;
+    color: white;
+   margin-left: auto;
+}
+
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style for the button to open the modal */
+.open-btn {
+   
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    
+}
+
+
+.update-btn {
+    background-color: rgb(0, 119, 255);
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    
+}
+
+li{
+    color: white;
+   list-style: none;
+   font-size: 18px;
+}
+/*the property of the part of the Menu part*/
+.left-menu {
+        width: 13vw; /* Set width of the menu */
+        position: fixed; /* Fixed position on the left side */
+        top: 0;
+        left: 0;
+        border-right: 1px solid gainsboro;
+        background-color: black; /* Dark background for the menu */
+        height: 100%; /* Make the menu fill the entire height of the page */
+        overflow: auto;
+        color: white;
+    }
+/*make sure 超連結will not appear and keep in white mode*/
+a {
+    color: white;
+    text-decoration:none;   
+}
+/*the profile header in the List*/
+.post-header img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+
+      /* Dropdown container styles */
+      .dropdown {
+        position: relative;
+    }
+    /*the part inside the dropdown*/
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        bottom: 100%; /* Positions the dropdown above the link */
+        left: 0;
+        background-color: #333;
+        min-width: 160px;
+        z-index: 1;
+        border-bottom: 1px solid #ddd;
+    }
+    /*the cursor pass and the list inside Servic show up*/
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    /*keep the arrangement of the every option of the list inside in service*/
+    .dropdown-content a {
+        color: white;
+        padding: 12px 16px;
+        display: block;
+    }
+   /*the prperty of the pop up */
+    .content {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .content>img{
+        transform: scale(0.5);
+    }
+    
+    svg{
+        width : 16px;
+        height : 16px
+    }

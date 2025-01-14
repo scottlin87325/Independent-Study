@@ -1,0 +1,24 @@
+<meta charset="utf-8">
+<script></script>
+
+<h2>註冊頁面</h2>
+<hr>
+
+<form th:action="@{/reg_submit}" th:object="${member}" method="post" enctype="multipart/form-data">
+	信箱: <input id="email" th:field="*{email}"><br>
+	密碼: <input type="password" id="password" th:field="*{password}"><br>
+	姓名: <input id="realname" th:field="*{realname}"><br>
+	暱稱: <input id="membername" th:field="*{membername}"><br>
+	頭像: <input type="file" th:field="*{memberphotofile}"><br>
+	性別: 
+	<input type="radio" name="group1" value="M" th:field="*{gender}">男
+  	<input type="radio" name="group1" value="F" th:field="*{gender}">女<br>
+  	手機: <input id="telephone" th:field="*{telephone}"><br>
+  	生日: <input type="date" id="birthday" th:field="*{birthday}"><br>
+  	自我介紹: <br>
+  	<input id="introduce" th:field="*{introduce}"><br>
+  	
+	<button type="submit">點我註冊</button>
+</form>
+<hr>
+<span>最下面</span>

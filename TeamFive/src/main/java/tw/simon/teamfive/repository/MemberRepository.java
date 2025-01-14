@@ -10,6 +10,6 @@ import tw.simon.teamfive.model.Member;
 
 
 @Repository
-public interface MemberRrepository extends JpaRepository<Member, Long>{
+public interface MemberRepository extends JpaRepository<Member, Long>{
 	Optional<Member> findByEmail(String email);
 }

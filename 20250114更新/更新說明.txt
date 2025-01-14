@@ -1,0 +1,2 @@
+屬性檔新增代碼讓多對多(@ManyToMany)搜不到中間表時，hibernate自動生成中間表
+spring.jpa.hibernate.ddl-auto=update

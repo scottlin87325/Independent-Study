@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>第五組留言板</title>
+    <script src="../js/jquery-3.6.0.js"></script>
+    <script src="../js/message_s_JS.js"></script>
+    <link rel="stylesheet" href="../css/style2.css">
+</head>
+
+<body>
+    <button id="test">測試(console)</button>
+    <input type="file" id="fileinput" style="color: white;">
+    <textarea id="mytext" placeholder="輸入你的訊息"></textarea>
+    <button id="sendText">送出文字</button>
+    <hr>
+    <div class="divLeft">
+        <img class="postImg" id="mypost" src="" alt="Image Preview" style="max-width: 98%;">
+    </div>
+    <div class="divRight">
+        <article id="p1" iddata="p1" class="post">
+            <div class="memberphoto">頭像</div>
+            <section class="username">Simon2</section>
+            <br>
+            <section class="membertext">般若波羅蜜多心經
+                觀自在菩薩，行深般若波羅蜜多時，照見五蘊皆空，度一切苦厄。
+                舍利子，色不異空，空不異色，色即是空，空即是色；受、想、行、識，亦復如是。
+                舍利子，是諸法空相，不生不滅，不垢不淨，不增不減。
+                是故空中無色，無受想行識；無眼耳鼻舌身意，無色聲香味觸法；無眼界，乃至無意識界。
+                無無明，亦無無明盡，乃至無老死，亦無老死盡。
+                無苦集滅道，無智亦無得。
+                以無所得故，菩提薩埵依般若波羅蜜多故，心無罣礙；無罣礙故，無有恐怖，遠離顛倒夢想，究竟涅槃。
+                三世諸佛，依般若波羅蜜多故，得阿耨多羅三藐三菩提。
+                故知般若波羅蜜多，是大神咒，是大明咒，是無上咒，是無等等咒，能除一切苦，真實不虛。
+                如是觀自在菩薩，依般若波羅蜜多故，演說此咒：
+                唵，捨吽，般若波羅蜜多，唵，捨吽。
+            </section>
+            <br>
+            <div class="love">♡</div>
+            <section class="myTime" id="timeslip" timeSet=""></section>
+            <section class="respond">回覆</section>
+        </article>
+        <hr>
+    </div>
+
+    <script>
+        //變數區
+        let calTime;
+        let idName = 'p1';
+        var className = 'post';
+        var inputTime = new Date('2024-10-10T10:10:00');
+
+        $('#timeslip').attr('timeSet', `${inputTime}`);
+        //圖片載入
+        $(document).ready(function () {
+            $('#fileinput').on('change', function (event) {
+                // console.log($('#mypost'));
+                var FI = event.target.files[0]; // 取得使用者選擇的檔案
+                if (FI) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#mypost').attr('src', e.target.result); // 顯示圖片預覽
+                    };
+                    reader.readAsDataURL(FI); // 讀取檔案為 Data URL
+                }
+            });
+        });
+
+        //測試用
+        $('#test').click(function () {
+
+        })
+
+        $('#timeslip').attr('timeSet', `${inputTime}`);
+
+        //送出文字(按鈕)
+        $('#sendText').click(function () {
+            //使用者session
+            pass1(idName);
+            pass2(className);
+            userRespond('Simon');
+            idName = 'p1'
+            className = 'post'
+        })
+
+        //愛心
+        $('.divRight').on('click', '.love', function () {
+            $(this).text($(this).text() === '♡' ? '❤' : '♡');
+        }).on('mouseenter', '.love', function () {
+            $(this).css({
+                'color': 'red',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.love', function () {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            })
+        });
+
+        //繼續閱讀or顯示更少
+        if($('.membertext').height()>108){
+            $('.membertext').height('108');
+            $('.membertext').after(`<section class="more">(繼續閱讀)</section>`);
+        }
+        $('.divRight').on('click', '.more', function () {
+            if($('.membertext').height()>108){
+                $('.membertext').height(108);
+                $(this).text('(繼續閱讀)')
+            }else{
+                $('.membertext').height('');
+                $(this).text('(顯示更少)')
+            }
+        }).on('mouseenter', '.more', function () {
+            $(this).css({
+                'color': 'silver',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.more', function () {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            })
+        });
+
+        
+
+
+        //回復
+        $('.divRight').on('mouseenter', '.respond', function () {
+            $(this).css({
+                'color': 'aqua',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.respond', function () {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            });
+        }).on('click', '.respond', function () {
+            $('#mytext').val('');
+            var resN = $(this).parent().find('.username').text();
+            let t = $('#mytext').val();
+            $('#mytext').val(t + '@' + resN + ' ');
+            className = $(this).parent().attr('class');
+            idName = $(this).parent().attr('iddata');
+        });
+        settime();
+        setInterval(settime, 60000);
+    </script>
+
+
+
+
+
+
+    <script>
+        // 臨時資料存放點
+        //♡♥❤
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自動連結處理</title>
+</head>
+
+<body>
+    <p id="content">這是一段文字，其中有一個 連結文字1，還有另一個 連結文字2。</p>
+
+    <script>
+        test();
+        function test() {
+            // 定義要替換的字詞和對應的連結
+            const links = {
+                "連結文字1": "https://example.com",
+                "連結文字2": "https://anotherlink.com"
+            };
+
+            // 獲取文字內容
+            let content = document.getElementById("content").innerHTML;
+            let i = 0;
+            // 遍歷 links 將字詞替換為連結
+            for (const [keyword, url] of Object.entries(links)) {
+                const linkHTML = `<a href="${url}">${keyword}</a>`;
+                const regex = new RegExp(`${keyword}`, 'g');  // 使用正則表達式來匹配整詞
+                content = content.replace(regex, linkHTML);
+            }
+
+            // 更新頁面中的文本
+            document.getElementById("content").innerHTML = content;
+        }
+    </script>
+</body>
+
+</html>

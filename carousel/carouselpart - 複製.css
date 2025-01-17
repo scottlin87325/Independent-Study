@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+ /*major part*/
+  .post-pic {
+    position: relative;  /*雙子需都有 */
+    height: 390px;
+    width: 205px;
+    background-color: black;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px white(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  /*carousel part switch in every 0.5second*/
+  .post-images {
+    display: flex;
+    height: auto;
+    width: auto;
+    transition: transform 0.5s ease-in-out;
+  }
+  /*the property of the photos*/
+  .post-images img {
+    width: 100%;
+    height: 640px;
+  }
+  /*the property of the  switch button*/
+  .pic-button {
+    position: absolute;  /* 雙子需都有 */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  /*left button to go back the former photo*/
+  .prev {
+    left: 10px;
+  }
+  /*right button to go to next photo*/
+  .next {
+    right: 10px;
+  }

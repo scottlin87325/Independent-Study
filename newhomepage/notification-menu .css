@@ -1,0 +1,454 @@
+@import url("https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Agdasima", sans-serif;
+}
+body{
+  background-color: black;
+}
+/* Color Variables */
+:root {
+  --sidebar-bg: #12171e;
+  --sidebar-width: 80px;
+  --sidebar-width-active: 460px;/*調整放大後距離*/
+  --text-color: #fff;
+  --menu-item-color: rgb(188, 186, 186);
+  --menu-item-hover-bg: rgb(117, 109, 109);
+  --menu-item-hover-color: #fff;
+  --menu-header-color: rgb(137, 135, 135);
+  --tooltip-bg: rgba(0, 0, 0, 0.8);
+  --border-color: rgb(218, 147, 147);
+  color: white;
+  text-decoration:none;  
+ 
+}
+/*方塊顏色，選取列表收縮後寬度*/
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 80px;
+  color:white;
+  padding: 0.4rem 0.8rem;/*menu字展開後變化*/
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+  transition: all 0.5s ease;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 99%;
+
+}
+
+.logo,
+.menu-item,
+.logout {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  transition: justify-content 0.5s ease;
+  
+}
+.logo {
+  margin-top: 30px;
+}
+
+.logo i,
+.menu-item i,
+.logout i {
+  font-size: 2rem;
+  transition: 0.5s ease;
+}
+/*框選至邊界距離*/
+.logo span,
+.menu-item span,
+.logout span {
+  margin-left: 10px;
+  display: none;
+  transition: 0.5s ease;
+}
+
+
+/*項目框選*/
+.menu {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  color: white;
+  text-decoration:none;  
+}
+/*menu字左右展開前*/
+.menu-header {
+  color: var(--menu-header-color);
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 16px;
+  transition: 0.5s ease;
+}
+/*項目上下左右間格展開後*/
+.menu-item {
+  cursor: pointer;
+  padding: 10px 5px;
+  border-radius: 3px;
+  color: var(--menu-item-color);
+  transition: all 0.5 ease;
+  font-size: 16px;
+  color: white;
+  text-decoration:none;  
+}
+
+.menu-item:hover,
+.nav-active,
+.logout:hover {
+  background: var(--menu-item-hover-bg);
+  color: var(--menu-item-hover-color);
+  transition: 0.5s ease;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+/* 修改 Services 的圖標大小和樣式 */
+.menu-item i,
+.menu-item svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px; /* 統一圖標與文字的間距 */
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 修改 Profile 的頭像 */
+.post-header img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #555; /* 給一個預設的背景色 */
+}
+
+/* 確保所有選單項目的文字樣式一致 */
+.menu-item span {
+  font-size: 16px;
+  margin-left: 10px;
+  line-height: 20px;
+  vertical-align: middle;
+  color: white;
+}
+
+/* 統一 hover 效果 */
+.menu-item:hover {
+  background-color: rgba(150, 150, 150, 0.7);
+  transition: background-color 0.3s ease;
+}
+
+.menu-item i,
+.logout i {
+  font-size: 20px;
+}
+/*登出移動*/
+.logout {
+  padding: 10px 4px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: var(--menu-item-color);
+}
+
+/* when sidebar menu is active */
+.sidebar.active {
+  width: var(--sidebar-width-active);
+}
+
+.sidebar.active .logo,
+.sidebar.active .menu-item,
+.sidebar.active .logout {
+  justify-content: flex-start;
+}
+
+/* when sidebar is active show the nav items */
+.sidebar.active .logo span,
+.sidebar.active .menu-item span,
+.sidebar.active .logout span {
+  display: block;
+}
+/*menu字*/
+.sidebar.active .menu-header {
+  font-size: 20px;
+  text-align: left;
+}
+
+/* toggle menu */
+.toggle-menu {
+  position: absolute;
+  top: 10px;
+  right: -20px;
+  background-color: black;
+  border: 1px solid var(--menu-item-hover-bg);
+  color: var(--text-color);
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+.notpart {
+  position: absolute;
+  top: 0px;
+  right: -350px;
+  background-color: black;
+  border: 1px solid white;
+  width: 70%;
+  color: gray;
+height: 110%;
+  /* padding: 370px 184px; */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+.notpart h1{
+  border: 1px solid gray;
+  width: 100%;
+  overflow: auto;
+}
+
+/* menu item tooltip */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  top: 4rem;
+  transform: translateX(0%); /*水平移動(-)往右(+)往左*/
+  background-color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+[data-tooltip]:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4rem;
+  transform: translateX(0%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: black;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.sidebar:not(.active) [data-tooltip]:hover::before,
+.sidebar:not(.active) [data-tooltip]:hover::after {
+  opacity: 1;
+}
+.logout[data-tooltip]::before {
+  left: 120%;
+}
+.logout[data-tooltip]::after {
+  left: 100%;
+}
+.content {
+  margin-left: 220px; /* Ensure content is not hidden behind the menu */
+  padding: 20px;
+  width: 600px;
+  color: aliceblue;
+  align-items: right;
+  text-align: center;
+  
+}
+svg{
+  height: 16px;
+  width: 16px;
+  
+}
+a{
+  color: white;
+    text-decoration:none; 
+}
+.post-header img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* Dropdown container styles */
+.dropdown {
+  position: relative;
+}
+/*the part inside the dropdown*/
+.dropdown-content {
+  display: none;
+  position: absolute;
+  bottom: 100%; /* Positions the dropdown above the link */
+  left: 0;
+  background-color: #333;
+  min-width: 160px;
+  z-index: 1;
+  border-bottom: 1px solid #ddd;
+}
+/*the cursor pass and the list inside Servic show up*/
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+/*keep the arrangement of the every option of the list inside in service*/
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  body {
+    max-width: 100vw;
+    overflow-x: hidden; /* 防止橫向滾動 */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 移除原本隱藏側邊欄的設定 */
+  .content {
+    margin-left: 0;
+    margin-bottom: 80px; /* 增加底部邊距，確保內容不被遮擋 */
+    width: 100%;
+    padding: 20px;
+  }
+
+  .notpart {
+    max-width: 100%;
+    width: auto;
+    right: 0;
+    margin-right: 0;
+    overflow-x: hidden;
+  }
+
+  .notpart {
+    position: relative;
+    right: 0;
+    width: 100%;
+  }
+  /* 底部導航欄樣式 */
+  .sidebar {
+    display: flex;
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 0;
+    background-color: rgba(128, 128, 128, 0.5);
+    border-radius: 0 0 15px 0; /* 添加右下角圓角 */
+    overflow: hidden;
+    z-index: 1000;
+  }
+
+  /* 其他樣式保持不變 */
+  .menu {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .menu-item {
+    padding: 6px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 隱藏不需要的元素 */
+  .sidebar .logo,
+  .sidebar .menu-header,
+  .sidebar .toggle-menu,
+  .sidebar .logout,
+  .sidebar .menu-item span,
+  .sidebar .notpart,
+  [data-tooltip]::before,
+  [data-tooltip]::after {
+    display: none;
+  }
+
+  
+
+  /* 確保圖標大小正確 */
+  .menu-item svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* 調整主內容區域 */
+  .content {
+    margin-left: 0;
+    margin-bottom: 60px;
+  }
+
+  /* 調整下拉選單在底部導航中的位置 */
+  .dropdown-content {
+    bottom: 100%;
+    top: auto;
+    left: 0;
+  }
+}
+@media (max-width: 768px) {
+  .sidebar {
+    height: 60px; /* 可以調整高度讓點擊區域更大 */
+    z-index: 1000; /* 確保導航欄永遠在最上層 */
+  }
+}
+@media (max-width: 768px) {
+  .menu-item {
+    transition: transform 0.2s ease;
+  }
+  
+  .menu-item:active {
+    transform: scale(0.9); /* 點擊時的反饋效果 */
+  }
+}
+@media (max-width: 768px) {
+  .search-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: black;
+    border-bottom: 1px solid #333;
+    z-index: 1000;
+  }
+}

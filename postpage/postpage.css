@@ -1,0 +1,146 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.post-pic{
+    height: 350px; 
+    width: 2000px;
+    
+}
+.post-images{
+    height: auto; 
+    width: 100%
+}
+
+/*the left*/
+.post-container {
+    height: 640px; 
+    width: 510px; 
+    background-color: black;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px white(0, 0, 0, 0.1);
+    overflow: hidden;
+   
+}
+
+/*the property of the part of the head part*/
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: transparent;
+    border-bottom: 1px solid white;
+    color: white;
+   
+}
+
+/*right page profile head size*/
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    
+}
+
+/*account id name*/
+.post-header .username {
+    font-weight: bold;
+}
+/*the follow option next to id*/
+.post-follow {
+    color: darkcyan;
+}
+/*three dot right page in the right up side  */
+.post-dot {
+    margin-left: auto;
+    color: aliceblue;
+    
+}
+/* the right side in order to input the comment place*/
+.post-image img {
+    width: auto;
+    height: auto;
+}
+@media (max-width: 768px) {
+    .post-header{
+        display: none;
+    }
+    .post-follow{
+        display: none;
+    }
+    .post-dot{
+        display: none;
+    }
+   
+}
+/*the left side of input post photo*/
+.post-images img {
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+}
+/*the part of the range of icon Likes describtion and comment input part*/
+.post-footer {
+    padding: 10px;
+    border-top: 1px solid black;
+   
+}
+/*show how many likes at this moment*/
+.post-footer .likes {
+    font-weight: bold;
+    color: white;
+    
+}
+/*the desribtion of the post*/
+.post-footer .caption {
+    margin-top: 5px;
+    font-size: 14px;
+    color: white;
+}
+
+/* Likes comment share save region*/
+.action-buttons {
+    display: flex;
+    justify-content: space-between; /*make sure the gap between icon still be there*/
+    margin-top: 10px;
+    color: white;
+}
+/* the right page icon size*/
+svg {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/*add the new comment*/
+.comment-region #comment {
+    background-color: gray;
+    color: white;
+    
+
+}
+
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+    }
+  
+    main {
+        grid-template-columns: 1fr;
+    }
+   .post-pic{
+     display: none;
+   }
+  .post-images{
+    width: 100%;
+  }
+    
+  }

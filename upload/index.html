@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus, Crop, and Resize Image</title>
+
+    <!-- Cropper.js CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        #image-container {
+            max-width: 100%;
+            max-height: 500px;
+            text-align: center;
+        }
+
+        #uploaded-image {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #cropped-result {
+            margin-top: 20px;
+        }
+
+        #cropped-image {
+            max-width: 300px;
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>Upload, Focus, Crop, and Resize Image</h2>
+        
+        <!-- File input to upload the image -->
+        <input type="file" id="file-upload" accept="image/*" onchange="loadImage(event)">
+        <br><br>
+        
+        <!-- Container to display the uploaded image -->
+        <div id="image-container">
+            <img id="uploaded-image" src="" alt="Upload an image" style="display:none;">
+        </div>
+        
+        <br>
+        
+        <!-- Button to crop and resize the selected image -->
+        <button onclick="cropAndResizeImage()">Crop & Resize Image</button>
+
+        <br><br>
+
+        <!-- Display the cropped and resized image result -->
+        <div id="cropped-result">
+            <h3>Cropped and Resized Image:</h3>
+            <img id="cropped-image" src="" alt="Cropped Image" style="display:none;">
+        </div>
+    </div>
+
+    <!-- Cropper.js JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    
+    <script>
+        let cropper; // To store the Cropper instance
+
+        // Load and display the uploaded image
+        function loadImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const imgElement = document.getElementById('uploaded-image');
+                imgElement.src = e.target.result;
+                imgElement.style.display = 'block'; // Show the image
+                initCropper(); // Initialize the cropper after image is loaded
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Initialize Cropper.js on the uploaded image
+        function initCropper() {
+            const img = document.getElementById('uploaded-image');
+            if (cropper) {
+                cropper.destroy(); // Destroy any previous cropper instance
+            }
+            cropper = new Cropper(img, {
+                aspectRatio: NaN, // Freeform crop (no fixed aspect ratio)
+                viewMode: 1, // Show a restricted area for cropping
+                autoCropArea: 0.5, // Default cropping area (50%)
+                scalable: true, // Allow scaling of the image
+                cropBoxResizable: true, // Allow resizing the crop box
+
+            });
+        }
+
+        // Crop the image based on the selected area and resize the entire output image
+        function cropAndResizeImage() {
+            if (cropper) {
+                // Get the cropped area (only the selected part of the image)
+                const croppedCanvas = cropper.getCroppedCanvas({
+                    width: 100, // Set the width of the cropped area
+                    height: 100, // Set the height of the cropped area
+                });
+
+                // Resize the entire output image by reducing its size
+                const resizedCanvas = document.createElement('canvas');
+                const ctx = resizedCanvas.getContext('2d');
+                resizedCanvas.width = 100; // Output width of the final image
+                resizedCanvas.height = 100; // Output height of the final image
+
+                // Draw the cropped image onto the resized canvas to shrink it
+                ctx.drawImage(croppedCanvas, 0, 0, 500, 500, 0, 0, 300, 300);
+
+                // Display the resized image
+                const croppedImageElement = document.getElementById('cropped-image');
+                croppedImageElement.src = resizedCanvas.toDataURL(); // Set the source to the resized image
+                croppedImageElement.style.display = 'block'; // Show the resized image
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Carousel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .carousel-container {
+      position: relative;
+      height: 600px;
+      width: 800px;
+      margin: 50px auto;
+      overflow: hidden;
+    }
+    .carousel-images {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .carousel-images img {
+      width: 100%;
+      height: auto;
+    }
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .prev {
+      left: 10px;
+    }
+    .next {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="carousel-container">
+  <div class="carousel-images">
+    <img src="./IMG_2514.jpg" alt="Image 1">
+    <img src="./IMG_2515.jpg" alt="Image 2">
+    <img src="./IMG_2519.jpg" alt="Image 4">
+    <img src="./IMG_2525.jpg" alt="Image 5">
+    <img src="./IMG_2545.jpg" alt="Image 6">
+    <img src="./IMG_2547.jpg" alt="Image 7">
+    <img src="" alt="Image 8">
+  
+  </div>
+  <button class="carousel-button prev">&#10094;</button>
+  <button class="carousel-button next">&#10095;</button>
+</div>
+
+<script>
+  const prevButton = document.querySelector('.prev');
+  const nextButton = document.querySelector('.next');
+  const carouselImages = document.querySelector('.carousel-images');
+  const images = document.querySelectorAll('.carousel-images img');
+  let currentIndex = 0;
+
+  // Function to show the current image based on the index
+  function updateCarousel() {
+    const totalImages = images.length;
+    const offset = -(currentIndex * 100) + '%';
+    carouselImages.style.transform = `translateX(${offset})`;
+  }
+
+  // Event listener for the previous button
+  prevButton.addEventListener('click', () => {
+    currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+    updateCarousel();
+  });
+
+  // Event listener for the next button
+  nextButton.addEventListener('click', () => {
+    currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+    updateCarousel();
+  });
+
+  // Optional: Auto cycle every 3 seconds
+  setInterval(() => {
+    currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+    updateCarousel();
+  }, 3000);
+
+</script>
+
+</body>
+</html>

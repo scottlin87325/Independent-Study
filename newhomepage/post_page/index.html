@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Post Simulation</title>
+    
+       
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="add-post-btn" onclick="openModal()">Add Post</button>
+
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <h3>Create a Post</h3>
+            <input type="file" id="imageInput" accept="image/*">
+            <textarea id="postText" placeholder="Write a description..."></textarea>
+            <button onclick="addPost()">Post</button>
+            <div class="close-btn" onclick="closeModal()">Cancel</div>
+        </div>
+    </div>
+
+    <div class="container" id="postContainer">
+        <!-- Posts will be added here dynamically -->
+    </div>
+
+    
+    <script src="./app.js"></script>
+</body>
+</html>

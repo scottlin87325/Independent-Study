@@ -1,0 +1,20 @@
+資料庫
+member	=> Post_count 欄位預設值改為0
+	=> 新增欄位Account_available，檢測該帳號是否有被註銷
+
+collect	=> Collected_count 欄位預設值改為0
+
+新增表passwordreset，對應忘記密碼的功能
+
+post	=> Liked_count 欄位預設值改為0
+	=> Message_count 欄位預設值改為0
+
+messageboard	=> Message_Liked_count 欄位預設值改為0
+
+chatroom => 新增欄位Status，給加好友確認關係用，預設值為ask
+
+-----------------------------------------------------------------
+model
+底下全部的多對多、多對1、1對1的部分全部註解
+Member	=> 新增accountavaiable
+Chatroom=> 新增status

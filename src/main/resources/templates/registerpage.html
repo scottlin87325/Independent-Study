@@ -3,21 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" >
     <link  rel="stylesheet" href="/css/Page.css">
-    
-    
-    
-    
 </head>
 <body>
-
-
-
-
     <div class="Login-Page">
       <!-- 作品名 -->
         <h1>作品名作品名</h1>
@@ -36,8 +24,8 @@
         </div> 
 
         <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="輸入密碼" th:field="*{password}" required/>
-        <i id="checkEye" class="fas fa-eye"></i>
+	        <input type="password" class="form-control" id="floatingPassword" placeholder="輸入密碼" th:field="*{password}" required/>
+	        <i id="checkEye" class="fas fa-eye"></i>
         </div>
         
         <!-- 同意文字 -->
@@ -46,17 +34,12 @@
         <a  href="https://www.facebook.com/privacy/policy" target="_blank">《Cookie 政策》</a>和
         <a  href="https://privacycenter.instagram.com/policies/cookies/" target="_blank">《Cookie 政策》</a><p/>
         <button class="btn"  type="submit">註冊</button>
-    
         </form>                       
-             
-       
+      
         <hr>
         <br>
         <a  class="back-button" th:href="@{/loginpage}" style="font-size:30px;">返回登入頁面</a>
 
-
-
-        
       <script src="/js/PasswordEye.js"></script>
 </body>
 </html>

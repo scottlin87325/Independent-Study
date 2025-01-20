@@ -24,6 +24,10 @@ public class Chatlog {
 	@Column(name = "ChatlogID")
 	private Integer chatlogid;
 	
+	//以下兩個變數因為沒有關聯而重新建立
+//	private Integer chatroomid;
+	private Integer senderid;
+	
 	@Column(name = "Input_time" ,columnDefinition = "TIMESTAMP")
 	private String inputtime;
 	@Column(name = "Room_message" ,columnDefinition = "VARCHAR(1000)")
@@ -43,6 +47,18 @@ public class Chatlog {
 	}
 	public void setChatlogid(Integer chatlogid) {
 		this.chatlogid = chatlogid;
+	}
+//	public Integer getChatroomid() {
+//		return chatroomid;
+//	}
+//	public void setChatroomid(Integer chatroomid) {
+//		this.chatroomid = chatroomid;
+//	}
+	public Integer getSenderid() {
+		return senderid;
+	}
+	public void setSenderid(Integer senderid) {
+		this.senderid = senderid;
 	}
 	public String getInputtime() {
 		return inputtime;
@@ -96,18 +112,18 @@ public class Chatlog {
 //		this.member = member;
 //	}
 //	
-//	// 多對1，Chatroom
-//	@ManyToOne
-//	@JoinColumn(
-//			name = "chatroomid",
-//			columnDefinition = "INT(30) UNSIGNED")
-//	private Chatroom chatroom;
-//	public Chatroom getChatroom() {
-//		return chatroom;
-//	}
-//	public void setChatroom(Chatroom chatroom) {
-//		this.chatroom = chatroom;
-//	}
+	// 多對1，Chatroom
+	@ManyToOne
+	@JoinColumn(
+			name = "chatroomid",
+			columnDefinition = "INT(30) UNSIGNED")
+	private Chatroom chatroom;
+	public Chatroom getChatroom() {
+		return chatroom;
+	}
+	public void setChatroom(Chatroom chatroom) {
+		this.chatroom = chatroom;
+	}
 //	
 //	// 多對多，Sticker
 //	@ManyToMany

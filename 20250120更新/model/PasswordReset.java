@@ -8,8 +8,8 @@ import java.util.Date;
 public class PasswordReset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "MemberID")
-    private Integer memberid;
+	@Column(name = "ResetID")
+    private Integer resetid;
 
     @Column(nullable = false, unique = true)
     private String token;
@@ -19,11 +19,11 @@ public class PasswordReset {
     private Date createdAt;
 
 	//---------------------------------------------------------------------
-    public Integer getMemberid() {
-		return memberid;
+	public Integer getResetid() {
+		return resetid;
 	}
-	public void setMemberid(Integer memberid) {
-		this.memberid = memberid;
+	public void setResetid(Integer resetid) {
+		this.resetid = resetid;
 	}
 	public String getToken() {
 		return token;
@@ -69,7 +69,7 @@ public class PasswordReset {
     
 	//---------------------------------------------------------------------
     @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "MemberID", nullable = false)
     private Member member;
-    
+
 }

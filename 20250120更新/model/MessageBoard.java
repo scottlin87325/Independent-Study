@@ -17,6 +17,10 @@ public class MessageBoard {
 	@Column(name = "Message_boardID")
 	private Integer messageboardid;
 	
+	//以下兩個變數因為沒有關聯而重新建立
+	private Integer postid;
+	private Integer messagelogid;
+	
 	@Column(name = "Message_Liked_count")
 	private Integer messagelikedcount;
 
@@ -26,6 +30,18 @@ public class MessageBoard {
 	}
 	public void setMessageboardid(Integer messageboardid) {
 		this.messageboardid = messageboardid;
+	}
+	public Integer getPostid() {
+		return postid;
+	}
+	public void setPostid(Integer postid) {
+		this.postid = postid;
+	}
+	public Integer getMessagelogid() {
+		return messagelogid;
+	}
+	public void setMessagelogid(Integer messagelogid) {
+		this.messagelogid = messagelogid;
 	}
 	public Integer getMessagelikedcount() {
 		return messagelikedcount;

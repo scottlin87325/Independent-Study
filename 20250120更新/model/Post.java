@@ -24,6 +24,9 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PostID")
 	private Integer postid;
+	
+	//以下變數因為沒有關聯而重新建立
+	private Integer posterid;
 
 	@Column(name = "Post_time", columnDefinition = "TIMESTAMP")
 	private String posttime;
@@ -40,6 +43,12 @@ public class Post {
 	}
 	public void setPostid(Integer postid) {
 		this.postid = postid;
+	}
+	public Integer getPosterid() {
+		return posterid;
+	}
+	public void setPosterid(Integer posterid) {
+		this.posterid = posterid;
 	}
 	public String getPosttime() {
 		return posttime;

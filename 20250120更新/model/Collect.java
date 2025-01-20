@@ -18,6 +18,7 @@ public class Collect {
 	@Column(name = "CollectID")
 	private Integer collectid;
 	
+	private Integer collecterid;
 	private Integer postid;
 	
 	@Column(name = "Collected_count")
@@ -41,6 +42,12 @@ public class Collect {
 	}
 	public void setCollectedcount(Integer collectedcount) {
 		this.collectedcount = collectedcount;
+	}
+	public Integer getCollecterid() {
+		return collecterid;
+	}
+	public void setCollecterid(Integer collecterid) {
+		this.collecterid = collecterid;
 	}
 	
 	//---------------------------------------------------------------------

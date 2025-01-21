@@ -6,6 +6,6 @@ import com.scott.chat.model.Chatroom;
 import java.util.List;
 
 @Repository
-public interface ChatroomRepository extends JpaRepository<Chatroom, Long> {
-    List<Chatroom> findByMemberaOrMemberb(Long membera, Long memberb);
+public interface ChatroomRepository extends JpaRepository<Chatroom, Integer> {
+    List<Chatroom> findByMemberaOrMemberb(Integer membera, Integer memberb);
 }

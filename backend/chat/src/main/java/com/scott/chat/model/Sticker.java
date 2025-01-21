@@ -2,6 +2,8 @@ package com.scott.chat.model;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Transient;
 
 @Entity
@@ -17,12 +20,13 @@ public class Sticker {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "StickerID")
-	private Long stickerid;
+	private Integer stickerid;
 	
-	@Column(name = "Sticker_type")
+	@Column(name = "Sticker_type",columnDefinition = "VARCHAR(30)")
 	private String stickertype;
 	
 	// 貼圖傳輸三階段變數
+	@Column(columnDefinition = "MEDIUMBLOB")
 	private byte[] sticker;
 	@Transient
 	private MultipartFile stickerfile;
@@ -30,10 +34,10 @@ public class Sticker {
 	private String stickerbase64;
 	
 	//---------------------------------------------------------------------------
-	public Long getStickerid() {
+	public Integer getStickerid() {
 		return stickerid;
 	}
-	public void setStickerid(Long stickerid) {
+	public void setStickerid(Integer stickerid) {
 		this.stickerid = stickerid;
 	}
 	public String getStickertype() {
@@ -69,6 +73,27 @@ public class Sticker {
 	}
 	public void setStickerbase64(String stickerbase64) {
 		this.stickerbase64 = stickerbase64;
+	}
+	
+	//---------------------------------------------------------------------------
+	// 多對多，Messagelog
+	@ManyToMany(mappedBy = "sticker")
+    private Set<Messagelog> messagelog = new HashSet<>();
+	public Set<Messagelog> getMessagelog() {
+		return messagelog;
+	}
+	public void setMessagelog(Set<Messagelog> messagelog) {
+		this.messagelog = messagelog;
+	}
+
+	// 多對多，Chatlog
+	@ManyToMany(mappedBy = "sticker")
+   private Set<Chatlog> chatlog = new HashSet<>();
+	public Set<Chatlog> getChatlog() {
+		return chatlog;
+	}
+	public void setChatlog(Set<Chatlog> chatlog) {
+		this.chatlog = chatlog;
 	}
 	
 }

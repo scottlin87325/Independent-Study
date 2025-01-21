@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.scott.chat.model.Member;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Integer> {
     Optional<Member> findByEmail(String email);
 }
 

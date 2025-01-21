@@ -21,7 +21,7 @@ public class MemberController {
     private MemberRepository memberRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> getMember(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> getMember(@PathVariable Integer id) {
         return memberRepository.findById(id)
             .map(member -> {
                 Map<String, Object> response = new HashMap<>();

@@ -4,11 +4,15 @@ let currentChatroomId = null;
 
 // WebSocket 連接
 function connectWebSocket() {
+    console.log('開始建立WebSocket連接...');
     const socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
+    
     stompClient.connect({}, function(frame) {
-        console.log('Connected: ' + frame);
+        console.log('WebSocket連接成功:', frame);
         loadChatRooms();
+    }, function(error) {
+        console.error('WebSocket連接失敗:', error);
     });
 }
 
@@ -99,6 +103,7 @@ async function selectChatRoom(chatroomId, otherUser) {
     
     const chatAvatar = document.getElementById('chatAvatar');
     chatAvatar.innerHTML = ''; // 清空現有內容
+    chatAvatar.classList.add('active'); // 添加 active class 來顯示頭像
     
     if (otherUser.memberphoto) {
         // 如果有頭像，創建img元素
@@ -126,7 +131,15 @@ async function selectChatRoom(chatroomId, otherUser) {
 async function loadChatHistory(chatroomId) {
     try {
         const response = await fetch(`/api/chat/history/${chatroomId}`);
-        const messages = await response.json();
+        
+        // 先取得原始回應內容並記錄
+        const rawText = await response.text();
+        console.log('Raw response:', rawText);
+        
+        // 將文字轉換為 JSON
+        const messages = JSON.parse(rawText);
+        console.log('Parsed messages:', messages);
+
         displayChatHistory(messages);
     } catch (error) {
         console.error('Error loading chat history:', error);
@@ -244,8 +257,17 @@ function sendMessage() {
             roommessage: message
         };
         
-        stompClient.send("/app/chat/" + currentChatroomId, {}, JSON.stringify(chatMessage));
-        messageInput.value = '';
+        // 加入日誌
+        console.log('準備發送訊息:', chatMessage);
+        console.log('WebSocket 連接狀態:', stompClient.connected);
+        
+        try {
+            stompClient.send("/app/chat/" + currentChatroomId, {}, JSON.stringify(chatMessage));
+            console.log('訊息發送成功');
+            messageInput.value = '';
+        } catch (error) {
+            console.error('發送訊息時發生錯誤:', error);
+        }
     }
 }
 

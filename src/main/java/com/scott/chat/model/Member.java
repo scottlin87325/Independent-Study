@@ -1,33 +1,38 @@
 package com.scott.chat.model;
 
 import java.util.Base64;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MemberID")
-	private Long memberid;
+	private Integer memberid;
 	
 	@Column(unique = true ,columnDefinition = "VARCHAR(30)")
-	private String email;	
-	
+	private String email;
 	@Column(columnDefinition = "VARCHAR(100)")
-	private String password;	
-	
+	private String password;
 	@Column(columnDefinition = "VARCHAR(30)")
 	private String realname;
-	
-	
 	@Column(name = "Member_name",columnDefinition = "VARCHAR(30)")
 	private String membername;
 	
@@ -47,14 +52,15 @@ public class Member {
 	private String birthday;
 	@Column(columnDefinition = "VARCHAR(1000)")
 	private String introduce;
-	
 	@Column(name = "Post_count")
 	private Integer postcount;
+
+	
 	//---------------------------------------------------------------------
-	public Long getMemberid() {
+	public Integer getMemberid() {
 		return memberid;
 	}
-	public void setMemberid(Long memberid) {
+	public void setMemberid(Integer memberid) {
 		this.memberid = memberid;
 	}
 	public String getEmail() {
@@ -142,5 +148,63 @@ public class Member {
 		this.postcount = postcount;
 	}
 
-	
+	//---------------------------------------------------------------------
+//	// 1對多，Post
+//	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
+//	private List<Post> post;
+//	public List<Post> getPost() {
+//		return post;
+//	}
+//	public void setPost(List<Post> post) {
+//		this.post = post;
+//	}
+//	
+//	// 1對多，Chatlog
+//	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+//	private List<Chatlog> chatlog;
+//	public List<Chatlog> getChatlog() {
+//		return chatlog;
+//	}
+//	public void setChatlog(List<Chatlog> chatlog) {
+//		this.chatlog = chatlog;
+//	}
+//	
+//	// 多對多，Collect
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(
+//		    name = "member_collect",
+//		    joinColumns = @JoinColumn(
+//		    		name = "MemberID",
+//		    		columnDefinition = "INT(30) UNSIGNED"),
+//		    inverseJoinColumns = @JoinColumn(
+//		    		name = "CollectID",
+//		    		columnDefinition = "INT(30) UNSIGNED")
+//			)
+//    private Set<Collect> collect = new HashSet<>();
+//	public Set<Collect> getCollect() {
+//		return collect;
+//	}
+//	public void setCollect(Set<Collect> collect) {
+//		this.collect = collect;
+//	}
+//
+//	// 多對多，Chatroom
+//	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+//	@JoinTable(
+//		    name = "member_chatroom",
+//		    joinColumns = @JoinColumn(
+//		    		name = "MemberID",
+//		    		columnDefinition = "INT(30) UNSIGNED"),
+//		    inverseJoinColumns = @JoinColumn(
+//		    		name = "ChatroomID",
+//		    		columnDefinition = "INT(30) UNSIGNED")
+//			)
+//    private Set<Chatroom> chatroom = new HashSet<>();
+//	public Set<Chatroom> getChatroom() {
+//		return chatroom;
+//	}
+//	public void setChatroom(Set<Chatroom> chatroom) {
+//		this.chatroom = chatroom;
+//	}
+
 }

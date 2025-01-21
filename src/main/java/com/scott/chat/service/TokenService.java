@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.scott.chat.model.Member;
-import com.scott.chat.model.TokenRecord;
+import com.scott.chat.model.PasswordReset;
+
 import com.scott.chat.repository.TokenRepository;
 import com.scott.chat.util.BCrypt;
 import com.scott.chat.repository.MemberRepository;
@@ -34,7 +35,7 @@ public class TokenService {
     private MemberService memberService;
 
     // 根據 email 查找會員的 memberId
-    public Long getMemberIdByEmail(String email) {
+    public Integer getMemberIdByEmail(String email) {
         Optional<Member> memberOpt = memberRepository.findByEmail(email);
         return memberOpt.map(Member::getMemberid).orElse(null); // 返回 memberId 或 null
     }
@@ -51,7 +52,7 @@ public class TokenService {
             Date createdAt = new Date();
 
             // 創建新的 Token 記錄
-            TokenRecord tokenRecord = new TokenRecord(token, member, expiryDate, createdAt);
+            PasswordReset tokenRecord = new PasswordReset(token, member, expiryDate, createdAt);
             tokenRepository.save(tokenRecord);
 
             // 發送郵件
@@ -65,9 +66,9 @@ public class TokenService {
 
     // 檢查 Token 是否有效
     public boolean validateToken(String token) {
-        Optional<TokenRecord> tokenRecordOpt = tokenRepository.findByToken(token);
+        Optional<PasswordReset> tokenRecordOpt = tokenRepository.findByToken(token);
         if (tokenRecordOpt.isPresent()) {
-            TokenRecord tokenRecord = tokenRecordOpt.get();
+        	PasswordReset tokenRecord = tokenRecordOpt.get();
             return !tokenRecord.isExpired();
         }
         return false;
@@ -75,7 +76,7 @@ public class TokenService {
 
     // 根據 Token 找到相關會員
     public Optional<Member> getMemberByToken(String token) {
-        Optional<TokenRecord> tokenRecordOpt = tokenRepository.findByToken(token);
+        Optional<PasswordReset> tokenRecordOpt = tokenRepository.findByToken(token);
         if (tokenRecordOpt.isPresent() && !tokenRecordOpt.get().isExpired()) {
             return Optional.of(tokenRecordOpt.get().getMember());
         }

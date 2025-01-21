@@ -13,8 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.scott.chat.security.CustomAuthenticationFailureHandler;
 import com.scott.chat.security.CustomAuthenticationSuccessHandler;
+import com.scott.chat.security.OAuth2LoginSuccessHandler;
 import com.scott.chat.service.CustomUserDetailsService;
-import com.scott.chat.service.OAuth2LoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity

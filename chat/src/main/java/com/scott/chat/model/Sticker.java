@@ -76,24 +76,24 @@ public class Sticker {
 	}
 	
 	//---------------------------------------------------------------------------
-	// 多對多，Messagelog
-	@ManyToMany(mappedBy = "sticker")
-    private Set<Messagelog> messagelog = new HashSet<>();
-	public Set<Messagelog> getMessagelog() {
-		return messagelog;
-	}
-	public void setMessagelog(Set<Messagelog> messagelog) {
-		this.messagelog = messagelog;
-	}
-
-	// 多對多，Chatlog
-	@ManyToMany(mappedBy = "sticker")
-    private Set<Chatlog> chatlog = new HashSet<>();
-	public Set<Chatlog> getChatlog() {
-		return chatlog;
-	}
-	public void setChatlog(Set<Chatlog> chatlog) {
-		this.chatlog = chatlog;
-	}
+//	// 多對多，Messagelog
+//	@ManyToMany(mappedBy = "sticker")
+//    private Set<Messagelog> messagelog = new HashSet<>();
+//	public Set<Messagelog> getMessagelog() {
+//		return messagelog;
+//	}
+//	public void setMessagelog(Set<Messagelog> messagelog) {
+//		this.messagelog = messagelog;
+//	}
+//
+//	// 多對多，Chatlog
+//	@ManyToMany(mappedBy = "sticker")
+//    private Set<Chatlog> chatlog = new HashSet<>();
+//	public Set<Chatlog> getChatlog() {
+//		return chatlog;
+//	}
+//	public void setChatlog(Set<Chatlog> chatlog) {
+//		this.chatlog = chatlog;
+//	}
 	
 }

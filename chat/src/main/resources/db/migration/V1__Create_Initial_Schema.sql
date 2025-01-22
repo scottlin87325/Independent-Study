@@ -1,25 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- 主機： 127.0.0.1
--- 產生時間： 2025-01-15 15:02:59
--- 伺服器版本： 10.4.32-MariaDB
--- PHP 版本： 8.2.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- 資料庫： `social`
---
 CREATE DATABASE IF NOT EXISTS `social` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `social`;
 
@@ -27,8 +5,6 @@ USE `social`;
 
 --
 -- 資料表結構 `chatlog`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `chatlog`;
@@ -41,64 +17,58 @@ CREATE TABLE `chatlog` (
   `Room_file` mediumblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- 資料表的關聯 `chatlog`:
---   `SenderID`
---       `member` -> `MemberID`
---   `ChatroomID`
---       `chatroom` -> `ChatroomID`
---
-
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `chatroom`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `chatroom`;
 CREATE TABLE `chatroom` (
   `ChatroomID` int(30) UNSIGNED NOT NULL,
   `Member_a` int(30) UNSIGNED NOT NULL,
-  `Member_b` int(30) UNSIGNED NOT NULL
+  `Member_b` int(30) UNSIGNED NOT NULL,
+  `Status` varchar(10) DEFAULT 'ask' COMMENT '好友狀態，ask/confirm'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 資料表的關聯 `chatroom`:
---   `Member_a`
---       `member` -> `MemberID`
---   `Member_b`
---       `member` -> `MemberID`
---
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `collect`
 --
--- 建立時間： 2025-01-15 13:58:35
---
 
 DROP TABLE IF EXISTS `collect`;
 CREATE TABLE `collect` (
   `CollectID` int(30) UNSIGNED NOT NULL,
+  `CollecterID` int(30) UNSIGNED NOT NULL COMMENT '收藏者',
   `PostID` int(30) UNSIGNED NOT NULL,
-  `Collected_count` int(30) UNSIGNED NOT NULL COMMENT '被收藏數'
+  `Collected_count` int(30) UNSIGNED NOT NULL DEFAULT 0 COMMENT '被收藏數，預設為0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- 資料表的關聯 `collect`:
---   `PostID`
---       `post` -> `PostID`
+-- 資料表結構 `flyway_schema_history`
 --
+
+DROP TABLE IF EXISTS `flyway_schema_history`;
+CREATE TABLE `flyway_schema_history` (
+  `installed_rank` int(11) NOT NULL,
+  `version` varchar(50) DEFAULT NULL,
+  `description` varchar(200) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `script` varchar(1000) NOT NULL,
+  `checksum` int(11) DEFAULT NULL,
+  `installed_by` varchar(100) NOT NULL,
+  `installed_on` timestamp NOT NULL DEFAULT current_timestamp(),
+  `execution_time` int(11) NOT NULL,
+  `success` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `member`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `member`;
@@ -113,19 +83,13 @@ CREATE TABLE `member` (
   `Telephone` varchar(30) DEFAULT NULL COMMENT '手機',
   `Birthday` date DEFAULT NULL COMMENT 'yyyy-mm-dd',
   `Introduce` varchar(1000) DEFAULT NULL COMMENT '自我介紹',
-  `Post_count` int(30) UNSIGNED DEFAULT NULL COMMENT '發過的貼文數'
+  `Post_count` int(30) DEFAULT 0 COMMENT '發過的貼文數，預設為0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 資料表的關聯 `member`:
---
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `messageboard`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `messageboard`;
@@ -133,23 +97,13 @@ CREATE TABLE `messageboard` (
   `Message_boardID` int(30) UNSIGNED NOT NULL,
   `PostID` int(30) UNSIGNED NOT NULL,
   `MessagelogID` int(30) UNSIGNED DEFAULT NULL,
-  `Message_Liked_count` int(30) UNSIGNED DEFAULT NULL COMMENT '留言點讚數'
+  `Message_Liked_count` int(30) UNSIGNED DEFAULT 0 COMMENT '留言點讚數，預設值為0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 資料表的關聯 `messageboard`:
---   `PostID`
---       `post` -> `PostID`
---   `MessagelogID`
---       `messagelog` -> `MessagelogID`
---
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `messagelog`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `messagelog`;
@@ -160,16 +114,25 @@ CREATE TABLE `messagelog` (
   `Message_file` mediumblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- 資料表的關聯 `messagelog`:
+-- 資料表結構 `passwordreset`
 --
+
+DROP TABLE IF EXISTS `passwordreset`;
+CREATE TABLE `passwordreset` (
+  `ResetID` int(30) NOT NULL,
+  `Token` varchar(255) NOT NULL,
+  `MemberID` int(30) UNSIGNED NOT NULL,
+  `Expiry_date` datetime NOT NULL COMMENT '有效時間',
+  `Created_at` datetime NOT NULL COMMENT '產出時間'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `post`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `post`;
@@ -177,23 +140,15 @@ CREATE TABLE `post` (
   `PostID` int(30) UNSIGNED NOT NULL,
   `PosterID` int(30) UNSIGNED NOT NULL COMMENT '發貼文的人',
   `Post_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `Liked_count` int(30) UNSIGNED DEFAULT NULL COMMENT '按讚數',
-  `Message_count` int(30) UNSIGNED DEFAULT NULL COMMENT '留言數',
+  `Liked_count` int(30) UNSIGNED DEFAULT 0 COMMENT '按讚數，預設值為0',
+  `Message_count` int(30) UNSIGNED DEFAULT 0 COMMENT '留言數，預設值為0',
   `Post_content` varchar(1000) DEFAULT NULL COMMENT '貼文內文'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 資料表的關聯 `post`:
---   `PosterID`
---       `member` -> `MemberID`
---
 
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `postphoto`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `postphoto`;
@@ -203,18 +158,10 @@ CREATE TABLE `postphoto` (
   `Posted_photo` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- 資料表的關聯 `postphoto`:
---   `PostID`
---       `post` -> `PostID`
---
-
 -- --------------------------------------------------------
 
 --
 -- 資料表結構 `sticker`
---
--- 建立時間： 2025-01-15 13:58:35
 --
 
 DROP TABLE IF EXISTS `sticker`;
@@ -223,10 +170,6 @@ CREATE TABLE `sticker` (
   `Sticker_type` varchar(30) DEFAULT NULL COMMENT '關鍵字，ex: 早安、加油、你好、吃飯...',
   `Sticker` mediumblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 資料表的關聯 `sticker`:
---
 
 --
 -- 已傾印資料表的索引
@@ -253,7 +196,15 @@ ALTER TABLE `chatroom`
 --
 ALTER TABLE `collect`
   ADD PRIMARY KEY (`CollectID`),
-  ADD KEY `PostID` (`PostID`);
+  ADD KEY `PostID` (`PostID`),
+  ADD KEY `CollecterID` (`CollecterID`);
+
+--
+-- 資料表索引 `flyway_schema_history`
+--
+ALTER TABLE `flyway_schema_history`
+  ADD PRIMARY KEY (`installed_rank`),
+  ADD KEY `flyway_schema_history_s_idx` (`success`);
 
 --
 -- 資料表索引 `member`
@@ -275,6 +226,14 @@ ALTER TABLE `messageboard`
 --
 ALTER TABLE `messagelog`
   ADD PRIMARY KEY (`MessagelogID`);
+
+--
+-- 資料表索引 `passwordreset`
+--
+ALTER TABLE `passwordreset`
+  ADD PRIMARY KEY (`ResetID`),
+  ADD UNIQUE KEY `token` (`Token`),
+  ADD KEY `member_id` (`MemberID`);
 
 --
 -- 資料表索引 `post`
@@ -337,6 +296,12 @@ ALTER TABLE `messagelog`
   MODIFY `MessagelogID` int(30) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- 使用資料表自動遞增(AUTO_INCREMENT) `passwordreset`
+--
+ALTER TABLE `passwordreset`
+  MODIFY `ResetID` int(30) NOT NULL AUTO_INCREMENT;
+
+--
 -- 使用資料表自動遞增(AUTO_INCREMENT) `post`
 --
 ALTER TABLE `post`
@@ -376,7 +341,8 @@ ALTER TABLE `chatroom`
 -- 資料表的限制式 `collect`
 --
 ALTER TABLE `collect`
-  ADD CONSTRAINT `collect_ibfk_2` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `collect_ibfk_2` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `collect_ibfk_3` FOREIGN KEY (`CollecterID`) REFERENCES `member` (`MemberID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- 資料表的限制式 `messageboard`
@@ -384,6 +350,12 @@ ALTER TABLE `collect`
 ALTER TABLE `messageboard`
   ADD CONSTRAINT `messageboard_ibfk_1` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `messageboard_ibfk_4` FOREIGN KEY (`MessagelogID`) REFERENCES `messagelog` (`MessagelogID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- 資料表的限制式 `passwordreset`
+--
+ALTER TABLE `passwordreset`
+  ADD CONSTRAINT `passwordreset_ibfk_1` FOREIGN KEY (`MemberID`) REFERENCES `member` (`MemberID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- 資料表的限制式 `post`
@@ -397,7 +369,3 @@ ALTER TABLE `post`
 ALTER TABLE `postphoto`
   ADD CONSTRAINT `postphoto_ibfk_1` FOREIGN KEY (`PostID`) REFERENCES `post` (`PostID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -32,6 +32,8 @@ public class Chatroom {
 	@Column(name = "Member_b")
 	private Integer memberb;
 	
+	private String status;
+	
 	// 建立membera、memberb的大小先後順序
 	@PrePersist	 // 在實體被首次保存到資料庫之前自動執行
     @PreUpdate // 在實體被更新到資料庫之前自動執行
@@ -68,26 +70,32 @@ public class Chatroom {
 	public void setMemberb(Integer memberb) {
 		this.memberb = memberb;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 	//---------------------------------------------------------------------
-	// 1對多，Chatlog
-	@OneToMany(mappedBy = "chatroom",cascade = CascadeType.REMOVE)
-	private List<Chatlog> chatlog;
-	public List<Chatlog> getChatlog() {
-		return chatlog;
-	}
-	public void setChatlog(List<Chatlog> chatlog) {
-		this.chatlog = chatlog;
-	}
-	
-	// 多對多，Member
-	@ManyToMany(mappedBy = "chatroom")
-    private Set<Member> member = new HashSet<>();
-	public Set<Member> getMember() {
-		return member;
-	}
-	public void setMember(Set<Member> member) {
-		this.member = member;
-	}
-	
+//	// 1對多，Chatlog
+//	@OneToMany(mappedBy = "chatroom",cascade = CascadeType.REMOVE)
+//	private List<Chatlog> chatlog;
+//	public List<Chatlog> getChatlog() {
+//		return chatlog;
+//	}
+//	public void setChatlog(List<Chatlog> chatlog) {
+//		this.chatlog = chatlog;
+//	}
+//	
+//	// 多對多，Member
+//	@ManyToMany(mappedBy = "chatroom")
+//    private Set<Member> member = new HashSet<>();
+//	public Set<Member> getMember() {
+//		return member;
+//	}
+//	public void setMember(Set<Member> member) {
+//		this.member = member;
+//	}
+//	
 }

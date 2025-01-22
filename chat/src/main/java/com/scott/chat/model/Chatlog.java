@@ -24,6 +24,10 @@ public class Chatlog {
 	@Column(name = "ChatlogID")
 	private Integer chatlogid;
 	
+	//以下兩個變數因為沒有關聯而重新建立
+//	private Integer chatroomid;
+	private Integer senderid;
+	
 	@Column(name = "Input_time" ,columnDefinition = "TIMESTAMP")
 	private String inputtime;
 	@Column(name = "Room_message" ,columnDefinition = "VARCHAR(1000)")
@@ -43,6 +47,18 @@ public class Chatlog {
 	}
 	public void setChatlogid(Integer chatlogid) {
 		this.chatlogid = chatlogid;
+	}
+//	public Integer getChatroomid() {
+//		return chatroomid;
+//	}
+//	public void setChatroomid(Integer chatroomid) {
+//		this.chatroomid = chatroomid;
+//	}
+	public Integer getSenderid() {
+		return senderid;
+	}
+	public void setSenderid(Integer senderid) {
+		this.senderid = senderid;
 	}
 	public String getInputtime() {
 		return inputtime;
@@ -83,19 +99,19 @@ public class Chatlog {
 	}
 	
 	//---------------------------------------------------------------------
-	// 多對1，Member
-	@ManyToOne
-	@JoinColumn(
-			name = "senderid",
-			columnDefinition = "INT(30) UNSIGNED")
-	private Member member;
-	public Member getMember() {
-		return member;
-	}
-	public void setMember(Member member) {
-		this.member = member;
-	}
-	
+//	// 多對1，Member
+//	@ManyToOne
+//	@JoinColumn(
+//			name = "senderid",
+//			columnDefinition = "INT(30) UNSIGNED")
+//	private Member member;
+//	public Member getMember() {
+//		return member;
+//	}
+//	public void setMember(Member member) {
+//		this.member = member;
+//	}
+//	
 	// 多對1，Chatroom
 	@ManyToOne
 	@JoinColumn(
@@ -108,24 +124,24 @@ public class Chatlog {
 	public void setChatroom(Chatroom chatroom) {
 		this.chatroom = chatroom;
 	}
-	
-	// 多對多，Sticker
-	@ManyToMany
-	@JoinTable(
-		    name = "chatlog_sticker",
-		    joinColumns = @JoinColumn(
-		    		name = "ChatlogID",
-		    		columnDefinition = "INT(30) UNSIGNED"),
-		    inverseJoinColumns = @JoinColumn(
-		    		name = "StickerID",
-		    		columnDefinition = "INT(30) UNSIGNED")
-			)
-    private List<Sticker> sticker = new ArrayList<>();
-	public List<Sticker> getSticker() {
-		return sticker;
-	}
-	public void setSticker(List<Sticker> sticker) {
-		this.sticker = sticker;
-	}
+//	
+//	// 多對多，Sticker
+//	@ManyToMany
+//	@JoinTable(
+//		    name = "chatlog_sticker",
+//		    joinColumns = @JoinColumn(
+//		    		name = "ChatlogID",
+//		    		columnDefinition = "INT(30) UNSIGNED"),
+//		    inverseJoinColumns = @JoinColumn(
+//		    		name = "StickerID",
+//		    		columnDefinition = "INT(30) UNSIGNED")
+//			)
+//    private List<Sticker> sticker = new ArrayList<>();
+//	public List<Sticker> getSticker() {
+//		return sticker;
+//	}
+//	public void setSticker(List<Sticker> sticker) {
+//		this.sticker = sticker;
+//	}
 
 }

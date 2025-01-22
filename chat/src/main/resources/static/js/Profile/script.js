@@ -6,13 +6,7 @@ function toggleName() {
 }
 
 function togglePerson() {
-   var blurPerson = document.getElementById('blurPerson');
-   blurPerson.classList.toggle('active');
-   var popupPerson = document.getElementById('popupPerson');
-   popupPerson.classList.toggle('active');
-
-   // 加入跳轉功能
-   window.location.href = "http://127.0.0.1:5501/8_Setting/Setting.html"; // 將此替換為目標網址
+    window.location.href = "/settings";  // 使用控制器路徑進行跳轉
 }
 
 function toggleSave() {

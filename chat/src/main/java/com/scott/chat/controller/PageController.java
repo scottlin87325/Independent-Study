@@ -9,7 +9,7 @@ public class PageController {
 	/**
      * 首頁跳轉
      */
-    @GetMapping({"/", "/home"})
+    @GetMapping("/home")
     public String showHomePage() {
         return "Home";
     }
@@ -30,6 +30,13 @@ public class PageController {
         return "profile";
     }
     
+    /**
+     * 處理設定頁面的跳轉
+     */
+    @GetMapping("/settings")
+    public String showSettingsPage() {
+        return "/setting";  // 返回設定頁面
+    }
     
     /**
      * 登出功能

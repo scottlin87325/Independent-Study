@@ -12,11 +12,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+    <script src="/00_CSS/popper.min.js"></script>
 
-    <link rel="stylesheet" href="/css/Profile/style topline.css">
-    <link rel="stylesheet" href="/css/Profile/style popup.css">
-    <link rel="stylesheet" href="/css/Profile/style nav.css">
-    <link rel="stylesheet" href="/css/Profile/style.css">
+    <link rel="stylesheet" href="/css/Setting/style nav.css">
+    <link rel="stylesheet" href="/css/Setting/style.css">
     <title>Profile</title>
 </head>
 
@@ -24,10 +23,11 @@
 
     <section>
         <!-- 左邊列 -->
+
         <div class="left">
             <div class="sidebar">
                 <div class="menu-item">
-                    <a href="../1_Home/Home.html">
+                    <a href="/home">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                             fill="#FFFFFF">
                             <path
@@ -37,7 +37,7 @@
                         首頁
                     </a>
                 </div>
-                
+
                 <div class="menu-item">
                     <a href="/search">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -106,160 +106,50 @@
             <div class="submenu" id="submenu2">
                 <h2>設定</h2>
             </div>
-
-
         </div>
-        <!-- ------------------ -->
 
-
-
+<!-- --------------------------------------------------------- -->
         <div class="left-block"></div>
+        <div class="left-block-2"></div>
         <div class="middle">
             <div class="middle-top">
-                <!-- 大頭貼 -->
-                <div class="middle-top-left">
+                <div class="title">編輯個人檔案</div>
+            </div>
+            <div class="middle-pic">
+                <div class="pic">
                     <div class="profile-pic">
                         <input type="file" accept="image/jpeg, image/png, image/gif"
                             onchange="uploadProfilePicture(event)">
                     </div>
-                </div>
-                <!-- ---------- --------->
-
-                <div class="middle-top-right">
-                    <div class="right-1">
-                        <button class="member" id="blurName" onclick="toggleName()">帳號名稱</button>
-                        <button class="change btn btn-secondary" onclick="togglePerson()">編輯個人資料</button>
-                        <button class="check btn btn-secondary" id="blurSave" onclick="toggleSave()">查看收藏</button>
-                    </div>
-                    <div class="right-2">
-                        <button class="postview" id="blurPost" onclick="togglePost()">貼文數</button>
-                        <button class="fans" id="blurFans" onclick="toggleFans()">粉絲數</button>
-                        <button class="followNumber" id="blurFollow" onclick="toggleFollow()">追蹤數</button>
-                    </div>
-
-                    <div class="right-3">
-                        <div class="about">自我介紹</div>
-                    </div>
+                    <div class="nickName">暱稱</div>
+                    <div class="account">帳號</div>
+                    <button class="btn btn-primary">變更相片</button>
                 </div>
             </div>
-
-
-
-            <!-- 中間區塊 -->
-            <div class="middle-mid"></div>
-            <!-- ----------------------->
-
-
-
-            <!-- 中間網頁轉換鍵 -->
-            <div class="middle-switch">
-                <div class="switch-1">
-                    <a href="#home" class="switch">貼文</a>
-                </div>
-                <div class="switch-2">
-                    <a href="#Services" class="switch">我的珍藏</a>
-                </div>
-                <div class="switch-3">
-                    <a href="#Contact" class="switch">已標註</a>
-                </div>
+            <div class="middle-about">
+                <div class="titleAbout">個人簡介</div>
+                <textarea class="about"></textarea>
             </div>
-            <!------------------------->
-
-
-
-            <div class="middle-bottom"></div>
+            <div class="middle-type">
+                <div class="titleType">性別</div>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>請選擇你的性別</option>
+                    <option value="1">男性</option>
+                    <option value="2">女性</option>
+                </select>
+            </div>
+            <div class="middle-sumbit">
+                <button class="btn btn-primary">提交</button>
+            </div>
         </div>
         <div class="right"></div>
-        <div class="right-block"></div>
-
         <!-- --------------------------------------------------------------------------- -->
-        <!-- 彈出框 -->
 
-        <!-- 帳號名稱 -->
-        <div id="popupName">
-            <h2>Name</h2>
-            <p>Come In!!</p>
-
-            <div class="button-move">
-                <button class="close" onclick="toggleName()">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#FFFFFF">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-       
-
-        <!-- 查看收藏 -->
-        <div id="popupSave">
-            <h2>Hello, Save</h2>
-            <p>Come In!!</p>
-
-            <div class="button-move">
-                <button class="close" onclick="toggleSave()">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#FFFFFF">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!--貼文數-->
-        <div id="popupPost">
-            <h2>Hello, Post</h2>
-            <p>Come In!!</p>
-
-            <div class="button-move">
-                <button class="close" onclick="togglePost()">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#FFFFFF">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!--粉絲數-->
-        <div id="popupFans">
-            <h2>Hello, Fans</h2>
-            <p>Come In!!</p>
-
-            <div class="button-move">
-                <button class="close" onclick="toggleFans()">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#FFFFFF">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <!--追蹤數-->
-        <div id="popupFollow">
-            <h2>Hello, Follow</h2>
-            <p>Come In!!</p>
-
-            <button class="close" onclick="toggleFollow()">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                    fill="#FFFFFF">
-                    <path
-                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                </svg>
-            </button>
-        </div>
 
 
     </section>
 
-    <script src="/js/Profile/script.js"></script>
-    <script src="/js/Profile/script_nav.js"></script>
+    <script src="/js/Setting/script_nav.js"></script>
 </body>
 
 </html>

@@ -57,6 +57,10 @@ public class Chatlog {
     private Integer senderid;  // 用於接收前端資料
     
     public Integer getSenderid() {
+		// 如果 senderid 為 null，則從 member 關聯中獲取
+		if (senderid == null && member != null) {
+			return member.getMemberid();
+		}
         return senderid;
     }
     

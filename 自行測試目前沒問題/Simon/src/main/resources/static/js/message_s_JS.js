@@ -70,7 +70,9 @@ function userRespond(userName) {
 		if(respondid==='.divRight'){
         	$(`${respondid}`).append(`
 			<article id=${rid} iddata=${rid} class=${drs}>
-				<div class="memberphoto">頭像</div>
+				<div class="memberphoto">
+					<img class="imgSize" src="data:image/png;base64,${memberphotobase64}">
+				</div>
 			    <section class="username">${userName}</section>
 			    <section class="memberrespond">${a}</section>
 			    <div class="love">♡</div>
@@ -81,7 +83,9 @@ function userRespond(userName) {
 			}else{
 				$(`${respondid}`).after(`
 			    <article iddata="${rid}" class=${drs}>
-			    	<div class="memberphoto">頭像</div>
+			    	<div class="memberphoto">
+						<img class="imgSize" src="data:image/png;base64,${memberphotobase64}">
+					</div>
 			        <section class="username">${userName}</section>
 			        <section class="memberrespond">${a}</section>
 			        <div class="love">♡</div>
@@ -101,7 +105,7 @@ function mTag(mr) {
     }
     for (let [keyword, url] of Object.entries(links)) {
         let linkHTML = `<a href="${url}">${keyword}</a>`;
-        let regex = new RegExp(`${keyword}`, 'g');  // 使用正則表達式來匹配整詞
+        let regex = new RegExp(`${keyword}`, 'g');
         mr = mr.replace(regex, linkHTML);
     }
     return mr;

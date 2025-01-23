@@ -32,7 +32,7 @@ public class RegisterController {
 			System.out.println(result.getAllErrors().toString());
 			return "register";
 		}
-		
+		System.out.println(member);
 		memberService.addMember(member);
 		
 		return "login";

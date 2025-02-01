@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +23,7 @@ import jakarta.persistence.Transient;
 import jakarta.persistence.JoinColumn;
 
 @Entity
+@JsonIgnoreProperties({"chatroom", "chatlog", "collect", "post"})
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +57,6 @@ public class Member {
 	private String introduce;
 	@Column(name = "Post_count")
 	private Integer postcount;
-
 	
 	//---------------------------------------------------------------------
 	public Integer getMemberid() {
@@ -147,64 +149,64 @@ public class Member {
 	public void setPostcount(Integer postcount) {
 		this.postcount = postcount;
 	}
-
+	
 	//---------------------------------------------------------------------
-//	// 1對多，Post
-//	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
-//	private List<Post> post;
-//	public List<Post> getPost() {
-//		return post;
-//	}
-//	public void setPost(List<Post> post) {
-//		this.post = post;
-//	}
-//	
-//	// 1對多，Chatlog
-//	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
-//	private List<Chatlog> chatlog;
-//	public List<Chatlog> getChatlog() {
-//		return chatlog;
-//	}
-//	public void setChatlog(List<Chatlog> chatlog) {
-//		this.chatlog = chatlog;
-//	}
-//	
-//	// 多對多，Collect
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(
-//		    name = "member_collect",
-//		    joinColumns = @JoinColumn(
-//		    		name = "MemberID",
-//		    		columnDefinition = "INT(30) UNSIGNED"),
-//		    inverseJoinColumns = @JoinColumn(
-//		    		name = "CollectID",
-//		    		columnDefinition = "INT(30) UNSIGNED")
-//			)
-//    private Set<Collect> collect = new HashSet<>();
-//	public Set<Collect> getCollect() {
-//		return collect;
-//	}
-//	public void setCollect(Set<Collect> collect) {
-//		this.collect = collect;
-//	}
-//
-//	// 多對多，Chatroom
-//	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
-//	@JoinTable(
-//		    name = "member_chatroom",
-//		    joinColumns = @JoinColumn(
-//		    		name = "MemberID",
-//		    		columnDefinition = "INT(30) UNSIGNED"),
-//		    inverseJoinColumns = @JoinColumn(
-//		    		name = "ChatroomID",
-//		    		columnDefinition = "INT(30) UNSIGNED")
-//			)
-//    private Set<Chatroom> chatroom = new HashSet<>();
-//	public Set<Chatroom> getChatroom() {
-//		return chatroom;
-//	}
-//	public void setChatroom(Set<Chatroom> chatroom) {
-//		this.chatroom = chatroom;
-//	}
+	// 1對多，Post
+	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
+	private List<Post> post;
+	public List<Post> getPost() {
+		return post;
+	}
+	public void setPost(List<Post> post) {
+		this.post = post;
+	}
+	
+	// 1對多，Chatlog
+	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+	private List<Chatlog> chatlog;
+	public List<Chatlog> getChatlog() {
+		return chatlog;
+	}
+	public void setChatlog(List<Chatlog> chatlog) {
+		this.chatlog = chatlog;
+	}
+	
+	// 多對多，Collect
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		    name = "member_collect",
+		    joinColumns = @JoinColumn(
+		    		name = "MemberID",
+		    		columnDefinition = "INT(30) UNSIGNED"),
+		    inverseJoinColumns = @JoinColumn(
+		    		name = "CollectID",
+		    		columnDefinition = "INT(30) UNSIGNED")
+			)
+   private Set<Collect> collect = new HashSet<>();
+	public Set<Collect> getCollect() {
+		return collect;
+	}
+	public void setCollect(Set<Collect> collect) {
+		this.collect = collect;
+	}
+
+	// 多對多，Chatroom
+	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+	@JoinTable(
+		    name = "member_chatroom",
+		    joinColumns = @JoinColumn(
+		    		name = "MemberID",
+		    		columnDefinition = "INT(30) UNSIGNED"),
+		    inverseJoinColumns = @JoinColumn(
+		    		name = "ChatroomID",
+		    		columnDefinition = "INT(30) UNSIGNED")
+			)
+   private Set<Chatroom> chatroom = new HashSet<>();
+	public Set<Chatroom> getChatroom() {
+		return chatroom;
+	}
+	public void setChatroom(Set<Chatroom> chatroom) {
+		this.chatroom = chatroom;
+	}
 
 }

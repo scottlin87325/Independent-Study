@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.scott.chat.model.PasswordResetRequest;
+import com.scott.chat.dto.PasswordResetRequest;
 import com.scott.chat.model.PasswordReset;
 import com.scott.chat.service.TokenService;
 

@@ -21,7 +21,7 @@
         /* 背景 */
         body {
              /* 背景色 */
-            background-image: linear-gradient(to right, #ff8867 0%, #fae994 100%);
+            background: black;
            
             display: flex;
             justify-content: center; 
@@ -130,6 +130,7 @@
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            cursor: pointer;
         }
         
         .back-button:hover {

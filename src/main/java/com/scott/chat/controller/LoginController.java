@@ -122,4 +122,11 @@ public class LoginController {
 	    return "chat"; 
 	}
 	
+	
+	@GetMapping("/Friend Request Page")
+	public String friendRequestPage() {
+	    return "Friend Request Page"; 
+	}
+	
+	
 }

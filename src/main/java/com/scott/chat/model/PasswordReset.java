@@ -1,16 +1,13 @@
 package com.scott.chat.model;
 
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "passwordreset")
 public class PasswordReset {
-
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ResetID")
     private Integer resetid;
@@ -34,12 +31,6 @@ public class PasswordReset {
 	}
 	public void setToken(String token) {
         this.token = token;
-    }
-    public Member getMember() {
-        return member;
-    }
-    public void setMember(Member member) {
-        this.member = member;
     }
     public Date getExpiryDate() {
         return expiryDate;
@@ -72,8 +63,17 @@ public class PasswordReset {
     }
     
 	//---------------------------------------------------------------------
+    // 多對1，Member
     @ManyToOne
-    @JoinColumn(name = "MemberID", nullable = false)
+    @JoinColumn(
+    		name = "MemberID", 
+    		nullable = false)
     private Member member;
-
+    public Member getMember() {
+        return member;
+    }
+    public void setMember(Member member) {
+        this.member = member;
+    }
+    
 }

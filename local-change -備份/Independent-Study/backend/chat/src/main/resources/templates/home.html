@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Instagram Style Post</title>
+   <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css}" rel="stylesheet">
+   <link th:href="@{/css/yurong/style.css}" rel="stylesheet">
+</head>
+
+<body>
+   <!-- 側邊選單 -->
+   <nav class="side-menu">
+       <div class="logo">
+           <h1>Omigram</h1>
+       </div>
+       <ul class="menu-items">
+           <li>
+               <a href="#" class="menu-item active" data-page="home">
+                   <i class="fas fa-home"></i>
+                   <span>首頁</span>
+               </a>
+           </li>
+           <li>
+               <a href="#" class="menu-item" data-page="search">
+                   <i class="fas fa-search"></i>
+                   <span>搜尋</span>
+               </a>
+           </li>
+           <li>
+               <a href="#" class="menu-item" data-page="messages">
+                   <i class="far fa-paper-plane"></i>
+                   <span>訊息</span>
+               </a>
+           </li>
+           <li>
+               <a href="#" class="menu-item" data-page="notifications">
+                   <i class="far fa-heart"></i>
+                   <span>通知</span>
+               </a>
+           </li>
+           <li>
+               <a href="#" id="createPostBtn" class="menu-item">
+                   <i class="fas fa-plus-square"></i>
+                   <span>建立</span>
+               </a>
+           </li>
+           <li>
+               <a href="#" class="menu-item" data-page="profile">
+                   <img th:src="@{https://via.placeholder.com/32}" alt="個人檔案" class="profile-img">
+                   <span>個人檔案</span>
+               </a>
+           </li>
+       </ul>
+       <div class="menu-more">
+           <a th:href="@{/logout}" class="menu-item">
+               <i class="fas fa-sign-out-alt"></i>
+               <span>登出</span>
+           </a>
+       </div>
+   </nav>
+
+   <!-- 主要內容區域 -->
+   <main class="main-content">
+       <!-- 建立貼文對話框 -->
+       <div class="modal" id="createPostModal">
+           <div class="modal-content">
+               <!-- 頂部導航 -->
+               <div class="modal-header">
+                   <button class="cancel-btn">取消</button>
+                   <h2>新貼文</h2>
+                   <button class="share-btn" disabled>分享</button>
+               </div>
+
+               <!-- 圖片上傳區域 -->
+               <div class="upload-container" id="uploadContainer">
+                   <div class="upload-area" id="uploadArea">
+                       <i class="fas fa-images"></i>
+                       <h3>拖放照片和影片到這裡</h3>
+                       <label class="upload-btn">
+                           從電腦選擇
+                           <input type="file" multiple accept="image/*" id="fileInput" hidden>
+                       </label>
+                   </div>
+
+                   <!-- 圖片預覽輪播 -->
+                   <div class="carousel-container" id="carouselContainer" style="display: none;">
+                       <div class="carousel-wrapper">
+                           <div class="carousel" id="carousel"></div>
+                           <button class="carousel-btn prev" id="prevBtn">
+                               <i class="fas fa-chevron-left"></i>
+                           </button>
+                           <button class="carousel-btn next" id="nextBtn">
+                               <i class="fas fa-chevron-right"></i>
+                           </button>
+                       </div>
+                       <div class="carousel-indicators" id="indicators"></div>
+                   </div>
+               </div>
+
+               <!-- 文字輸入區域 -->
+               <div class="text-container">
+                   <textarea placeholder="寫下貼文內容..." id="postText"></textarea>
+               </div>
+           </div>
+       </div>
+
+       <!-- 首頁內容 -->
+       <div class="page-content active" id="home-content">
+           <div class="post-container" id="postContainer">
+               <!-- 貼文會在這裡動態生成 -->
+           </div>
+       </div>
+
+       <!-- 搜尋頁面 -->
+       <div class="page-content" id="search-content">
+           <!-- TODO: 整合搜尋功能 -->
+           <div class="search-container">
+               <input type="text" placeholder="搜尋..." class="search-input">
+               
+               <h1>995595</h1>
+               <div class="search-results">
+                   <!-- 搜尋結果會在這裡顯示 -->
+               </div>
+           </div>
+       </div>
+
+       <!-- 訊息頁面 -->
+       <div class="page-content" id="messages-content">
+           <h1>995595</h1>
+           <!-- TODO: 整合聊天室功能 -->
+           <div class="chat-container">
+               <div class="chat-list">
+                   <!-- 聊天列表會在這裡顯示 -->
+               </div>
+               <div class="chat-content">
+                   <!-- 聊天內容會在這裡顯示 -->
+               </div>
+           </div>
+       </div>
+
+       <!-- 通知頁面 -->
+       <div class="page-content" id="notifications-content">
+           <div class="notifications-container">
+               <!-- 通知內容會在這裡顯示 -->
+           </div>
+       </div>
+
+       <!-- 個人主頁 -->
+       <div class="page-content" id="profile-content">
+           <div class="profile-container">
+               <div class="profile-header">
+                   <img th:src="@{https://via.placeholder.com/150}" alt="個人頭像" class="profile-avatar">
+                   <div class="profile-info">
+                       <h2 th:text="${member.membername}">用戶名稱</h2>
+                       <div class="profile-stats">
+                           <span>0 貼文</span>
+                           <span>0 追蹤者</span>
+                           <span>0 追蹤中</span>
+                       </div>
+                   </div>
+               </div>
+               <div class="profile-gallery">
+                   <!-- 個人貼文會在這裡顯示 -->
+               </div>
+           </div>
+       </div>
+   </main>
+   
+   <!-- 通知彈出視窗 -->
+   <div class="notifications-modal" id="notificationsModal">
+       <div class="notifications-wrapper">
+           <div class="notifications-header">
+               <h3>通知</h3>
+           </div>
+           <div class="notifications-list">
+               <!-- 通知項目會動態插入這裡 -->
+           </div>
+       </div>
+   </div>
+
+   <script th:src="@{/js/yurong/ui.js}"></script>
+   <script th:src="@{/js/yurong/api.js}"></script>
+<!--檢查用-->
+<script>
+    console.log('頁面已加載');
+    console.log('當前用戶:', document.querySelector('.profile-info h2').textContent);
+</script>
+   
+</body>
+
+</html>

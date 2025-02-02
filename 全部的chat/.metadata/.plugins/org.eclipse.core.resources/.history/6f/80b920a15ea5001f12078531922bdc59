@@ -1,0 +1,23 @@
+package tw.org.iii.test;
+
+public class t62 {
+
+	public static void main(String[] args) {
+		t621 obj = new t621();
+		obj.run();
+		obj.run();
+		System.out.println("Main");
+		obj.start();
+		System.out.println("finish");
+	}
+
+}
+
+
+class t621 extends Thread{
+	public void run() {
+		for(int i=0;i<10;i++) {
+			System.out.println(i);
+		}
+	}
+}

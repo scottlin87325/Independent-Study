@@ -1,0 +1,16 @@
+<meta charset="utf-8">
+<script></script>
+<header th:replace="fragments::header"></header>
+<h2>Register Page</h2>
+<hr>
+
+<form th:action="@{/reg_submit}" th:object="${member}" method="post" enctype="multipart/form-data">
+	Account: <input id="account" th:field="*{account}"><br>
+	Password: <input type="password" id="passwd" th:field="*{passwd}"><br>
+	Real Name: <input id="realname" th:field="*{realname}"><br>
+	Icon: <input type="file" th:field="*{iconFile}"><br>
+	<button type="submit">Register</button>
+</form>
+
+<hr>
+<footer th:replace="fragments::footer"></footer>

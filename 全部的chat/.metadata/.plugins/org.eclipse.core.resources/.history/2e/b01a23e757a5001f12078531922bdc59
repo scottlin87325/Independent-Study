@@ -1,0 +1,36 @@
+package tw.org.iii.test;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.json.JSONArray;
+
+public class t60 {
+
+	public static void main(String[] args) {
+		try {
+			URL url = new URL("https://data.moa.gov.tw/Service/OpenData/ODwsv/ODwsvAgriculturalProduce.aspx");
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(conn.getInputStream()));
+			
+			String line; StringBuffer sb = new StringBuffer();
+			while((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+			reader.close();
+			//System.out.println(sb.toString());
+			parseJSON(sb.toString());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	static void parseJSON(String json) {
+		JSONArray root = new JSONArray(json);
+		System.out.println(root.length());
+	}
+}

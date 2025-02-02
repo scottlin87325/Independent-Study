@@ -1,0 +1,14 @@
+<meta charset="utf-8">
+<script></script>
+<header th:replace="fragments::header"></header>
+<h2>Register Page</h2>
+<hr>
+
+<form th:action="@{/login_submit}" th:object="${member}" method="post">
+	Account: <input id="account" th:field="*{account}"><br>
+	Password: <input type="password" id="passwd" th:field="*{passwd}"><br>
+	<button type="submit">Login</button>
+</form>
+
+<hr>
+<footer th:replace="fragments::footer"></footer>

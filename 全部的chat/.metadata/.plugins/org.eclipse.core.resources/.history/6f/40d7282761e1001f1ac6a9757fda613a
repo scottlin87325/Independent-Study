@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>第五組留言板</title>
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/js/message_s_JS.js"></script>
+    <link rel="stylesheet" href="/css/messageboard.css">
+</head>
+
+<body>
+    <button id="test">測試(console)</button>
+    <input type="file" id="fileinput" style="color: white;">
+    <input type="text" id="mytext" placeholder="輸入你的訊息">
+    <button id="sendText">送出文字</button>
+    <hr>
+        <div class="divLeft" th:each="photo : ${post.postphoto}">
+            <img class="postImg" th:src="'data:image/png;base64,' + ${postphoto.postedphotobase64}">
+        </div>
+        <div class="divRight" th:each="post:${posts}">
+            <article id="p1" iddata="p1" class="post">
+                <div class='memberphoto' id="msg">
+                	<img class="imgSize" th:src="'data:image/png;base64,' + ${post.member.memberphotobase64}">
+                </div>
+                <section class="username" th:text="${post.member.membername}"></section>
+                <section class="membertext" th:text="${post.postcontent}"></section>
+                <div class="love">♡</div>
+                <section class="myTime" id="timeslip" timeSet=""></section>
+                <section class="respond">回復</section>
+            </article>
+        </div>
+
+    <script th:inline="javascript" th:each="post:${posts}">
+        //變數區
+        let calTime;
+        let idName='p1';
+        var className='post';
+        var inputTime = /*[[${post.posttime}]]*/{};
+		
+        $('#timeslip').attr('timeSet', `${inputTime}`);
+        
+        //圖片載入
+        $(document).ready(function () {
+            $('#fileinput').on('change', function (event) {
+                // console.log($('#mypost'));
+                var FI = event.target.files[0]; // 取得使用者選擇的檔案
+                if (FI) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#mypost').attr('src', e.target.result); // 顯示圖片預覽
+                    };
+                    reader.readAsDataURL(FI); // 讀取檔案為 Data URL
+                }
+            });
+        });
+
+        //測試用
+        $('#test').click(function(){
+
+        })
+
+        //送出文字(按鈕)
+        $('#sendText').click(function () {
+            //使用者session
+            pass1(idName);
+            pass2(className);
+            userRespond(/*[[${member.membername}]]*/);
+            idName='p1'
+            className='post'
+        })
+
+        //愛心
+        $('.divRight').on('click','.love',function(){
+                $(this).text($(this).text() === '♡' ? '❤' : '♡'); 
+        }).on('mouseenter', '.love', function() {
+            $(this).css({
+                'color': 'red',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.love', function() {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            })
+        });
+        
+      //繼續閱讀or顯示更少
+        if($('.membertext').height()>108){
+            $('.membertext').height('108');
+            $('.membertext').after(`<section class="more">(繼續閱讀)</section>`);
+        }
+        $('.divRight').on('click', '.more', function () {
+            if($('.membertext').height()>108){
+                $('.membertext').height(108);
+                $(this).text('(繼續閱讀)')
+            }else{
+                $('.membertext').height('');
+                $(this).text('(顯示更少)')
+            }
+        }).on('mouseenter', '.more', function () {
+            $(this).css({
+                'color': 'silver',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.more', function () {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            })
+        });
+
+        //回復
+        $('.divRight').on('mouseenter', '.respond', function () {
+            $(this).css({
+                'color': 'aqua',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.respond', function () {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            });
+        }).on('click', '.respond', function () {
+            $('#mytext').val('');
+            var resN = $(this).parent().find('.username').text();
+            let t = $('#mytext').val();
+            $('#mytext').val(t + '@' + resN + ' ');
+            className = $(this).parent().attr('class');
+            idName = $(this).parent().attr('iddata');
+        });
+        settime();
+       	setInterval(settime, 60000);
+    </script>
+
+
+
+
+
+
+<script>
+    // 臨時資料存放點
+    //♡♥❤
+</script>
+
+</body>
+
+</html>

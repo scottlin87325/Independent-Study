@@ -1,0 +1,5 @@
+package tw.brad.stest1.controller;
+
+public class MemberController {
+
+}

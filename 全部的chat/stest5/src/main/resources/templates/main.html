@@ -1,0 +1,24 @@
+<meta charset="utf-8">
+<script></script>
+<header th:replace="fragments::header"></header>
+<h2>Main Page</h2>
+<div>Welcome, <span th:text="${member.realname}"></span></div>
+<img th:src="'data:image/png;base64,' + ${member.iconBase64}">
+<hr>
+Product List
+<table border="1" width="100%">
+	<tr>
+		<th>Category</th>
+		<th>Name</th>
+		<th>Unite Price</th>
+	</tr>
+	<tr th:each="product:${products}">
+		<td th:text="${product.categories.categoryname}"></td>
+		<td th:text="${product.productname}"></td>
+		<td th:text="${product.unitprice}"></td>
+	</tr>
+</table>
+
+
+<hr>
+<footer th:replace="fragments::footer"></footer>

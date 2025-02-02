@@ -1,0 +1,32 @@
+html{
+    height: 100%;   /* 确保 html 和 body 高度为 100% */
+    margin: 0;      /* 去除默认的 margin */
+    padding: 0;     /* 去除默认的 padding */
+}
+.divLeft{
+	position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+}
+.divRight{
+	position: relative;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50%;
+}
+
+td{
+    color: white;
+}
+
+body {
+    background-color: black;
+    color: white;
+}
+.imgSize{
+	max-width: 35px;
+    max-height: 35px;
+}

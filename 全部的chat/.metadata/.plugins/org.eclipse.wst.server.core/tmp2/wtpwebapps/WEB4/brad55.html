@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script>
+			function search(){
+				$.ajax({
+					url : 'brad56.jsp',
+					method : 'get',
+					data: {
+						'orderid' : $('#orderId').val()
+					},
+					success: function(data){
+						//console.log(data);
+						$('#employee').html(data.Employee);
+						$('#customer').html(data.Customer);
+						
+						$('#table').empty();
+						$(data.details).each(function(i, detail){
+							$('#table').append(
+								'<tr>' +
+								'<td>' + detail.ProductName + '</td>' + 
+								'<td>' + detail.UnitPrice + '</td>' + 
+								'<td>' + detail.Quantity + '</td>' + 
+								'</tr>'
+							);
+						});
+						
+					}
+				});
+			}
+		</script>
+		
+</head>
+<body>
+	<h1>Brad Big Company</h1>
+		<hr />
+		Order ID: <input id='orderId' />
+		<input type="button" onclick="search()" value="Search" />
+		<hr />
+		Employee: <span id='employee'></span><br />
+		Customer: <span id='customer'></span><br />
+		<hr />
+		<table border='1' width='100%' id='table'>
+		</table>
+</body>
+</html>

@@ -1,0 +1,52 @@
+//發文or留言經過時間計算
+function timeSlip(inputTime) {  //inputTime輸入時間要抓資料庫
+    let currentTime = new Date();
+    let y;
+    calTime = Math.round((currentTime - inputTime) / 1000);
+    if (calTime < 60) {
+        // console.log(calTime + '秒');
+        y=calTime + '秒';
+    } else if (calTime < 3600) {
+        let x = Math.ceil(calTime / 60);
+        // console.log(x + '分');
+        y=x + '分'
+    } else if (calTime < 86400) {
+        let x = Math.floor(calTime / 3600);
+        // console.log(x + '小時');
+        y=x + '小時';
+    } else if (calTime < 2592000) {
+        let x = Math.floor(calTime / 86400);
+        // console.log(x + '天');
+        y=x + '天';
+    } else {
+        let x = Math.floor(calTime / 604800);
+        // console.log(x + '週');
+        y=x + '週';
+    }
+    return y;
+}
+
+//用戶留言區塊
+function userRespond(userName) {
+    let a = $('#mytext').val();
+    if (a == "") {
+    } else {
+        let x = new Date("2024-12-13T10:00:00"); //時間要改
+        $('#divRight').append(`
+        <div>
+        <table style="width: 100%;">
+            <tr>
+                <td class="username">${userName}</td>
+                <td> : ${a}</td>
+                <td class="love" style="text-align: right; font-size: 25px;">♡</td>
+            </tr>
+            <tr>
+                <td style="font-size: 14px; width: 10%;">${timeSlip(x)}</td>
+                <td class="respond" style=" text-align: left; font-size: 14px; width: 10%;">回覆</td>
+                <td style="width: 80%"></td>
+            </tr>
+        </table>
+        </div>`);
+    }
+    $('#mytext').val('');
+}

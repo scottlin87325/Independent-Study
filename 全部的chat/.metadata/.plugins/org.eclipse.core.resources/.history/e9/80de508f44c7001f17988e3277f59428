@@ -1,0 +1,15 @@
+<meta charset="utf-8">
+<script></script>
+<h2>登入頁面</h2>
+<hr>
+
+<form th:action="@{/login_submit}" th:object="${member}" method="post">
+	信箱: <input id="email" th:field="*{email}"><br>
+	密碼: <input type="password" id="password" th:field="*{password}"><br>
+	<button type="submit">按我登入</button>
+</form>
+<form th:action="@{/register}">
+	<button type="submit">註冊新帳戶</button>
+</form>
+
+<hr>

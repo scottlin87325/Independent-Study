@@ -1,0 +1,19 @@
+main {
+    display: flex;
+}
+
+main div {
+    flex: 1;
+    color: white;
+}
+
+body {
+    background-color: black;
+}
+
+.imgSize{
+	max-width: 100px;
+    max-height: 100px;
+    width: auto; /* 保持宽高比 */
+    height: auto; /* 保持宽高比 */
+}

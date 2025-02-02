@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>第五組留言板</title>
+    <script src="/js/jquery-3.6.0.js"></script>
+    <script src="/js/message_s_JS.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <button id="test">測試(console)</button>
+    <input type="file" id="fileinput" style="color: white;">
+    <input type="text" id="mytext" placeholder="輸入你的訊息">
+    <button id="sendText">送出文字</button>
+    <hr>
+    <main>
+        <div class="divLeft">
+            <img id="mypost" src="" alt="Image Preview" style="max-width: 98%;">
+        </div>
+        <div class="divRight">
+            <div>
+                <br>
+                <table id="msg" style="width: 100%;">
+                    <tr>
+                        <td>
+                        	<img class="imgSize" th:src="'data:image/png;base64,' + ${member.iconBase64}">
+                        </td>
+                        <td class="username" th:text="${member.membername}"></td>
+                    </tr>
+                    <tr>
+                        <td>貼文文字</td>
+                    </tr>
+                    <tr>
+                        <td class="love" style="width: 5%; font-size: 25px;">♡</td>
+                        <td id="timeslip" style="width: 5%;">時間</td>
+                        <td class="respond" style="width: 5%;">回復</td>
+                        <td style="width: 70%;"></td>
+                    </tr>
+                </table>
+            </div>
+            <hr>
+        </div>
+    </main>
+
+    <script>
+        //變數區
+        let calTime;
+
+        //圖片載入
+        $(document).ready(function () {
+            $('#fileinput').on('change', function (event) {
+                // console.log($('#mypost'));
+                var FI = event.target.files[0]; // 取得使用者選擇的檔案
+                if (FI) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#mypost').attr('src', e.target.result); // 顯示圖片預覽
+                    };
+                    reader.readAsDataURL(FI); // 讀取檔案為 Data URL
+                }
+            });
+        });
+
+        //測試用
+        $('#test').click(function(){
+            let inputTime = new Date("2024-12-13T10:00:00");
+            timeSlip(inputTime);
+        })
+
+        //送出文字(按鈕)
+        $('#sendText').click(function () {
+            //使用者session
+            userRespond('Simon');
+        })
+
+        //愛心
+        $('.divRight').on('click','.love',function(){
+                $(this).text($(this).text() === '♡' ? '❤' : '♡'); 
+        }).on('mouseenter', '.love', function() {
+            $(this).css({
+                'color': 'red',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.love', function() {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            })
+        });
+
+        //回復
+        $('.divRight').on('mouseenter', '.respond', function() {
+            $(this).css({
+                'color': 'aqua',
+                'cursor': 'pointer'
+            });
+        }).on('mouseleave', '.respond', function() {
+            $(this).css({
+                'color': '',
+                'cursor': ''
+            });
+        }).on('click','.respond',function(){
+            $('#mytext').val('');
+            let a = $(this).closest('table').find('.username').text();
+            let t = $('#mytext').val();
+            $('#mytext').val('@'+a+' '+t);
+        });
+    </script>
+
+
+
+
+
+
+<script>
+    // 臨時資料存放點
+    //♡♥❤
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib version="2.0"
+        xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+  <tlib-version>1.0</tlib-version>
+  <short-name>hello</short-name>
+  
+  <tag>
+    <name>hello</name>
+    <tag-class>tw.brad.tags.HelloTag</tag-class>
+    <body-content>scriptless</body-content>	<!-- empty => no body; scriptless => has body -->
+    <attribute>
+       <name>name</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue> <!-- 是否支援 EL -->
+    </attribute>
+  </tag>  
+
+  <tag>
+    <name>hello2</name>
+    <tag-class>tw.brad.tags.HelloTag</tag-class>
+    <body-content>scriptless</body-content>	<!-- empty => no body; scriptless => has body -->
+    <attribute>
+       <name>name</name>
+       <required>true</required>
+       <rtexprvalue>true</rtexprvalue> <!-- 是否支援 EL -->
+    </attribute>
+  </tag>  
+
+  	
+</taglib>

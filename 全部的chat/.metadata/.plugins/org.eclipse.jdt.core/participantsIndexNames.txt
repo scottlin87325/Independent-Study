@@ -1,0 +1,7 @@
+INDEX VERSION 1.134
+C:\Users\user\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1223686530.index
+\WEB4\src\main\java
+C:\Users\user\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\369512603.index
+\WEB4\src\main\java
+C:\Users\yami\eclipse-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\369512603.index
+\WEB4\src\main\java

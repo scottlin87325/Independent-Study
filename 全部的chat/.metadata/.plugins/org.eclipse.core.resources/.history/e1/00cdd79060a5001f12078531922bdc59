@@ -1,0 +1,33 @@
+package tw.org.iii.test;
+
+public class t62 {
+
+	public static void main(String[] args) {
+		t621 obj1 = new t621();
+		t621 obj2 = new t621();
+//		obj1.run();
+//		obj1.run();
+		System.out.println("Main");
+		obj1.start();
+		obj2.start();
+		System.out.println("finish");
+		
+	}
+
+}
+
+
+class t621 extends Thread{
+	private String name;
+	t621(String name){this.name = name;}
+	public void run() {
+		for(int i=0;i<10;i++) {
+			System.out.printf("%s : %d\n", name,i);
+			try {
+				Thread.sleep(100);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+}

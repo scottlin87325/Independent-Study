@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import com.scott.chat.model.Chatlog;
+import com.scott.chat.model.ChatlogDTO;
 import com.scott.chat.model.Chatroom;
 import com.scott.chat.model.ChatroomDTO;
 import com.scott.chat.model.Member;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,23 +46,19 @@ public class ChatController {
     }
 
     @GetMapping("/history/{chatroomId}")
-    public ResponseEntity<List<Chatlog>> getChatHistory(
-            @PathVariable Integer chatroomId) {
-        return ResponseEntity.ok(chatService.getChatHistory(chatroomId));
+    public ResponseEntity<List<ChatlogDTO>> getChatHistory(@PathVariable Integer chatroomId) {
+        List<Chatlog> chatLogs = chatService.getChatHistory(chatroomId);
+        List<ChatlogDTO> chatlogDTOs = chatLogs.stream()
+                .map(ChatlogDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(chatlogDTOs);
     }
 
-    @MessageMapping("/chat/{chatroomId}")
+    @MessageMapping("/chat/{chatroomId}") 
     @SendTo("/topic/messages/{chatroomId}")
-    public Chatlog handleMessage(@DestinationVariable Integer chatroomId, Chatlog message) {
-        log.info("收到WebSocket訊息: chatroomId={}, message={}", chatroomId, message);
-        try {
-            Chatlog savedMessage = chatService.saveMessage(message);
-            log.info("訊息儲存成功: {}", savedMessage);
-            return savedMessage;
-        } catch (Exception e) {
-            log.error("處理訊息時發生錯誤", e);
-            throw e;
-        }
+    public ChatlogDTO handleMessage(@DestinationVariable Integer chatroomId, Chatlog message) {
+        Chatlog savedMessage = chatService.saveMessage(message);
+        return new ChatlogDTO(savedMessage); // 使用 DTO
     }
 
     @GetMapping("/current-user")

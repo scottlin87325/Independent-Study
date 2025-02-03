@@ -24,7 +24,7 @@ import jakarta.persistence.UniqueConstraint;
 	    @UniqueConstraint(columnNames = {"Member_a", "Member_b"})
 	})
 	
-@JsonIgnoreProperties({"member", "chatlog"})
+//@JsonIgnoreProperties({"member", "chatlog"})
 public class Chatroom {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

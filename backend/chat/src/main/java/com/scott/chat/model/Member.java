@@ -23,7 +23,7 @@ import jakarta.persistence.Transient;
 import jakarta.persistence.JoinColumn;
 
 @Entity
-@JsonIgnoreProperties({"chatroom", "chatlog", "collect", "post"})
+//@JsonIgnoreProperties({"chatroom", "chatlog", "collect", "post"})
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

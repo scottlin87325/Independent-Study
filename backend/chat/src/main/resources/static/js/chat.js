@@ -86,7 +86,7 @@ async function displayChatRooms(chatrooms) {
 // 獲取使用者資訊
 async function fetchUserInfo(userId) {
     try {
-        const response = await fetch(`/api/member/${userId}`);
+        const response = await fetch(`/api/member/forchat/${userId}`);
         return await response.json();
     } catch (error) {
         console.error('Error fetching user info:', error);

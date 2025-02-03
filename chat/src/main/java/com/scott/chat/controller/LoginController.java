@@ -1,6 +1,8 @@
 package com.scott.chat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,12 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.scott.chat.model.Member;
 import com.scott.chat.service.MemberService;
 import com.scott.chat.util.BCrypt;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -58,41 +63,38 @@ public class LoginController {
 	}
 	
 	
-	@GetMapping("/loginpage")
-	public String login(Model model) {
-		model.addAttribute("member", new Member());
-		return "loginpage";
-	}
-	
-	
-	@PostMapping("/login_submit")
-	public String loginSubmit(@ModelAttribute Member member, 
-			BindingResult result, Model model, HttpSession session) {
-		
-		
-		  //獲取資料庫中的會員資料
-	    Member existingMember = memberService.findMemberByAccount(member.getEmail());
-	    
-	    // 驗證帳號
-	    if (existingMember == null) {
-	        
-	        model.addAttribute("error", "帳號或密碼錯誤！");
-	        return "loginpage"; // 返回頁面 顯示提示
-	    } 
-	    //驗證密碼
-	    if (!BCrypt.checkpw(member.getPassword(), existingMember.getPassword())) {
-	        
-	        model.addAttribute("error", "帳號或密碼錯誤！");
-	        return "loginpage"; // 返回頁面 顯示提示
-	    }else {
-			session.setAttribute("member", existingMember);//加到session
-		}
+	 @GetMapping("/loginpage")
+	    public String login(Model model, HttpServletRequest request) {
+	        // 檢查用戶是否已經登錄
+	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	        if (authentication != null && authentication.isAuthenticated() 
+	                && !authentication.getPrincipal().equals("anonymousUser")) {
+	            return "redirect:/main"; // 已登錄，重定向到主頁
+	        }
 
-		model.addAttribute("member", existingMember);//加到資料庫
-		
-		return "redirect:/main";
+	        // 檢查是否有錯誤訊息
+	        Object error = request.getAttribute("error");
+	        if (error != null) {
+	            model.addAttribute("error", error);  // 將 error 設置為 model 屬性
+	            System.out.println("Adding error to model: " + error);
+	        }
+
+	        // 如果 model 中還沒有 member 物件，創建一個新的
+	        if (!model.containsAttribute("member")) {
+	            model.addAttribute("member", new Member());
+	        }
+
+	        return "loginpage"; // 繼續展示登錄頁
+	    }
+
+	    @PostMapping("/loginpage")
+	    public String loginpage(@ModelAttribute Member member) {
+	        return "loginpage";
+	    }
 	
-	}
+	
+	
+	
 	
 	@GetMapping("/main")
 	public String mainPage(HttpSession session, HttpServletResponse response) {
@@ -108,11 +110,7 @@ public class LoginController {
 	}
 	
 		//登出
-	 @RequestMapping("/logout")
-	    public String logout(HttpSession session) {
-	        session.invalidate();  
-            return "redirect:/loginpage";
-	    }
+	
 		
 	@GetMapping("/forgotPassword")
 	public String showForgotPasswordPage() {
@@ -123,5 +121,12 @@ public class LoginController {
 	public String showchat() {
 	    return "chat"; 
 	}
+	
+	
+	@GetMapping("/Friend Request Page")
+	public String friendRequestPage() {
+	    return "Friend Request Page"; 
+	}
+	
 	
 }

@@ -52,7 +52,6 @@ public class Member {
 	private String birthday;
 	@Column(columnDefinition = "VARCHAR(1000)")
 	private String introduce;
-	
 	@Column(name = "Post_count")
 	private Integer postcount;
 	
@@ -149,16 +148,16 @@ public class Member {
 	}
 	
 	//---------------------------------------------------------------------
-	// 1對多，Post
-	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
-	private List<Post> post;
-	public List<Post> getPost() {
-		return post;
-	}
-	public void setPost(List<Post> post) {
-		this.post = post;
-	}
-	
+//	// 1對多，Post
+//	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL)
+//	private List<Post> post;
+//	public List<Post> getPost() {
+//		return post;
+//	}
+//	public void setPost(List<Post> post) {
+//		this.post = post;
+//	}
+//	
 	// 1對多，Chatlog
 	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
 	private List<Chatlog> chatlog;
@@ -168,26 +167,26 @@ public class Member {
 	public void setChatlog(List<Chatlog> chatlog) {
 		this.chatlog = chatlog;
 	}
-	
-	// 多對多，Collect
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-		    name = "member_collect",
-		    joinColumns = @JoinColumn(
-		    		name = "MemberID",
-		    		columnDefinition = "INT(30) UNSIGNED"),
-		    inverseJoinColumns = @JoinColumn(
-		    		name = "CollectID",
-		    		columnDefinition = "INT(30) UNSIGNED")
-			)
-    private Set<Collect> collect = new HashSet<>();
-	public Set<Collect> getCollect() {
-		return collect;
-	}
-	public void setCollect(Set<Collect> collect) {
-		this.collect = collect;
-	}
-
+//	
+//	// 多對多，Collect
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(
+//		    name = "member_collect",
+//		    joinColumns = @JoinColumn(
+//		    		name = "MemberID",
+//		    		columnDefinition = "INT(30) UNSIGNED"),
+//		    inverseJoinColumns = @JoinColumn(
+//		    		name = "CollectID",
+//		    		columnDefinition = "INT(30) UNSIGNED")
+//			)
+//    private Set<Collect> collect = new HashSet<>();
+//	public Set<Collect> getCollect() {
+//		return collect;
+//	}
+//	public void setCollect(Set<Collect> collect) {
+//		this.collect = collect;
+//	}
+//
 	// 多對多，Chatroom
 	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
 	@JoinTable(

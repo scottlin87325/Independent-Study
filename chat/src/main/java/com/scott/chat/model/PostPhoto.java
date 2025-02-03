@@ -12,14 +12,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
+@Table(name = "postphoto")
 public class PostPhoto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "Post_photoID")
 	private Integer postphotoid;
+	
+	//以下變數因為沒有關聯而重新建立
+	private Integer postid;
 	
 	// 各個貼文圖片的傳輸三階段
 	@Column(name = "Posted_photo" ,columnDefinition = "MEDIUMBLOB")
@@ -35,6 +40,12 @@ public class PostPhoto {
 	}
 	public void setPostphotoid(Integer postphotoid) {
 		this.postphotoid = postphotoid;
+	}
+	public Integer getPostid() {
+		return postid;
+	}
+	public void setPostid(Integer postid) {
+		this.postid = postid;
 	}
 	
 	//---------------------------------------------------------------------------
@@ -66,17 +77,17 @@ public class PostPhoto {
 	}
 	
 	//---------------------------------------------------------------------------
-	// 多對1，Post
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(
-			name = "postid",
-			columnDefinition = "INT(30) UNSIGNED")
-	private Post post;
-	public Post getPost() {
-		return post;
-	}
-	public void setPost(Post post) {
-		this.post = post;
-	}
+//	// 多對1，Post
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(
+//			name = "postid",
+//			columnDefinition = "INT(30) UNSIGNED")
+//	private Post post;
+//	public Post getPost() {
+//		return post;
+//	}
+//	public void setPost(Post post) {
+//		this.post = post;
+//	}
 	
 }

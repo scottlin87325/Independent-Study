@@ -8,7 +8,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import com.scott.chat.model.Chatlog;
+import com.scott.chat.model.ChatlogDTO;
 import com.scott.chat.model.Chatroom;
+import com.scott.chat.model.ChatroomDTO;
 import com.scott.chat.model.Member;
 import com.scott.chat.service.ChatService;
 
@@ -17,10 +19,16 @@ import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/api/chat")
 public class ChatController {
+
+    private static final Logger log = LoggerFactory.getLogger(ChatController.class);
 
     @Autowired
     private ChatService chatService;
@@ -33,21 +41,24 @@ public class ChatController {
     }
 
     @GetMapping("/rooms/{userId}")
-    public ResponseEntity<List<Chatroom>> getUserChatrooms(
-            @PathVariable Integer userId) {
+    public ResponseEntity<List<ChatroomDTO>> getUserChatrooms(@PathVariable Integer userId) {
         return ResponseEntity.ok(chatService.getUserChatrooms(userId));
     }
 
     @GetMapping("/history/{chatroomId}")
-    public ResponseEntity<List<Chatlog>> getChatHistory(
-            @PathVariable Integer chatroomId) {
-        return ResponseEntity.ok(chatService.getChatHistory(chatroomId));
+    public ResponseEntity<List<ChatlogDTO>> getChatHistory(@PathVariable Integer chatroomId) {
+        List<Chatlog> chatLogs = chatService.getChatHistory(chatroomId);
+        List<ChatlogDTO> chatlogDTOs = chatLogs.stream()
+                .map(ChatlogDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(chatlogDTOs);
     }
 
-    @MessageMapping("/chat/{chatroomId}")
+    @MessageMapping("/chat/{chatroomId}") 
     @SendTo("/topic/messages/{chatroomId}")
-    public Chatlog handleMessage(@DestinationVariable Integer chatroomId, Chatlog message) {
-        return chatService.saveMessage(message);
+    public ChatlogDTO handleMessage(@DestinationVariable Integer chatroomId, Chatlog message) {
+        Chatlog savedMessage = chatService.saveMessage(message);
+        return new ChatlogDTO(savedMessage); // 使用 DTO
     }
 
     @GetMapping("/current-user")

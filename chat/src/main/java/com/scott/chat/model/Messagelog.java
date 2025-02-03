@@ -87,33 +87,33 @@ public class Messagelog {
 	}
 	
 	//---------------------------------------------------------------------
-	// 1對多，MessageBoard
-	@OneToMany(mappedBy = "messagelog")
-	private List<MessageBoard> messageBoard;
-	public List<MessageBoard> getMessageBoard() {
-		return messageBoard;
-	}
-	public void setMessageBoard(List<MessageBoard> messageBoard) {
-		this.messageBoard = messageBoard;
-	}
-	
-	// 多對多，Sticker
-	@ManyToMany
-	@JoinTable(
-		    name = "messagelog_sticker",
-		    joinColumns = @JoinColumn(
-		    		name = "MessageID",
-		    		columnDefinition = "INT(30) UNSIGNED"),
-		    inverseJoinColumns = @JoinColumn(
-		    		name = "StickerID",
-		    		columnDefinition = "INT(30) UNSIGNED")
-			)
-    private List<Sticker> sticker = new ArrayList<>();
-	public List<Sticker> getSticker() {
-		return sticker;
-	}
-	public void setSticker(List<Sticker> sticker) {
-		this.sticker = sticker;
-	}
-	
+//	// 1對多，MessageBoard
+//	@OneToMany(mappedBy = "messagelog")
+//	private List<MessageBoard> messageBoard;
+//	public List<MessageBoard> getMessageBoard() {
+//		return messageBoard;
+//	}
+//	public void setMessageBoard(List<MessageBoard> messageBoard) {
+//		this.messageBoard = messageBoard;
+//	}
+//	
+//	// 多對多，Sticker
+//	@ManyToMany
+//	@JoinTable(
+//		    name = "messagelog_sticker",
+//		    joinColumns = @JoinColumn(
+//		    		name = "MessageID",
+//		    		columnDefinition = "INT(30) UNSIGNED"),
+//		    inverseJoinColumns = @JoinColumn(
+//		    		name = "StickerID",
+//		    		columnDefinition = "INT(30) UNSIGNED")
+//			)
+//    private List<Sticker> sticker = new ArrayList<>();
+//	public List<Sticker> getSticker() {
+//		return sticker;
+//	}
+//	public void setSticker(List<Sticker> sticker) {
+//		this.sticker = sticker;
+//	}
+//	
 }

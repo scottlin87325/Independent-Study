@@ -18,6 +18,7 @@ public class Collect {
 	@Column(name = "CollectID")
 	private Integer collectid;
 	
+	private Integer collecterid;
 	private Integer postid;
 	
 	@Column(name = "Collected_count")
@@ -42,26 +43,32 @@ public class Collect {
 	public void setCollectedcount(Integer collectedcount) {
 		this.collectedcount = collectedcount;
 	}
+	public Integer getCollecterid() {
+		return collecterid;
+	}
+	public void setCollecterid(Integer collecterid) {
+		this.collecterid = collecterid;
+	}
 	
 	//---------------------------------------------------------------------
-	// 多對多，Member
-	@ManyToMany(mappedBy = "collect")
-    private Set<Member> member = new HashSet<>();
-	public Set<Member> getMember() {
-		return member;
-	}
-	public void setMember(Set<Member> member) {
-		this.member = member;
-	}
-	
-	// 多對多，Post
-	@ManyToMany(mappedBy = "collect" ,cascade = CascadeType.ALL)
-	private Set<Post> post = new HashSet<>();
-	public Set<Post> getPost() {
-		return post;
-	}
-	public void setPost(Set<Post> post) {
-		this.post = post;
-	}
-	
+//	// 多對多，Member
+//	@ManyToMany(mappedBy = "collect")
+//    private Set<Member> member = new HashSet<>();
+//	public Set<Member> getMember() {
+//		return member;
+//	}
+//	public void setMember(Set<Member> member) {
+//		this.member = member;
+//	}
+//	
+//	// 多對多，Post
+//	@ManyToMany(mappedBy = "collect" ,cascade = CascadeType.ALL)
+//	private Set<Post> post = new HashSet<>();
+//	public Set<Post> getPost() {
+//		return post;
+//	}
+//	public void setPost(Set<Post> post) {
+//		this.post = post;
+//	}
+//	
 }

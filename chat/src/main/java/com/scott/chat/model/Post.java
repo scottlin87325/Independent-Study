@@ -24,6 +24,9 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PostID")
 	private Integer postid;
+	
+	//以下變數因為沒有關聯而重新建立
+	private Integer posterid;
 
 	@Column(name = "Post_time", columnDefinition = "TIMESTAMP")
 	private String posttime;
@@ -40,6 +43,12 @@ public class Post {
 	}
 	public void setPostid(Integer postid) {
 		this.postid = postid;
+	}
+	public Integer getPosterid() {
+		return posterid;
+	}
+	public void setPosterid(Integer posterid) {
+		this.posterid = posterid;
 	}
 	public String getPosttime() {
 		return posttime;
@@ -67,59 +76,59 @@ public class Post {
 	}
 	
 	//---------------------------------------------------------------------
-	// 1對1，MessageBoard
-	@OneToOne(mappedBy = "post" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
-	private MessageBoard messageBoard;
-	public MessageBoard getMessageBoard() {
-		return messageBoard;
-	}
-	public void setMessageBoard(MessageBoard messageBoard) {
-		this.messageBoard = messageBoard;
-	}
-	
-	// 多對1，Member
-	@ManyToOne
-	@JoinColumn(
-			name = "posterid",
-			columnDefinition = "INT(30) UNSIGNED")
-	private Member member;
-	public Member getMember() {
-		return member;
-	}
-	public void setMember(Member member) {
-		this.member = member;
-	}
-	
-	// 1對多，PostPhoto
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(
-			name = "postid",
-			columnDefinition = "INT(30) UNSIGNED")
-	private List<PostPhoto> postphoto;
-	public List<PostPhoto> getPostphoto() {
-		return postphoto;
-	}
-	public void setPostphoto(List<PostPhoto> postphoto) {
-		this.postphoto = postphoto;
-	}
-	
-	// 多對多，Collect
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(
-		    name = "post_collect",
-		    joinColumns = @JoinColumn(
-		    		name = "PostID",
-		    		columnDefinition = "INT(30) UNSIGNED"),
-		    inverseJoinColumns = @JoinColumn(
-		    		name = "CollectID",
-		    		columnDefinition = "INT(30) UNSIGNED")
-		)
-	private Set<Collect> collect = new HashSet<>();
-	public Set<Collect> getCollect() {
-		return collect;
-	}
-	public void setCollect(Set<Collect> collect) {
-		this.collect = collect;
-	}
+//	// 1對1，MessageBoard
+//	@OneToOne(mappedBy = "post" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+//	private MessageBoard messageBoard;
+//	public MessageBoard getMessageBoard() {
+//		return messageBoard;
+//	}
+//	public void setMessageBoard(MessageBoard messageBoard) {
+//		this.messageBoard = messageBoard;
+//	}
+//	
+//	// 多對1，Member
+//	@ManyToOne
+//	@JoinColumn(
+//			name = "posterid",
+//			columnDefinition = "INT(30) UNSIGNED")
+//	private Member member;
+//	public Member getMember() {
+//		return member;
+//	}
+//	public void setMember(Member member) {
+//		this.member = member;
+//	}
+//	
+//	// 1對多，PostPhoto
+//	@OneToMany(cascade = CascadeType.ALL)
+//	@JoinColumn(
+//			name = "postid",
+//			columnDefinition = "INT(30) UNSIGNED")
+//	private List<PostPhoto> postphoto;
+//	public List<PostPhoto> getPostphoto() {
+//		return postphoto;
+//	}
+//	public void setPostphoto(List<PostPhoto> postphoto) {
+//		this.postphoto = postphoto;
+//	}
+//	
+//	// 多對多，Collect
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//	@JoinTable(
+//		    name = "post_collect",
+//		    joinColumns = @JoinColumn(
+//		    		name = "PostID",
+//		    		columnDefinition = "INT(30) UNSIGNED"),
+//		    inverseJoinColumns = @JoinColumn(
+//		    		name = "CollectID",
+//		    		columnDefinition = "INT(30) UNSIGNED")
+//		)
+//	private Set<Collect> collect = new HashSet<>();
+//	public Set<Collect> getCollect() {
+//		return collect;
+//	}
+//	public void setCollect(Set<Collect> collect) {
+//		this.collect = collect;
+//	}
 
 }

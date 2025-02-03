@@ -14,7 +14,7 @@ public interface ChatroomRepository extends JpaRepository<Chatroom, Integer> {
     Optional<Chatroom> findByMemberaAndMemberb(Integer membera, Integer memberb);
     
     // 查詢待處理的好友請求（確保只查詢 memberb 是接收者的請求）
-    @Query("SELECT c FROM Chatroom c WHERE c.status = 'confirm' AND c.memberb = :userId")
+    @Query("SELECT c FROM Chatroom c WHERE c.status = 'ask' AND c.memberb = :userId")
     List<Chatroom> findPendingRequests(@Param("userId") Integer userId);
     
     // 查詢是否存在任何關係（無論方向）

@@ -34,7 +34,7 @@ public class FriendRequestService {
         Chatroom chatroom = new Chatroom();
         chatroom.setMembera(senderId);    // 發送者永遠是 membera
         chatroom.setMemberb(receiverId);   // 接收者永遠是 memberb
-        chatroom.setStatus("confirm");     // 設置狀態為待確認
+        chatroom.setStatus("ask");     // 設置狀態為待確認
         
         chatroom = chatroomRepository.save(chatroom);
         
@@ -66,7 +66,7 @@ public class FriendRequestService {
             throw new IllegalStateException("無權處理此請求");
         }
         
-        chatroom.setStatus("ask");  // 設置為已接受
+        chatroom.setStatus("confirm");  // 設置為已接受
         Chatroom savedChatroom = chatroomRepository.save(chatroom);
         
         // 發送接受通知給發送者

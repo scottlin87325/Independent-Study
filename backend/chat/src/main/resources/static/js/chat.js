@@ -59,10 +59,10 @@ async function displayChatRooms(chatrooms) {
         const avatar = document.createElement('div');
         avatar.className = 'friend-avatar';
 
-        if (otherUser.memberphoto) {
+        if (otherUser.memberphotobase64) {
             // 如果有頭像，創建img元素
             const img = document.createElement('img');
-            img.src = `data:image/jpeg;base64,${otherUser.memberphoto}`;
+            img.src = `data:image/jpeg;base64,${otherUser.memberphotobase64}`;
             img.alt = otherUser.membername;
             img.style.width = '100%';
             img.style.height = '100%';
@@ -109,10 +109,10 @@ async function selectChatRoom(chatroomId, otherUser) {
     chatAvatar.innerHTML = ''; // 清空現有內容
     chatAvatar.classList.add('active'); // 添加 active class 來顯示頭像
 
-    if (otherUser.memberphoto) {
+    if (otherUser.memberphotobase64) {
         // 如果有頭像，創建img元素
         const img = document.createElement('img');
-        img.src = `data:image/jpeg;base64,${otherUser.memberphoto}`;
+        img.src = `data:image/jpeg;base64,${otherUser.memberphotobase64}`;
         img.alt = otherUser.membername;
         img.style.width = '100%';
         img.style.height = '100%';

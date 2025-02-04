@@ -1,0 +1,66 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.5s ease;
+    background-color: black;
+    color: black;
+}
+
+section {
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+    /* margin: 20px auto; */
+    overflow: hidden;
+}
+
+section>div {
+    float: left;
+    background-color: transparent;
+    /* background-color: gainsboro; */
+}
+
+.left {
+    width: 13vw;
+    height: 100vh;
+    /* background-color: antiquewhite; */
+}
+
+.left-block{
+    width: 2vw;
+    height: 100vh;
+    /* background-color: burlywood; */
+}
+
+.right-block{
+    width: 15vw;
+    height: 100vh;
+    /* background-color: cyan; */
+}
+
+.middle {
+    width: 70vw;
+    height: 100vh;
+    /* background-color: forestgreen; */
+    color: white;
+    position: relative;
+}
+
+
+/* ----------------------------------------- */
+
+

@@ -1,8 +1,0 @@
-[
-    {
-        id: number,
-        url: string,
-        title: string
-    },
-    // ... 更多圖片
-]用json傳回

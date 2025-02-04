@@ -15,7 +15,7 @@
 
 /* 好友列標題 */
 .friendslist-header {
-    padding: 22px;
+    padding: 32px;
     border-bottom: 2px solid WhiteSmoke;
 }
 
@@ -23,7 +23,7 @@
 .friends-list {
     background: #161616;
     /* 背景 */
-    width: 30%;
+    width: 20%;
     /* 固定寬度 */
     height: 100%;
     /* 填滿整個視窗高度 */
@@ -109,7 +109,7 @@
 
 /* 聊天視窗標題欄 */
 .chat-header {
-    padding: 10px;
+    padding: 20px;
     border-bottom: 2px solid WhiteSmoke;
     display: flex;
     align-items: center;

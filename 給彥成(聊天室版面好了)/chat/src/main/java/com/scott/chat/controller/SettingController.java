@@ -41,26 +41,14 @@ public class SettingController {
        Member member = settingService.findByEmail(email);
        
        if (member != null) {
-           if (updates.containsKey("membername")) {
-               member.setMembername(updates.get("membername"));
-           }
-           if (updates.containsKey("introduce")) {
-               member.setIntroduce(updates.get("introduce")); 
-           }
-           if (updates.containsKey("gender")) {
-               member.setGender(updates.get("gender"));
-           }
-           if (updates.containsKey("birthday")) {
-               member.setBirthday(updates.get("birthday"));
-           }
-           if (updates.containsKey("telephone")) {
-               member.setTelephone(updates.get("telephone"));
-           }
+           // 修改這裡的判斷邏輯，允許空值更新
+           member.setMembername(updates.getOrDefault("membername", member.getMembername()));
+           member.setIntroduce(updates.getOrDefault("introduce", member.getIntroduce()));
+           member.setGender(updates.getOrDefault("gender", member.getGender()));
+           member.setBirthday(updates.getOrDefault("birthday", member.getBirthday()));
+           member.setTelephone(updates.getOrDefault("telephone", member.getTelephone()));
            
            settingService.save(member);
-           if(member.getMemberphoto() != null) {
-               member.setMemberphotobase64(Base64.getEncoder().encodeToString(member.getMemberphoto()));
-           }
            return ResponseEntity.ok(member);
        }
        return ResponseEntity.notFound().build();

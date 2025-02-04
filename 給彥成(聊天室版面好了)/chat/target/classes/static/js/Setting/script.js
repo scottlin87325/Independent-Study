@@ -127,11 +127,11 @@ function closeModal(modalId = 'nicknameModal') {
 function submitChanges() {
     const updates = {
         membername: document.querySelector('.nickName').textContent,
-        introduce: document.querySelector('.about').value,
+        introduce: document.querySelector('.about').value || "",
         gender: document.querySelector('.form-select').value === '1' ? '男' : 
                 document.querySelector('.form-select').value === '2' ? '女' : null,
-        birthday: document.querySelector('.birthday').textContent,
-        telephone: document.querySelector('.telephone').textContent
+        birthday: document.querySelector('.birthday').textContent || "",
+        telephone: document.querySelector('.telephone').textContent || ""
     };
 
     const promises = [];

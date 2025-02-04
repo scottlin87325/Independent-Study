@@ -39,6 +39,7 @@ async function loadUserPosts(memberName) {
                 padding: 20px;
                 font-size: 16px;
                 font-family: "Noto Sans TC", serif;
+				margin-left: -35px;
             `;
             noPostsMsg.textContent = '目前無貼文';
             container.innerHTML = '';

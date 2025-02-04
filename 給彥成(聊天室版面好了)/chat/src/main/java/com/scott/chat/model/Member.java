@@ -51,7 +51,7 @@ public class Member {
 	@Column(columnDefinition = "DATE")
 	private String birthday;
 	@Column(columnDefinition = "VARCHAR(1000)")
-	private String introduce;
+	private String introduce = "";
 	@Column(name = "Post_count")
 	private Integer postcount;
 	

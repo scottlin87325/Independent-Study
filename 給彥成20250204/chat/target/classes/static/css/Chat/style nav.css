@@ -1,0 +1,149 @@
+.sidebar {
+    font-family: "Noto Sans TC", serif;
+    position: relative;
+    width: 250px;
+    background-color: rgb(30, 30, 30);
+    color: white;
+    padding: 20px;
+    height: 100%;
+    border-right: 1px solid rgba(90, 90, 90, 0.5);
+    z-index: 1;
+    transition: width 0.3s ease;
+    overflow-x: hidden; /* 防止內容溢出 */
+}
+
+.menu-item {
+    margin: 15px 0; /* 移除負margin */
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.menu-item:hover::after {
+    transform: translateX(0);
+}
+
+.menu-item a {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 對齊開始位置 */
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    width: 100%; /* 確保寬度填滿 */
+}
+
+.menu-item:hover a {
+    transform: translateX(5px);
+    background-color: rgba(68, 68, 68, 0.8);
+}
+
+.menu-item a svg {
+    min-width: 24px;
+    width: 24px; /* 固定寬度 */
+    height: 24px; /* 固定高度 */
+    margin-right: 10px;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover svg {
+    transform: scale(1.1);
+}
+
+.menu-item span {
+    transition: opacity 0.3s ease;
+}
+
+/* Responsive design */
+@media screen and (max-width: 1200px) {
+    .sidebar {
+        width: 70px;
+        padding: 20px 0;
+    }
+    
+    .menu-item a {
+        justify-content: center; /* 在收起時置中SVG */
+        padding: 10px 0; /* 移除左右padding */
+    }
+    
+    .menu-item a span {
+        opacity: 0;
+        width: 0;
+        display: none;
+    }
+    
+    .menu-item a svg {
+        margin: 0; /* 移除SVG的margin */
+    }
+    
+    .menu-item:hover a {
+        transform: translateX(0);
+        background-color: rgba(68, 68, 68, 0.8);
+    }
+    
+    .menu-item::after {
+        width: 70px;
+    }
+    
+    .submenu.open {
+        left: 70px;
+    }
+}
+
+/* Hover effect for collapsed sidebar */
+@media screen and (max-width: 1200px) {
+    .sidebar:hover {
+        width: 250px;
+    }
+    
+    .sidebar:hover .menu-item a {
+        justify-content: flex-start; /* 展開時恢復左對齊 */
+        padding: 10px; /* 恢復原來的padding */
+    }
+    
+    .sidebar:hover .menu-item a span {
+        opacity: 1;
+        width: auto;
+        display: inline;
+    }
+    
+    .sidebar:hover .menu-item a svg {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    
+    .sidebar:hover .menu-item::after {
+        width: 100%;
+    }
+    
+    .sidebar:hover .menu-item:hover a {
+        transform: translateX(5px);
+    }
+    
+    .sidebar:hover .menu-item {
+        transition: background-color 0.3s ease;
+    }
+    
+    .sidebar:hover .menu-item:hover {
+        background-color: rgba(68, 68, 68, 0.3);
+    }
+}

@@ -5,17 +5,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import lombok.extern.slf4j.Slf4j;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-@Slf4j
 @Component
 public class TimeUtils {
+    
+    private static final Logger logger = Logger.getLogger(TimeUtils.class.getName());
     
     private static final DateTimeFormatter formatter = 
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     
     private static final ZoneId TAIPEI_ZONE = ZoneId.of("Asia/Taipei");
-
+    
     /**
      * 獲取當前時間字符串
      */
@@ -37,7 +39,7 @@ public class TimeUtils {
         try {
             return LocalDateTime.parse(timeStr, formatter);
         } catch (Exception e) {
-            log.error("Error parsing time string: {}", timeStr, e);
+            logger.log(Level.SEVERE, "Error parsing time string: " + timeStr, e);
             throw new IllegalArgumentException("Invalid time format");
         }
     }
@@ -94,7 +96,7 @@ public class TimeUtils {
         LocalDateTime dt2 = parseTime(time2);
         return dt1.compareTo(dt2);
     }
-
+    
     /**
      * 檢查時間是否在指定範圍內
      */
@@ -104,7 +106,7 @@ public class TimeUtils {
         long diffMinutes = ChronoUnit.MINUTES.between(time, now);
         return Math.abs(diffMinutes) <= rangeMinutes;
     }
-
+    
     /**
      * 獲取未來時間
      */
@@ -112,7 +114,7 @@ public class TimeUtils {
         LocalDateTime futureTime = LocalDateTime.now(TAIPEI_ZONE).plusMinutes(minutes);
         return formatTime(futureTime);
     }
-
+    
     /**
      * 獲取過去時間
      */

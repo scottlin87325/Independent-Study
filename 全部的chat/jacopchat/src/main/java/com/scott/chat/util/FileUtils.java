@@ -8,17 +8,20 @@ import java.util.Base64;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import lombok.extern.slf4j.Slf4j;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-@Slf4j
 @Component
 public class FileUtils {
+   
+   private static final Logger logger = Logger.getLogger(FileUtils.class.getName());
    
    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
    private static final String[] ALLOWED_IMAGE_TYPES = {
        "image/jpeg", 
        "image/png", 
-       "image/gif"
+       "image/gif",
+       "image/webp"
    };
 
    /**
@@ -31,7 +34,7 @@ public class FileUtils {
 
        // 檢查檔案大小
        if (file.getSize() > MAX_FILE_SIZE) {
-           log.warn("File too large: {} bytes", file.getSize());
+           logger.warning("File too large: " + file.getSize() + " bytes");
            return false;
        }
 
@@ -41,49 +44,68 @@ public class FileUtils {
            return false;
        }
 
+       // 對於 GIF 檔案，只驗證文件類型
+       if (contentType.equals("image/gif")) {
+           return true;
+       }
+
+       // 對於其他圖片類型，執行額外驗證
        for (String allowedType : ALLOWED_IMAGE_TYPES) {
            if (contentType.equals(allowedType)) {
-               return true;
+               return validateStaticImage(file);
            }
        }
        
-       log.warn("Invalid file type: {}", contentType);
+       logger.warning("Invalid file type: " + contentType);
        return false;
+   }
+
+   private boolean validateStaticImage(MultipartFile file) {
+       try {
+           BufferedImage image = ImageIO.read(file.getInputStream());
+           return image != null;
+       } catch (IOException e) {
+           logger.log(Level.SEVERE, "Error validating static image", e);
+           return false;
+       }
    }
 
    /**
     * 將MultipartFile轉換為byte數組
     */
    public byte[] convertMultipartFileToBytes(MultipartFile file) throws IOException {
+       String contentType = file.getContentType();
+       // 對於 GIF 檔案，直接返回原始數據
+       if (contentType != null && contentType.equals("image/gif")) {
+           return file.getBytes();
+       }
+
        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
            file.getInputStream().transferTo(baos);
            return baos.toByteArray();
        } catch (IOException e) {
-           log.error("Error converting MultipartFile to bytes", e);
+           logger.log(Level.SEVERE, "Error converting MultipartFile to bytes", e);
            throw e;
        }
-   }
-
-   /**
-    * 將byte數組轉換為Base64字符串
-    */
-   public String convertBytesToBase64(byte[] bytes) {
-       return Base64.getEncoder().encodeToString(bytes);
    }
 
    /**
     * 驗證圖片的尺寸
     */
    public boolean isValidImageDimensions(byte[] imageBytes, int maxWidth, int maxHeight) {
-       try {
-           BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageBytes));
+       // 尝试读取为 BufferedImage
+       try (ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes)) {
+           BufferedImage image = ImageIO.read(bis);
+           // 如果无法读取（例如是 GIF），则跳过尺寸验证
            if (image == null) {
-               return false;
+               logger.fine("Skipping dimension validation for non-static image");
+               return true;
            }
            return image.getWidth() <= maxWidth && image.getHeight() <= maxHeight;
        } catch (IOException e) {
-           log.error("Error validating image dimensions", e);
-           return false;
+           logger.log(Level.SEVERE, "Error validating image dimensions", e);
+           // 如果验证失败，也允许通过
+           return true;
        }
    }
 
@@ -140,7 +162,7 @@ public class FileUtils {
            BufferedImage image = ImageIO.read(file.getInputStream());
            return image != null;
        } catch (IOException e) {
-           log.error("Error checking if file is image", e);
+           logger.log(Level.SEVERE, "Error checking if file is image", e);
            return false;
        }
    }

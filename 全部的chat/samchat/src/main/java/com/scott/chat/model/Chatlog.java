@@ -26,7 +26,7 @@ public class Chatlog {
 	
 	//以下兩個變數因為沒有關聯而重新建立
 //	private Integer chatroomid;
-	private Integer senderid;
+//	private Integer senderid;
 	
 	@Column(name = "Input_time" ,columnDefinition = "TIMESTAMP")
 	private String inputtime;
@@ -41,6 +41,33 @@ public class Chatlog {
 	@Transient
 	private String roomfilebase64;
 	
+	@Transient // 這個欄位不會存到資料庫
+    private Integer chatroomid; // 用於接收前端資料
+
+    public Integer getChatroomid() {
+        return chatroomid;
+    }
+    
+    public void setChatroomid(Integer chatroomid) {
+        this.chatroomid = chatroomid;
+    }
+	
+	@Transient
+    private Integer senderid;  // 用於接收前端資料
+    
+    public Integer getSenderid() {
+		// 如果 senderid 為 null，則從 member 關聯中獲取
+		if (senderid == null && member != null) {
+			return member.getMemberid();
+		}
+        return senderid;
+    }
+    
+    public void setSenderid(Integer senderid) {
+        this.senderid = senderid;
+    }
+
+	
 	//---------------------------------------------------------------------
 	public Integer getChatlogid() {
 		return chatlogid;
@@ -54,12 +81,12 @@ public class Chatlog {
 //	public void setChatroomid(Integer chatroomid) {
 //		this.chatroomid = chatroomid;
 //	}
-	public Integer getSenderid() {
-		return senderid;
-	}
-	public void setSenderid(Integer senderid) {
-		this.senderid = senderid;
-	}
+//	public Integer getSenderid() {
+//		return senderid;
+//	}
+//	public void setSenderid(Integer senderid) {
+//		this.senderid = senderid;
+//	}
 	public String getInputtime() {
 		return inputtime;
 	}
@@ -99,18 +126,18 @@ public class Chatlog {
 	}
 	
 	//---------------------------------------------------------------------
-//	// 多對1，Member
-//	@ManyToOne
-//	@JoinColumn(
-//			name = "senderid",
-//			columnDefinition = "INT(30) UNSIGNED")
-//	private Member member;
-//	public Member getMember() {
-//		return member;
-//	}
-//	public void setMember(Member member) {
-//		this.member = member;
-//	}
+	// 多對1，Member
+	@ManyToOne
+	@JoinColumn(
+			name = "senderid",
+			columnDefinition = "INT(30) UNSIGNED")
+	private Member member;
+	public Member getMember() {
+		return member;
+	}
+	public void setMember(Member member) {
+		this.member = member;
+	}
 //	
 	// 多對1，Chatroom
 	@ManyToOne

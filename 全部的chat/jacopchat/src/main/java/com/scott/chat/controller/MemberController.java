@@ -20,6 +20,7 @@ import com.scott.chat.repository.MemberRepository;
 import com.scott.chat.service.MemberService;
 import com.scott.chat.dto.common.ApiResponse;
 import com.scott.chat.exception.UnauthorizedException;
+
 // REST風格的會員控制器
 @RestController
 @RequestMapping("/api/member")
@@ -104,17 +105,19 @@ public class MemberController {
            
            memberService.updateMember(currentMember);
            
-           return ResponseEntity.ok(ApiResponse.<String>builder()
-               .status(200)
-               .message("個人資料更新成功")
-               .build());
+           ApiResponse<String> response = new ApiResponse<>();
+           response.setStatus(200);
+           response.setMessage("個人資料更新成功");
+           
+           return ResponseEntity.ok(response);
                
        } catch (Exception e) {
+           ApiResponse<String> response = new ApiResponse<>();
+           response.setStatus(500);
+           response.setMessage("更新失敗: " + e.getMessage());
+           
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-               .body(ApiResponse.<String>builder()
-                   .status(500)
-                   .message("更新失敗: " + e.getMessage())
-                   .build());
+               .body(response);
        }
    }
    

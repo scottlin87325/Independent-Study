@@ -158,15 +158,15 @@ public class Member {
 //		this.post = post;
 //	}
 //	
-//	// 1對多，Chatlog
-//	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
-//	private List<Chatlog> chatlog;
-//	public List<Chatlog> getChatlog() {
-//		return chatlog;
-//	}
-//	public void setChatlog(List<Chatlog> chatlog) {
-//		this.chatlog = chatlog;
-//	}
+	// 1對多，Chatlog
+	@OneToMany(mappedBy = "member" ,cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+	private List<Chatlog> chatlog;
+	public List<Chatlog> getChatlog() {
+		return chatlog;
+	}
+	public void setChatlog(List<Chatlog> chatlog) {
+		this.chatlog = chatlog;
+	}
 //	
 //	// 多對多，Collect
 //	@ManyToMany(cascade = CascadeType.ALL)
@@ -187,23 +187,23 @@ public class Member {
 //		this.collect = collect;
 //	}
 //
-//	// 多對多，Chatroom
-//	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
-//	@JoinTable(
-//		    name = "member_chatroom",
-//		    joinColumns = @JoinColumn(
-//		    		name = "MemberID",
-//		    		columnDefinition = "INT(30) UNSIGNED"),
-//		    inverseJoinColumns = @JoinColumn(
-//		    		name = "ChatroomID",
-//		    		columnDefinition = "INT(30) UNSIGNED")
-//			)
-//    private Set<Chatroom> chatroom = new HashSet<>();
-//	public Set<Chatroom> getChatroom() {
-//		return chatroom;
-//	}
-//	public void setChatroom(Set<Chatroom> chatroom) {
-//		this.chatroom = chatroom;
-//	}
+	// 多對多，Chatroom
+	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+	@JoinTable(
+		    name = "member_chatroom",
+		    joinColumns = @JoinColumn(
+		    		name = "MemberID",
+		    		columnDefinition = "INT(30) UNSIGNED"),
+		    inverseJoinColumns = @JoinColumn(
+		    		name = "ChatroomID",
+		    		columnDefinition = "INT(30) UNSIGNED")
+			)
+    private Set<Chatroom> chatroom = new HashSet<>();
+	public Set<Chatroom> getChatroom() {
+		return chatroom;
+	}
+	public void setChatroom(Set<Chatroom> chatroom) {
+		this.chatroom = chatroom;
+	}
 
 }

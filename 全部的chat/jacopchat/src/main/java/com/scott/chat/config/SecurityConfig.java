@@ -24,6 +24,8 @@ import com.scott.chat.security.OAuth2LoginSuccessHandler;
 import com.scott.chat.service.CustomUserDetailsService;
 
 // 安全配置類，用於設置Spring Security的各項安全機制
+//Session 是指使用者與網站/應用程式之間的一段互動時期，主要用途包括
+//記錄使用者登入狀態、存儲暫時性資料、追蹤使用者行為
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

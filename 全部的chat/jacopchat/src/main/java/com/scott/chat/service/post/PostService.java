@@ -19,21 +19,30 @@ import com.scott.chat.exception.PostNotFoundException;
 import com.scott.chat.exception.UnauthorizedException;
 import com.scott.chat.util.TimeUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Base64;
 
-@Service
-@Slf4j
+/**
+* 貼文服務類
+* 處理貼文的CRUD操作與相關業務邏輯
+*/
+@Service 
 public class PostService {
+   
+   private static final Logger logger = Logger.getLogger(PostService.class.getName());
 
-   private final PostRepository postRepository;
-   private final MemberRepository memberRepository;
-   private final PostPhotoService postPhotoService;
-   private final TimeUtils timeUtils;
+   private final PostRepository postRepository;           // 貼文資料存取
+   private final MemberRepository memberRepository;       // 會員資料存取
+   private final PostPhotoService postPhotoService;      // 貼文圖片服務
+   private final TimeUtils timeUtils;                    // 時間工具類
 
+   /**
+    * 建構子
+    */
    @Autowired
    public PostService(PostRepository postRepository, 
                      MemberRepository memberRepository,
@@ -45,12 +54,38 @@ public class PostService {
        this.timeUtils = timeUtils;
    }
 
+   /**
+    * 創建貼文簡化版
+    */
    @Transactional
    public PostDTO createPost(String content, MultipartFile[] photos, Integer currentUserId) {
-       log.debug("Creating post for user ID: {}", currentUserId);
+       return createPost(content, photos, currentUserId, false);
+   }
+
+   /**
+    * 獲取單一貼文
+    */
+   @Transactional(readOnly = true)
+   public PostDTO getPost(Integer postId, Integer currentUserId) {
+       Post post = postRepository.findById(postId)
+           .orElseThrow(() -> new PostNotFoundException(postId));
+       
+       List<String> photoUrls = postPhotoService.getPhotosByPost(postId).stream()
+           .map(photo -> "/api/post-photos/photo/" + photo.getPostphotoid())
+           .collect(Collectors.toList());
+
+       return convertToDTO(post, photoUrls, currentUserId);
+   }
+   
+   /**
+    * 創建貼文完整版
+    */
+   @Transactional
+   public PostDTO createPost(String content, MultipartFile[] photos, Integer currentUserId, boolean isCropped) {
+       logger.fine("開始創建貼文，用戶ID: " + currentUserId + "，圖片裁切: " + isCropped);
        
        Member currentUser = memberRepository.findById(currentUserId)
-           .orElseThrow(() -> new UnauthorizedException("User not found"));
+           .orElseThrow(() -> new UnauthorizedException("找不到用戶"));
            
        Post post = new Post();
        post.setPosterid(currentUserId);
@@ -60,11 +95,11 @@ public class PostService {
        post.setMessagecount(0);
        
        Post savedPost = postRepository.save(post);
-       log.debug("Post created with ID: {}", savedPost.getPostid());
+       logger.fine("貼文已創建，ID: " + savedPost.getPostid());
        
        List<String> photoUrls = new ArrayList<>();
        if (photos != null && photos.length > 0) {
-           List<PostPhoto> savedPhotos = postPhotoService.savePhotos(savedPost.getPostid(), photos);
+           List<PostPhoto> savedPhotos = postPhotoService.savePhotos(savedPost.getPostid(), photos, isCropped);
            photoUrls = savedPhotos.stream()
                .map(photo -> "/api/post-photos/photo/" + photo.getPostphotoid())
                .collect(Collectors.toList());
@@ -77,17 +112,9 @@ public class PostService {
        return convertToDTO(savedPost, photoUrls, currentUserId);
    }
 
-   public PostDTO getPost(Integer postId, Integer currentUserId) {
-       Post post = postRepository.findById(postId)
-           .orElseThrow(() -> new PostNotFoundException(postId));
-       
-       List<String> photoUrls = postPhotoService.getPhotosByPost(postId).stream()
-           .map(photo -> "/api/post-photos/photo/" + photo.getPostphotoid())
-           .collect(Collectors.toList());
-
-       return convertToDTO(post, photoUrls, currentUserId);
-   }
-
+   /**
+    * 獲取貼文列表(分頁)
+    */
    public List<PostDTO> getPosts(int page, int size, Integer currentUserId) {
        PageRequest pageRequest = PageRequest.of(page, size, 
            Sort.by("posttime").descending());
@@ -105,13 +132,16 @@ public class PostService {
            .collect(Collectors.toList());
    }
 
+   /**
+    * 刪除貼文
+    */
    @Transactional
    public void deletePost(Integer postId, Integer currentUserId) {
        Post post = postRepository.findById(postId)
            .orElseThrow(() -> new PostNotFoundException(postId));
            
        if (!post.getPosterid().equals(currentUserId)) {
-           log.warn("Unauthorized deletion attempt - Post: {}, User: {}", postId, currentUserId);
+           logger.warning("未經授權的刪除嘗試 - 貼文: " + postId + "，用戶: " + currentUserId);
            throw new UnauthorizedException("您沒有權限刪除此貼文");
        }
        
@@ -123,16 +153,19 @@ public class PostService {
        memberRepository.save(poster);
        
        postRepository.delete(post);
-       log.info("Post {} successfully deleted by user {}", postId, currentUserId);
+       logger.info("貼文 " + postId + " 已被用戶 " + currentUserId + " 成功刪除");
    }
 
+   /**
+    * 更新貼文
+    */
    @Transactional
    public PostDTO updatePost(Integer postId, String content, Integer currentUserId) {
        Post post = postRepository.findById(postId)
            .orElseThrow(() -> new PostNotFoundException(postId));
            
        if (!post.getPosterid().equals(currentUserId)) {
-           log.warn("Unauthorized update attempt - Post: {}, User: {}", postId, currentUserId);
+           logger.warning("未經授權的更新嘗試 - 貼文: " + postId + "，用戶: " + currentUserId);
            throw new UnauthorizedException("您沒有權限修改此貼文");
        }
            
@@ -147,6 +180,9 @@ public class PostService {
        return convertToDTO(updatedPost, photoUrls, currentUserId);
    }
 
+   /**
+    * 更新按讚數
+    */
    @Transactional
    public void updateLikeCount(Integer postId, boolean isIncrease) {
        Post post = postRepository.findById(postId)
@@ -161,6 +197,9 @@ public class PostService {
        postRepository.save(post);
    }
 
+   /**
+    * 更新留言數
+    */
    @Transactional
    public void updateMessageCount(Integer postId, boolean isIncrease) {
        Post post = postRepository.findById(postId)
@@ -175,39 +214,46 @@ public class PostService {
        postRepository.save(post);
    }
 
+   /**
+    * 檢查是否為貼文擁有者
+    */
    public boolean isPostOwner(Integer postId, Integer currentUserId) {
        Post post = postRepository.findById(postId)
            .orElseThrow(() -> new PostNotFoundException(postId));
        
-       log.info("貼文擁有者ID: {}, 當前用戶ID: {}", post.getPosterid(), currentUserId);
+       logger.info("貼文擁有者ID: " + post.getPosterid() + ", 當前用戶ID: " + currentUserId);
        boolean isOwner = post.getPosterid().equals(currentUserId);
-       log.info("所有權判斷結果: {}", isOwner);
+       logger.info("所有權判斷結果: " + isOwner);
        
        return isOwner;
    }
 
+   /**
+    * 將貼文實體轉換為DTO
+    */
    private PostDTO convertToDTO(Post post, List<String> photoUrls, Integer currentUserId) {
        Member poster = memberRepository.findById(post.getPosterid())
            .orElseThrow(() -> new RuntimeException("找不到發文者"));
            
        boolean ownPost = currentUserId != null && currentUserId.equals(post.getPosterid());
-       log.debug("Converting to DTO - Post: {}, User: {}, IsOwner: {}", 
-                post.getPostid(), currentUserId, ownPost);
+       logger.fine("轉換為DTO - 貼文: " + post.getPostid() + "，用戶: " + 
+                   currentUserId + "，是否為擁有者: " + ownPost);
            
-       return PostDTO.builder()
-           .postId(post.getPostid())
-           .posterId(post.getPosterid())
-           .posterName(poster.getMembername())
-           .postTime(post.getPosttime())
-           .postContent(post.getPostcontent())
-           .likedCount(post.getLikedcount())
-           .messageCount(post.getMessagecount())
-           .photoUrls(photoUrls)
-           .posterAvatar(poster.getMemberphoto() != null ? 
-               Base64.getEncoder().encodeToString(poster.getMemberphoto()) : null)
-           .ownPost(ownPost)
-           .canEdit(ownPost)
-           .canDelete(ownPost)
-           .build();
+       PostDTO dto = new PostDTO();
+       dto.setPostId(post.getPostid());
+       dto.setPosterId(post.getPosterid());
+       dto.setPosterName(poster.getMembername());
+       dto.setPostTime(post.getPosttime());
+       dto.setPostContent(post.getPostcontent());
+       dto.setLikedCount(post.getLikedcount());
+       dto.setMessageCount(post.getMessagecount());
+       dto.setPhotoUrls(photoUrls);
+       dto.setPosterAvatar(poster.getMemberphoto() != null ? 
+           Base64.getEncoder().encodeToString(poster.getMemberphoto()) : null);
+       dto.setOwnPost(ownPost);
+       dto.setCanEdit(ownPost);
+       dto.setCanDelete(ownPost);
+       
+       return dto;
    }
 }

@@ -77,9 +77,6 @@
     margin-right: 15px;
     /* flex-shrink: 0; */
     /* 避免頭像壓縮 */
-
-    overflow: hidden;
-    background: transparent;
 }
 
 /* 聊天視窗 */
@@ -92,6 +89,7 @@
    +----------------+
    |    輸入區      |  <-- 固定高度
    +----------------+ */
+
 .chat-window {
     width: 100%;
     height: 100%;
@@ -251,17 +249,6 @@
     /* 給訊息區域一些間距 */
 }
 
-.friend-avatar img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    /* 移除任何可能的邊框 */
-    border: none;
-    /* 確保圖片本身也沒有背景 */
-    background: transparent;
-}
-
 /* 針對聊天訊息區域的滾動條樣式 */
 .chat-messages::-webkit-scrollbar {
     width: 8px;
@@ -312,4 +299,14 @@
     font-size: 12px;
     position: relative;
     z-index: 1;
+}
+
+/* 初始狀態隱藏聊天視窗的頭像但保留空間 */
+#chatAvatar {
+    visibility: hidden;
+}
+
+/* 當選擇聊天室時才顯示頭像 */
+#chatAvatar.active {
+    visibility: visible;
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.scott.chat.model.MemberDTO;
 import com.scott.chat.repository.MemberRepository;
 
 @RestController
@@ -30,6 +31,13 @@ public class MemberController {
                     Base64.getEncoder().encodeToString(member.getMemberphoto()) : null);
                 return ResponseEntity.ok(response);
             })
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @GetMapping("/forchat/{id}")
+    public ResponseEntity<MemberDTO> getMember2(@PathVariable Integer id) {
+        return memberRepository.findById(id)
+            .map(member -> ResponseEntity.ok(new MemberDTO(member)))
             .orElse(ResponseEntity.notFound().build());
     }
 }

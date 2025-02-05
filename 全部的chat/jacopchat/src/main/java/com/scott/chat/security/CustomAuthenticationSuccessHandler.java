@@ -1,24 +1,23 @@
 package com.scott.chat.security;
 
 import java.io.IOException;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.context.SecurityContextRepository;
-
 import com.scott.chat.model.CustomUserDetails;
 import com.scott.chat.model.Member;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.slf4j.Slf4j;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-@Slf4j
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    
+    private static final Logger logger = Logger.getLogger(CustomAuthenticationSuccessHandler.class.getName());
     
     private final SecurityContextRepository securityContextRepository;
     
@@ -51,12 +50,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             // 設置 session 超時時間 (30分鐘)
             session.setMaxInactiveInterval(1800);
             
-            log.debug("Authentication success for user: {}", member.getMembername());
+            logger.fine("Authentication success for user: " + member.getMembername());
             
             // 重定向到主頁
             response.sendRedirect("/main");
         } catch (Exception e) {
-            log.error("Error in authentication success handler", e);
+            logger.log(Level.SEVERE, "Error in authentication success handler", e);
             throw e;
         }
     }

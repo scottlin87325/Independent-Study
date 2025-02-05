@@ -5,15 +5,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-@Slf4j
 @Component
 public class ValidationUtils {
 
+    private static final Logger logger = Logger.getLogger(ValidationUtils.class.getName());
+
     private final FileUtils fileUtils;
+    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
     
     @Autowired
     public ValidationUtils(FileUtils fileUtils) {
@@ -23,11 +26,11 @@ public class ValidationUtils {
     // 貼文內容驗證
     public boolean isValidPostContent(String content) {
         if (!StringUtils.hasText(content)) {
-            log.warn("Post content is empty");
+            logger.warning("Post content is empty");
             return false;
         }
         if (content.length() > 1000) {
-            log.warn("Post content exceeds 1000 characters");
+            logger.warning("Post content exceeds 1000 characters");
             return false;
         }
         return true;
@@ -36,20 +39,39 @@ public class ValidationUtils {
     // 貼文圖片驗證
     public boolean isValidPhoto(MultipartFile photo) {
         if (photo == null || photo.isEmpty()) {
-            log.warn("Photo is null or empty");
+            logger.warning("Photo is null or empty");
             return false;
         }
-        return fileUtils.isValidImageFile(photo);
+
+        // 檢查檔案大小
+        if (photo.getSize() > MAX_FILE_SIZE) {
+            logger.warning("File size exceeds limit: " + photo.getSize());
+            return false;
+        }
+
+        String contentType = photo.getContentType();
+        // GIF 文件特殊处理
+        if (contentType != null && contentType.equals("image/gif")) {
+            // GIF 文件只需檢查檔案類型和大小
+            return true;
+        }
+
+        // 其他图片类型使用常规验证
+        boolean isValid = fileUtils.isValidImageFile(photo);
+        if (!isValid) {
+            logger.warning("Invalid image file: " + photo.getOriginalFilename() + ", type: " + contentType);
+        }
+        return isValid;
     }
 
     // 圖片集合驗證
     public boolean isValidPhotoList(Collection<MultipartFile> photos) {
         if (photos == null || photos.isEmpty()) {
-            log.warn("Photo list is null or empty");
+            logger.warning("Photo list is null or empty");
             return false;
         }
         if (photos.size() > 10) {
-            log.warn("Too many photos: {}", photos.size());
+            logger.warning("Too many photos: " + photos.size());
             return false;
         }
         return photos.stream().allMatch(this::isValidPhoto);
@@ -58,7 +80,7 @@ public class ValidationUtils {
     // 用戶ID驗證
     public boolean isValidUserId(Integer userId) {
         if (userId == null || userId <= 0) {
-            log.warn("Invalid user ID: {}", userId);
+            logger.warning("Invalid user ID: " + userId);
             return false;
         }
         return true;
@@ -67,11 +89,11 @@ public class ValidationUtils {
     // 留言內容驗證
     public boolean isValidMessage(String message) {
         if (!StringUtils.hasText(message)) {
-            log.warn("Message is empty");
+            logger.warning("Message is empty");
             return false;
         }
         if (message.length() > 500) {
-            log.warn("Message exceeds 500 characters");
+            logger.warning("Message exceeds 500 characters");
             return false;
         }
         return true;
@@ -113,14 +135,6 @@ public class ValidationUtils {
         return Pattern.compile(usernameRegex)
                      .matcher(username)
                      .matches();
-    }
-
-    // 檔案大小驗證
-    public boolean isValidFileSize(MultipartFile file, long maxSize) {
-        if (file == null || file.isEmpty()) {
-            return false;
-        }
-        return file.getSize() <= maxSize;
     }
 
     // XSS 防護

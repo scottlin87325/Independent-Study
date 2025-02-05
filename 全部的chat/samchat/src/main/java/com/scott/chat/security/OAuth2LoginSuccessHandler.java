@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.scott.chat.model.Member;
 import com.scott.chat.service.MemberService;
-import com.scott.chat.model.CustomUserDetails;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -109,24 +109,7 @@ public class LoginController {
 	    return "main";//有session
 	}
 	
-	//登出
-	@GetMapping("/logout")
-	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-	    session.invalidate();  // 清除session
-	    
-	    // 清除所有cookie
-	    Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            cookie.setValue("");
-	            cookie.setPath("/");
-	            cookie.setMaxAge(0);
-	            response.addCookie(cookie);
-	        }
-	    }
-	    
-	    return "redirect:/loginpage";
-	}
+		//登出
 	
 		
 	@GetMapping("/forgotPassword")
@@ -138,5 +121,12 @@ public class LoginController {
 	public String showchat() {
 	    return "chat"; 
 	}
+	
+	
+	@GetMapping("/Friend Request Page")
+	public String friendRequestPage() {
+	    return "Friend Request Page"; 
+	}
+	
 	
 }

@@ -1,5 +1,7 @@
 // 確保頁面加載完成後才執行腳本
 document.addEventListener('DOMContentLoaded', function() {
+	
+	
     // 添加必要的樣式
     const style = document.createElement('style');
     style.textContent = `
@@ -183,8 +185,8 @@ async function createPostPage(postData) {
                 </div>
 
                 <div class="commentInput" style="width: 100%; height: 8%; border-bottom: 1px solid rgb(145, 144, 144);">
-                    <div iddata="${post.postid}" class="pr" style="color: white; padding: 10px 20px; display: flex; align-items: center; height: 100%;">
-                        <input type="text" placeholder="留言..." style="width: 100%; padding: 8px 12px; border-radius: 20px; background-color: #333; border: none; color: white; outline: none;">
+                    <div iddata="${postData.postId}" class="pr" style="color: white; padding: 10px 20px; display: flex; align-items: center; height: 100%;">
+                        <input class="sendmsg" type="text" placeholder="留言..." style="width: 100%; padding: 8px 12px; border-radius: 20px; background-color: #333; border: none; color: white; outline: none;">
                     </div>
                 </div>
 
@@ -254,7 +256,7 @@ async function createPostPage(postData) {
     document.body.appendChild(postPage);
 	
 	//enter訊息
-	$(".commentInput").keydown(function (event) {
+	$('.commentInput').keydown(function (event) {
 	      if (event.key === "Enter") {
 	        //event.preventDefault(); // 防止 textarea 換行（如果適用）
 	        sendMessage();
@@ -266,13 +268,12 @@ async function createPostPage(postData) {
 	}
 	//送出訊息
 	function sendMessage() {
-	      let message = $(".commentInput").val();
-	      if (message.trim() !== "") {
+	      let messagein = $('.sendmsg').val();
+	      if (messagein != "") {
 			pass1(idName);
 			pass2(className);
 			userRespond(membername);
-			$(".postStreamBox")
-	        $(".commentInput").val(""); // 清空輸入框
+	        $('.sendmsg').val(""); // 清空輸入框
 			idName='p1'
 			className='post'
 	      }
@@ -290,8 +291,8 @@ async function createPostPage(postData) {
 	    });
 	}).on('click', '.respond', function () {
 	    var resN = $(this).parent().parent().parent().parent().find('.postMember2').text();
-	    let t = $('.commentInput').val();
-	    $('.commentInput').val(t + '@' + resN + ' ');
+	    let t = $('sendmsg').val();
+	    $('sendmsg').val(t + '@' + resN + ' ');
 	    className = $(this).parent().attr('class');
 	    idName = $(this).parent().attr('iddata');
 	});

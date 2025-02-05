@@ -13,6 +13,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
     <script src="/00_CSS/popper.min.js"></script>
+    <script src="/js/Search/post-display.js"></script>
+    <script src="/js/Search/jquery-3.6.0.js"></script>
+    <script src="/js/Search/message_s_JS.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <link rel="stylesheet" href="/css/Main/style home.css">
     <link rel="stylesheet" href="/css/Main/style nav.css">
     <link rel="stylesheet" href="/css/Search/create-post.css">
@@ -124,23 +128,30 @@
 <!-- --------------------------------------------------------- -->
 
         <div class="left-block"></div>
-        <div class="middle">
-            <div class="middle-top"></div>
-            <div class="middle-main">
-                <button class="member" onclick="showPostPage()">PO文測試</button>
-            </div>
-        </div>
+        <!-- 首頁內容 -->
+       <div class="page-content active" id="home-content">
+           <div class="post-container" id="postContainer">
+               <!-- 貼文會在這裡動態生成 -->
+           </div>
+       </div>
         <div class="right"></div>
         <div class="right-block"></div>
 
 
 
     </section>
-
+	
+	<script th:inline="javascript">
+		console.log("OK");
+		let mm=/*[[${member.membername}]]*/+'';
+		passmembername(mm);
+	</script>
+	
     <script src="/js/Main/script_nav.js"></script>
     <script src="/js/Search/create-post.js"></script>
     <script src="/js/Search/posts-manager.js"></script>
-    
+    <!-- <script src="/js/yurong/ui.js"></script> -->
+    <!-- <script src="/js/yurong/api.js"></script> -->
 </body>
 
 </html>

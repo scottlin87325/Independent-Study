@@ -25,6 +25,8 @@ public class Messagelog {
 	@Column(name = "MessagelogID")
 	private Integer messageid;
 	
+	@Column(name = "Super_messagelogID")
+	private Integer supermessagelogid;
 	@Column(name = "Message_time" ,columnDefinition = "TIMESTAMP")
 	private String messagetime;
 	@Column(columnDefinition = "VARCHAR(1000)")
@@ -44,6 +46,12 @@ public class Messagelog {
 	}
 	public void setMessageid(Integer messageid) {
 		this.messageid = messageid;
+	}
+	public Integer getSupermessagelogid() {
+		return supermessagelogid;
+	}
+	public void setSupermessagelogid(Integer supermessagelogid) {
+		this.supermessagelogid = supermessagelogid;
 	}
 	public String getMessagetime() {
 		return messagetime;

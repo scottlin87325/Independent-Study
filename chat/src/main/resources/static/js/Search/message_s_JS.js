@@ -3,11 +3,19 @@ let i=0;
 let rid;
 let respondid;
 let drs;
+let membername;
+let memberphoto;
 function pass1(value) {
     respondid ='#' + value;
 }
 function pass2(value) {
     respondclass = value;
+}
+function passmembername(pmembername){
+		membername=pmembername;
+}
+function passmemberphoto(pmemberphoto){
+		memberphoto=pmemberphoto;
 }
 
 function settime(){
@@ -52,8 +60,9 @@ function timeSlip(inputTime) {  //inputTime輸入時間要抓資料庫
 }
 
 //用戶留言區塊
-function userRespond(userName) {
-    let a = $('.commentInput').val();
+function userRespond() {
+	console.log(membername);
+    let a = $('.sendmsg').val();
     if (a != "") {
         if (a.match(/@\w+/g)) {
             a = mTag(a);
@@ -70,8 +79,10 @@ function userRespond(userName) {
 		if(respondid==='.postContent'){
         	$('.postStreamBox').append(`
 			<article id=${rid} iddata=${rid} class=${drs}>
-				<div class="memberphoto">頭像</div>
-			    <section class="username">${userName}</section>
+				<div class="memberphotospace">
+					<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
+				</div>
+			    <section class="username">${membername}</section>
 			    <section class="memberrespond">${a}</section>
 			    <div class="love">♡</div>
 			    <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
@@ -81,8 +92,10 @@ function userRespond(userName) {
 			}else{
 				$(`${respondid}`).after(`
 			    <article iddata="${rid}" class=${drs}>
-			    	<div class="memberphoto">頭像</div>
-			        <section class="username">${userName}</section>
+			    	<div class="memberphotospace">
+						<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
+					</div>
+			        <section class="username">${membername}</section>
 			        <section class="memberrespond">${a}</section>
 			        <div class="love">♡</div>
 			        <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
@@ -100,7 +113,7 @@ function mTag(mr) {
         links[matches[i]]= "https://google.com";
     }
     for (let [keyword, url] of Object.entries(links)) {
-        let linkHTML = `<a href="${url}">${keyword}</a>`;
+        let linkHTML = `<a class="ra" href="${url}">${keyword}</a>`;
         let regex = new RegExp(`${keyword}`, 'g');  // 使用正則表達式來匹配整詞
         mr = mr.replace(regex, linkHTML);
     }

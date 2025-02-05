@@ -97,13 +97,14 @@ public class LoginController {
 	
 	
 	@GetMapping("/main")
-	public String mainPage(HttpSession session, HttpServletResponse response) {
-			
-		
+	public String mainPage(HttpSession session, HttpServletResponse response, Model model) {
 	    // 檢查是否有登錄信息
 	    if (session.getAttribute("member") == null) {
 	        // 如果沒有登錄，重定向到登錄頁面
 	        return "redirect:/loginpage";
+	    }else {
+	    	Member member = (Member) session.getAttribute("member");
+	    	model.addAttribute("member", member);
 	    }
 	    
 	    return "main";//有session

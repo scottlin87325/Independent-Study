@@ -177,14 +177,14 @@ async function createPostPage(postData) {
                                 <span class="heart-emoji">🤍</span>
                                 <span class="likeCount">${postData.likeCount || 0}</span>
                             </button>
-                            <span class="respond">💬 ${postData.messageCount || 0}</span>
+                            <span>💬 ${postData.messageCount || 0}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="commentInput" style="width: 100%; height: 8%; border-bottom: 1px solid rgb(145, 144, 144);">
                     <div iddata="${postData.postId}" class="pr" style="color: white; padding: 10px 20px; display: flex; align-items: center; height: 100%;">
-                        <input type="text" placeholder="留言..." style="width: 100%; padding: 8px 12px; border-radius: 20px; background-color: #333; border: none; color: white; outline: none;">
+                        <input class="sendmsg" type="text" placeholder="留言..." style="width: 100%; padding: 8px 12px; border-radius: 20px; background-color: #333; border: none; color: white; outline: none;">
                     </div>
                 </div>
 
@@ -260,24 +260,22 @@ async function createPostPage(postData) {
 	        sendMessage();
 	      }
 	});
-	var membername;
-	function passmembername(pmembername){
-		membername=pmembername;
-	}
+	//變數區
+	var idName='p1';
+	var className='pr';
 	//送出訊息
 	function sendMessage() {
-	      let messagein = $('.commentInput').val();
-		  console.log(messagein);
+	      let messagein = $('.sendmsg').val();
 	      if (messagein != "") {
 			pass1(idName);
 			pass2(className);
-			userRespond(membername);
-	        $(".commentInput").val(""); // 清空輸入框
+			userRespond();
+	        $('.sendmsg').val(""); // 清空輸入框
 			idName='p1'
-			className='post'
+			className='pr'
 	      }
 	}
-	//回復
+	//回覆
 	$('.postContent').on('mouseenter', '.respond', function () {
 	    $(this).css({
 		    'color': 'aqua',
@@ -289,11 +287,12 @@ async function createPostPage(postData) {
 	        'cursor': ''
 	    });
 	}).on('click', '.respond', function () {
-	    var resN = $(this).parent().parent().parent().parent().find('.postMember2').text();
-	    let t = $('.commentInput').val();
-	    $('.commentInput').val(t + '@' + resN + ' ');
+	    var resN = $(this).parent().find('.username').text();
+	    let t = $('.sendmsg').val();
+	    $('.sendmsg').val(t + '@' + resN + ' ');
 	    className = $(this).parent().attr('class');
 	    idName = $(this).parent().attr('iddata');
+		$('.sendmsg').focus();
 	});
 	
 	

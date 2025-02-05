@@ -14,15 +14,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     
     <link rel="stylesheet" href="/css/Search/style searchbar.css">
     <link rel="stylesheet" href="/css/Search/style search.css">
     <link rel="stylesheet" href="/css/Search/style nav.css">
     <link rel="stylesheet" href="/css/Search/search-grid.css">
     <link rel="stylesheet" href="/css/Search/create-post.css">
+    <link rel="stylesheet" href="/css/Search/messageboard.css">
     <script src="/js/Search/jquery-3.6.0.js"></script>
-    <script src="/00_CSS/popper.min.js"></script>
+    <script src="/js/Search/message_s_JS.js"></script>
+    <!--  <script src="/00_CSS/popper.min.js"></script> -->
 
     <title>Search</title>
 </head>
@@ -164,17 +166,21 @@
 
 
     </section>
-
+	
+	<script th:inline="javascript">
+		console.log("OK");
+		let mn=/*[[${member.membername}]]*/+'';
+		let mp=/*[[${member.memberphotobase64}]]*/+'';
+		passmembername(mn);
+		passmemberphoto(mp);
+	</script>
+	
     <script src="/js/Search/script_nav.js"></script>
     <script src="/js/Search/post-display.js"></script>
     <script src="/js/Search/main.js"></script>
     <script src="/js/Search/script.js"></script>
     <script src="/js/Search/create-post.js"></script>
     <script src="/js/Search/posts-manager.js"></script>
-    
-	<script th:inline="javascript" th:each="post:${posts}">
-		passmembername(/*[[${member.membername}]]*/);
-	</script>
 </body>
 
 </html>

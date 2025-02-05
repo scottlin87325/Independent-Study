@@ -62,10 +62,10 @@ h1 {
     /* 標題色 */
     font-size: 45px;
     /*字體大小*/
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     /*底邊距離*/
+    margin-top: 0px;
     font-family: "Noto Sans TC", serif;
-
 }
 
 /* 輸入框樣式 */

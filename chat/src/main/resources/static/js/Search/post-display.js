@@ -143,7 +143,7 @@ async function createPostPage(postData) {
 
     // 更新的內容結構
     postPage.innerHTML = `
-        <div class="post" style="position: relative; width: 65%; height: 95%; background-color: black; border: 2px solid rgb(145, 144, 144); border-radius: 10px; display: flex;">
+        <div id=${postData.postId} class="post" style="position: relative; width: 65%; height: 95%; background-color: black; border: 2px solid rgb(145, 144, 144); border-radius: 10px; display: flex;">
             <button class="close" style="position: absolute; top: 0; right: 0; width: 45px; height: 45px; background: #575757c7; border: none; border-bottom-left-radius: 25px; cursor: pointer; z-index: 1001;">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
                     <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
@@ -258,6 +258,34 @@ async function createPostPage(postData) {
 	      if (event.key === "Enter") {
 	        //event.preventDefault(); // 防止 textarea 換行（如果適用）
 	        sendMessage();
+			//儲存留言
+			let data = [];
+			let pId = $('.post').attr('id');
+			data.push({
+				"postId":pId
+			});
+			$(".dfrespond, .dcrespond").each(function() {
+			    let className = $(this).attr("class");  // 取得 class
+			    let iddata = $(this).attr("iddata");   // 取得 iddata 屬性
+				let photo = $(this).find(".memberphoto").attr("src"); //抓圖
+				// 這裡抓取子元素的 class 名稱和內容
+			    let childElements = $(this).find(".username, .memberrespond").map(function() {
+			        return {
+			            "class": $(this).attr("class"),  // 取得class名稱
+			            "content": $(this).text().trim()  // 取得內容並去除空格
+			        };
+			    }).get();  // 轉成陣列
+				let time = $(this).find(".myTime").attr("timeSet");
+				
+			    data.push({
+			        "class": className,
+			        "iddata": iddata,
+					"memberphoto": photo,
+			        "childElements": childElements,
+					"myTime": time  
+				});
+			});
+			console.log(data);
 	      }
 	});
 	//變數區

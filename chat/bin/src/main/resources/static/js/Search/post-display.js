@@ -183,8 +183,8 @@ async function createPostPage(postData) {
                 </div>
 
                 <div class="commentInput" style="width: 100%; height: 8%; border-bottom: 1px solid rgb(145, 144, 144);">
-                    <div style="color: white; padding: 10px 20px; display: flex; align-items: center; height: 100%;">
-                        <input type="text" placeholder="留言..." style="width: 100%; padding: 8px 12px; border-radius: 20px; background-color: #333; border: none; color: white; outline: none;">
+                    <div iddata="${postData.postId}" class="pr" style="color: white; padding: 10px 20px; display: flex; align-items: center; height: 100%;">
+                        <input class="sendmsg" type="text" placeholder="留言..." style="width: 100%; padding: 8px 12px; border-radius: 20px; background-color: #333; border: none; color: white; outline: none;">
                     </div>
                 </div>
 
@@ -252,6 +252,51 @@ async function createPostPage(postData) {
     document.addEventListener('keydown', escHandler);
 
     document.body.appendChild(postPage);
+	
+	//enter訊息
+	$('.commentInput').keydown(function (event) {
+	      if (event.key === "Enter") {
+	        //event.preventDefault(); // 防止 textarea 換行（如果適用）
+	        sendMessage();
+	      }
+	});
+	//變數區
+	var idName='p1';
+	var className='pr';
+	//送出訊息
+	function sendMessage() {
+	      let messagein = $('.sendmsg').val();
+	      if (messagein != "") {
+			pass1(idName);
+			pass2(className);
+			userRespond();
+	        $('.sendmsg').val(""); // 清空輸入框
+			idName='p1'
+			className='pr'
+	      }
+	}
+	//回覆
+	$('.postContent').on('mouseenter', '.respond', function () {
+	    $(this).css({
+		    'color': 'aqua',
+		    'cursor': 'pointer'
+	    });
+	}).on('mouseleave', '.respond', function () {
+	    $(this).css({
+	        'color': '',
+	        'cursor': ''
+	    });
+	}).on('click', '.respond', function () {
+	    var resN = $(this).parent().find('.username').text();
+	    let t = $('.sendmsg').val();
+	    $('.sendmsg').val(t + '@' + resN + ' ');
+	    className = $(this).parent().attr('class');
+	    idName = $(this).parent().attr('iddata');
+		$('.sendmsg').focus();
+	});
+	
+	
+	
 }
 
 // 修改顯示圖片函數，添加點擊事件處理

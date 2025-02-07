@@ -74,7 +74,7 @@ public class Messagelog {
 		System.out.println("取回留言板檔案");
 		this.messagefile = messagefile;
 		messagefilebase64 = Base64.getEncoder().encodeToString(messagefile);
-		System.out.println(messagefilebase64);
+		//System.out.println(messagefilebase64);
 	}
 	public MultipartFile getMessagefilefile() {
 		return messagefilefile;

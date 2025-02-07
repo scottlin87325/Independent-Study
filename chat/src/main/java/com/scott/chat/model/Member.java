@@ -95,7 +95,7 @@ public class Member {
 		System.out.println("取回大頭貼");
 		this.memberphoto = memberphoto;
 		memberphotobase64 = Base64.getEncoder().encodeToString(memberphoto);
-		System.out.println(memberphotobase64);
+		//System.out.println(memberphotobase64);
 	}
 	public MultipartFile getMemberphotofile() {
 		return memberphotofile;

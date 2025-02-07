@@ -259,33 +259,7 @@ async function createPostPage(postData) {
 	        //event.preventDefault(); // 防止 textarea 換行（如果適用）
 	        sendMessage();
 			//儲存留言
-			let data = [];
-			let pId = $('.post').attr('id');
-			data.push({
-				"postId":pId
-			});
-			$(".dfrespond, .dcrespond").each(function() {
-			    let className = $(this).attr("class");  // 取得 class
-			    let iddata = $(this).attr("iddata");   // 取得 iddata 屬性
-				let photo = $(this).find(".memberphoto").attr("src"); //抓圖
-				// 這裡抓取子元素的 class 名稱和內容
-			    let childElements = $(this).find(".username, .memberrespond").map(function() {
-			        return {
-			            "class": $(this).attr("class"),  // 取得class名稱
-			            "content": $(this).text().trim()  // 取得內容並去除空格
-			        };
-			    }).get();  // 轉成陣列
-				let time = $(this).find(".myTime").attr("timeSet");
-				
-			    data.push({
-			        "class": className,
-			        "iddata": iddata,
-					"memberphoto": photo,
-			        "childElements": childElements,
-					"myTime": time  
-				});
-			});
-			console.log(data);
+			saveboarddata();
 	      }
 	});
 	//變數區

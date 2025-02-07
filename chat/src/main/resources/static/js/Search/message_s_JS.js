@@ -119,3 +119,38 @@ function mTag(mr) {
     }
     return mr;
 }
+
+function saveboarddata(){
+	let data = [];
+	let pId = $('.post').attr('id');
+	data.push({
+		"postId":pId
+	});
+	$(".dfrespond, .dcrespond").each(function() {
+		let className = $(this).attr("class");  // 取得 class
+		let iddata = $(this).attr("iddata");   // 取得 iddata 屬性
+		let photo = $(this).find(".memberphoto").attr("src"); //抓圖
+		// 這裡抓取子元素的 class 名稱和內容
+		let childElements = $(this).find(".username, .memberrespond").map(function() {
+			return {
+				"class": $(this).attr("class"),  // 取得class名稱
+				"content": $(this).text().trim()  // 取得內容並去除空格
+			};
+		}).get();  // 轉成陣列
+		let time = $(this).find(".myTime").attr("timeSet");
+					
+		data.push({
+			"class": className,
+			"iddata": iddata,
+			"memberphoto": photo,
+			"childElements": childElements,
+			"myTime": time  
+		});
+	});
+	$.ajax({
+		url: `/saveData/savePostData/${pId}`,  // 後端 API 端點
+		type: "POST",
+		contentType: "application/json; charset=UTF-8",
+		data: JSON.stringify(data),  // 轉 JSON 字串
+	});	
+}

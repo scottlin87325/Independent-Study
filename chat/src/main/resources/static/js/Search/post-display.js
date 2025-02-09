@@ -194,6 +194,8 @@ async function createPostPage(postData) {
             </div>
         </div>
     `;
+	
+	getboarddata(postData.postId);
 
     // 找到按讚按鈕並處理點擊事件
     const likeButton = postPage.querySelector('.likeButton');

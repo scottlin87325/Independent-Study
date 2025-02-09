@@ -18,9 +18,15 @@ function passmemberdata(pmembername, pmemberphoto, pmemberid) {
 	memberid = pmemberid;
 }
 
+function seti(rid) {
+	let x = rid.replace('rs', '');
+	i = parseInt(x, 10);
+	i++
+	console.log(i);
+}
+
 function settime() {
 	$('.myTime').each(function() {
-		// 獲取每個 <td> 的起始秒數
 		var startTime = new Date($(this).attr('timeSet'));
 		var save = startTime;  // 設定當前時間為起始秒數
 		let y = timeSlip(save);
@@ -63,7 +69,7 @@ function timeSlip(inputTime) {  //inputTime輸入時間要抓資料庫
 function userRespond() {
 	let a = $('.sendmsg').val();
 	if (a != "") {
-		if (a.match(/@\w+/g)) {
+		if (a.match(/@[\w\u4e00-\u9fa5]+/g)) {
 			a = mTag(a);
 		}
 		if (respondclass === 'pr') {
@@ -108,7 +114,7 @@ function userRespond() {
 
 function mTag(mr) {
 	let links = {};
-	let matches = mr.match(/@\w+/g);
+	let matches = mr.match(/@[\w\u4e00-\u9fa5]+/g);
 	for (let i = 0; i < matches.length; i++) {
 		links[matches[i]] = "https://google.com";
 	}
@@ -153,25 +159,28 @@ function getboarddata(postId) {
 	$.ajax({
 		url: `/postData/getPostData/${postId}`,
 		type: "GET"
-	}).done(function(response) {
+	}).done(async function(response) {
+		let rid;
 		response = JSON.parse(response);
 		for (let item of response) {
 			if (item.postId) {
+				continue;
 			} else {
-				//console.log(item.mid);	
 				let drs = item.class;
-				let rid = item.iddata;
+				rid = item.iddata;
 				let mid = item.mid;
 				let content = item.content;
 				let myTime = item.myTime;
-				// 等待 findmember(mid) 拿到資料
-				let member = findmember(mid).then(member => {
-					let memberphoto = member ? member.memberphoto : null;
-					let membername = member ? member.membername : null;
-				});
+				console.log(rid)
+				// 使用 await 等待 findmember(mid) 完成
+				let member = await findmember(mid);
+				let memberphoto = member ? member.memberphoto : null;
+				let membername = member ? member.membername : null;
+
 				loadRespond(drs, rid, mid, content, myTime, memberphoto, membername);
 			}
 		}
+		seti(rid);
 	}).fail(function(error) {
 		console.log("請求失敗:", getboarddataError);
 	});
@@ -193,21 +202,21 @@ function findmember(mid) {
 }
 
 function loadRespond(drs, rid, mid, content, myTime, memberphoto, membername) {
-	if (content.match(/@\w+/g)) {
+	if (content.match(/@[\w\u4e00-\u9fa5]+/g)) {
 		content = mTag(content);
 	}
 	if (drs === 'dfrespond') {
 		$('.postStreamBox').append(`
-	<article id=${rid} iddata=${rid} class=${drs}>
-		<div class="memberphotospace">
-			<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
-		</div>
-	    <section mid=${mid} class="username">${membername}</section>
-	    <section class="memberrespond">${content}</section>
-	    <div class="love">♡</div>
-	    <section class="myTime" id="timeslip" timeSet="${myTime}">剛剛</section>
-	    <section class="respond">回覆</section>
-	</article>
+		<article id=${rid} iddata=${rid} class=${drs}>
+			<div class="memberphotospace">
+				<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
+			</div>
+		    <section mid=${mid} class="username">${membername}</section>
+		    <section class="memberrespond">${content}</section>
+		    <div class="love">♡</div>
+		    <section class="myTime" id="timeslip" timeSet="${myTime}">剛剛</section>
+		    <section class="respond">回覆</section>
+		</article>
 	`);
 	} else {
 		$(`[iddata='${rid}']`).last().after(`
@@ -223,6 +232,7 @@ function loadRespond(drs, rid, mid, content, myTime, memberphoto, membername) {
 	    </article>
 	`);
 	}
+	settime();
 }
 
 function initWebSocket() {
@@ -232,4 +242,11 @@ function initWebSocket() {
 		const message = event.data;  // 預期接收的是變動的 id
 		console.log("MessageFile 更新 - id: " + message);  // 顯示變動的 id
 	};
+}
+function initWebSocketII() {
+	const socket = new WebSocket("ws://localhost:8080/ws");
+
+	socket.onopen = () => console.log("✅ WebSocket 已連線");
+	socket.onerror = (error) => console.error("❌ WebSocket 連線錯誤:", error);
+	socket.onclose = () => console.log("❌ WebSocket 連線關閉");
 }

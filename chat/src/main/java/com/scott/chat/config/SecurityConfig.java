@@ -73,7 +73,8 @@ public class SecurityConfig {
                 "/webjars/**", 
                 "/css/**", 
                 "/js/**",
-                "/images/**"
+                "/images/**",
+                "/ws/**" // 允許 WebSocket 連線
             ).permitAll()
             .requestMatchers("/main").authenticated() //只有main要驗證
             .anyRequest().authenticated()//所有頁面都要驗證

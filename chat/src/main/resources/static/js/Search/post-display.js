@@ -177,7 +177,7 @@ async function createPostPage(postData) {
                                 <span class="heart-emoji">🤍</span>
                                 <span class="likeCount">${postData.likeCount || 0}</span>
                             </button>
-                            <span>💬 ${postData.messageCount || 0}</span>
+                            <span>💬 ${postData.messageCount || ''}</span>
                         </div>
                     </div>
                 </div>
@@ -298,7 +298,22 @@ async function createPostPage(postData) {
 	    idName = $(this).parent().attr('iddata');
 		$('.sendmsg').focus();
 	});
-	
+	//愛心
+	$('.postStreamBox').on('click','.love',function(){
+		$(this).text($(this).text() === '♡' ? '❤' : '♡'); 
+	}).on('mouseenter', '.love', function() {
+		$(this).css({
+			'color': 'red',
+			'cursor': 'pointer'
+		});
+	}).on('mouseleave', '.love', function() {
+		$(this).css({
+			'color': '',
+			'cursor': ''
+		})
+	});
+	//每分鐘更新時間
+	setInterval(settime, 60000);
 	
 	
 }

@@ -17,9 +17,12 @@ public class MemberService {
 	//新增會員
 	public void addMember(Member member) {
 		member.setPassword(passwordEncoder.encode(member.getPassword()));
-		if (member.getPostcount() == null) {
-	        member.setPostcount(0); // 如果 Post_count 是 null，則設為 0
-	    }
+		member.setPostcount(0); // 如果 Post_count 是 null，則設為 0
+		member.setTelephone("090000000");
+	    member.setBirthday("2000-01-01");
+	    member.setGender("男");
+		
+		
 		memberRepository.save(member);
 	}
 	

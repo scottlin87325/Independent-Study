@@ -63,9 +63,10 @@ h1 {
     font-size: 45px;
     /*字體大小*/
     margin-bottom: 20px;
-    /*底邊距離*/
     margin-top: 0px;
+    /*底邊距離*/
     font-family: "Noto Sans TC", serif;
+
 }
 
 /* 輸入框樣式 */
@@ -176,4 +177,5 @@ h3 {
 .back-button:hover {
     background-color: #2980b9;
 }
+
 

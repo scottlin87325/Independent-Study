@@ -107,7 +107,7 @@ public class LoginController {
 	    	model.addAttribute("member", member);
 	    }
 	    
-	    return "main";//有session
+	    return "search";//有session
 	}
 	
 		//登出

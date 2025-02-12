@@ -22,7 +22,7 @@ function seti(rid) {
 	let x = rid.replace('rs', '');
 	i = parseInt(x, 10);
 	i++
-	console.log(i);
+	//console.log(i);
 }
 
 function settime() {
@@ -82,30 +82,34 @@ function userRespond() {
 		}
 		let x = new Date(); //時間要改
 		if (respondid === '.postContent') {
-			$('.postStreamBox').append(`
-			<article id=${rid} iddata=${rid} class=${drs}>
-				<div class="memberphotospace">
-					<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
-				</div>
-			    <section mid=${memberid} class="username">${membername}</section>
-			    <section class="memberrespond">${a}</section>
-			    <div class="love">♡</div>
-			    <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
-			    <section class="respond">回覆</section>
-			</article>
+			$('.postStream').append(`
+				<article id=${rid} iddata=${rid} class=${drs}>
+				    <div class="memberphotospace">
+				        <img class="memberphoto" src="data:image/png;base64,${memberphoto}">
+				    </div>
+				    <section mid=${memberid} class="username">${membername}</section>
+				    <section class="memberrespond">${a}</section>
+				    <div class="interaction-group">
+				        <div class="love">♡</div>
+				        <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
+				        <section class="respond">回覆</section>
+				    </div>
+				</article>
 			`);
 		} else {
 			$(`${respondid}`).after(`
-			    <article iddata="${rid}" class=${drs}>
-			    	<div class="memberphotospace">
+				<article id=${rid} iddata=${rid} class=${drs}>
+					<div class="memberphotospace">
 						<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
 					</div>
-			        <section mid=${memberid} class="username">${membername}</section>
-			        <section class="memberrespond">${a}</section>
-			        <div class="love">♡</div>
-			        <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
-			        <section class="respond">回覆</section>
-			    </article>
+					<section mid=${memberid} class="username">${membername}</section>
+					<section class="memberrespond">${a}</section>
+					<div class="interaction-group">
+						<div class="love">♡</div>
+						<section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
+						<section class="respond">回覆</section>
+					</div>
+				</article>
 			`);
 		}
 	}
@@ -160,6 +164,7 @@ function getboarddata(postId) {
 		url: `/postData/getPostData/${postId}`,
 		type: "GET"
 	}).done(async function(response) {
+		i=0;
 		let rid;
 		response = JSON.parse(response);
 		for (let item of response) {
@@ -171,7 +176,7 @@ function getboarddata(postId) {
 				let mid = item.mid;
 				let content = item.content;
 				let myTime = item.myTime;
-				console.log(rid)
+				//console.log(rid)
 				// 使用 await 等待 findmember(mid) 完成
 				let member = await findmember(mid);
 				let memberphoto = member ? member.memberphoto : null;
@@ -206,30 +211,34 @@ function loadRespond(drs, rid, mid, content, myTime, memberphoto, membername) {
 		content = mTag(content);
 	}
 	if (drs === 'dfrespond') {
-		$('.postStreamBox').append(`
-		<article id=${rid} iddata=${rid} class=${drs}>
-			<div class="memberphotospace">
-				<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
-			</div>
-		    <section mid=${mid} class="username">${membername}</section>
-		    <section class="memberrespond">${content}</section>
-		    <div class="love">♡</div>
-		    <section class="myTime" id="timeslip" timeSet="${myTime}">剛剛</section>
-		    <section class="respond">回覆</section>
-		</article>
+		$('.postStream').append(`
+			<article id=${rid} iddata=${rid} class=${drs}>
+				<div class="memberphotospace">
+					<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
+				</div>
+				<section mid=${mid} class="username">${membername}</section>
+				<section class="memberrespond">${content}</section>
+				<div class="interaction-group">
+					<div class="love">♡</div>
+					<section class="myTime" id="timeslip" timeSet="${myTime}">剛剛</section>
+					<section class="respond">回覆</section>
+				</div>
+			</article>
 	`);
 	} else {
 		$(`[iddata='${rid}']`).last().after(`
-	    <article iddata="${rid}" class=${drs}>
-	    	<div class="memberphotospace">
-				<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
-			</div>
-	        <section mid=${mid} class="username">${membername}</section>
-	        <section class="memberrespond">${content}</section>
-	        <div class="love">♡</div>
-	        <section class="myTime" id="timeslip" timeSet="${myTime}">剛剛</section>
-	        <section class="respond">回覆</section>
-	    </article>
+			<article id=${rid} iddata=${rid} class=${drs}>
+				<div class="memberphotospace">
+					<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
+				</div>
+				<section mid=${mid} class="username">${membername}</section>
+				<section class="memberrespond">${content}</section>
+				<div class="interaction-group">
+					<div class="love">♡</div>
+					<section class="myTime" id="timeslip" timeSet="${myTime}">剛剛</section>
+					<section class="respond">回覆</section>
+				</div>
+			</article>
 	`);
 	}
 	settime();

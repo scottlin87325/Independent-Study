@@ -142,8 +142,13 @@
     </section>
 	
 	<script th:inline="javascript">
-		let mm=/*[[${member.membername}]]*/+'';
-		passmembername(mm);
+		$(document).ready(function() {
+			initWebSocketII();
+		});
+		let mn = /*[[${member.membername}]]*/+'';
+		let mp = /*[[${member.memberphotobase64} ?: '']]*/+'';
+		let mi = /*[[${member.memberid}]]*/+'';
+		passmemberdata(mn, mp, mi);
 	</script>
 	
     <script src="/js/Main/script_nav.js"></script>

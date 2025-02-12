@@ -82,17 +82,19 @@ function userRespond() {
 		}
 		let x = new Date(); //時間要改
 		if (respondid === '.postContent') {
-			$('.postStreamBox').append(`
-			<article id=${rid} iddata=${rid} class=${drs}>
-				<div class="memberphotospace">
-					<img class="memberphoto" src="data:image/png;base64,${memberphoto}">
-				</div>
-			    <section mid=${memberid} class="username">${membername}</section>
-			    <section class="memberrespond">${a}</section>
-			    <div class="love">♡</div>
-			    <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
-			    <section class="respond">回覆</section>
-			</article>
+			$('.postStream').append(`
+				<article id=${rid} iddata=${rid} class=${drs}>
+				    <div class="memberphotospace">
+				        <img class="memberphoto" src="data:image/png;base64,${memberphoto}">
+				    </div>
+				    <section mid=${memberid} class="username">${membername}</section>
+				    <section class="memberrespond">${a}</section>
+				    <div class="interaction-group">
+				        <div class="love">♡</div>
+				        <section class="myTime" id="timeslip" timeSet="${x}">剛剛</section>
+				        <section class="respond">回覆</section>
+				    </div>
+				</article>
 			`);
 		} else {
 			$(`${respondid}`).after(`
@@ -206,7 +208,7 @@ function loadRespond(drs, rid, mid, content, myTime, memberphoto, membername) {
 		content = mTag(content);
 	}
 	if (drs === 'dfrespond') {
-		$('.postStreamBox').append(`
+		$('.postStream').append(`
 		<article id=${rid} iddata=${rid} class=${drs}>
 			<div class="memberphotospace">
 				<img class="memberphoto" src="data:image/png;base64,${memberphoto}">

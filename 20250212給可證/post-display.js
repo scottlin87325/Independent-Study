@@ -188,7 +188,7 @@ async function createPostPage(postData) {
                     </div>
                 </div>
 
-                <div class="postStreamBox" style="position: relative; width: 100%; height: 40%; overflow: auto;">
+                <div class="postStreamBox" style="position: relative; width: 100%; height: 40%; overflow: auto; background-color: rgba(95, 95, 95, 0.514);">
                     <div class="postStream"></div>
                 </div>
             </div>

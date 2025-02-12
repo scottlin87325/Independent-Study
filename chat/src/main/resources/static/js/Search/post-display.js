@@ -188,7 +188,7 @@ async function createPostPage(postData) {
                     </div>
                 </div>
 
-                <div class="postStreamBox" style="position: relative; width: 100%; height: 40%; overflow: auto;">
+                <div class="postStreamBox" style="position: relative; width: 100%; height: 40%; overflow: auto; background-color: rgba(95, 95, 95, 0.514);">
                     <div class="postStream"></div>
                 </div>
             </div>
@@ -291,11 +291,11 @@ async function createPostPage(postData) {
 	        'cursor': ''
 	    });
 	}).on('click', '.respond', function () {
-	    var resN = $(this).parent().find('.username').text();
+	    let resN = $(this).parent().parent().find('.username').text();
 	    let t = $('.sendmsg').val();
 	    $('.sendmsg').val(t + '@' + resN + ' ');
-	    className = $(this).parent().attr('class');
-	    idName = $(this).parent().attr('iddata');
+	    className = $(this).parent().parent().attr('class');
+	    idName = $(this).parent().parent().attr('iddata');
 		$('.sendmsg').focus();
 	});
 	//愛心

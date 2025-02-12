@@ -104,6 +104,7 @@ public class LoginController {
 	        return "redirect:/loginpage";
 	    }else {
 	    	Member member = (Member) session.getAttribute("member");
+	    	member.setMemberphoto(member.getMemberphoto());
 	    	model.addAttribute("member", member);
 	    }
 	    

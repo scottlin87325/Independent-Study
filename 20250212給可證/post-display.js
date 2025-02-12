@@ -143,7 +143,7 @@ async function createPostPage(postData) {
 
     // 更新的內容結構
     postPage.innerHTML = `
-        <div class="post" style="position: relative; width: 65%; height: 95%; background-color: black; border: 2px solid rgb(145, 144, 144); border-radius: 10px; display: flex;">
+        <div id=${postData.postId} class="post" style="position: relative; width: 65%; height: 95%; background-color: black; border: 2px solid rgb(145, 144, 144); border-radius: 10px; display: flex;">
             <button class="close" style="position: absolute; top: 0; right: 0; width: 45px; height: 45px; background: #575757c7; border: none; border-bottom-left-radius: 25px; cursor: pointer; z-index: 1001;">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF">
                     <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
@@ -177,7 +177,7 @@ async function createPostPage(postData) {
                                 <span class="heart-emoji">🤍</span>
                                 <span class="likeCount">${postData.likeCount || 0}</span>
                             </button>
-                            <span>💬 ${postData.messageCount || 0}</span>
+                            <span>💬 ${postData.messageCount || ''}</span>
                         </div>
                     </div>
                 </div>
@@ -194,6 +194,8 @@ async function createPostPage(postData) {
             </div>
         </div>
     `;
+	
+	getboarddata(postData.postId);
 
     // 找到按讚按鈕並處理點擊事件
     const likeButton = postPage.querySelector('.likeButton');
@@ -258,6 +260,8 @@ async function createPostPage(postData) {
 	      if (event.key === "Enter") {
 	        //event.preventDefault(); // 防止 textarea 換行（如果適用）
 	        sendMessage();
+			//儲存留言
+			saveboarddata();
 	      }
 	});
 	//變數區
@@ -294,7 +298,22 @@ async function createPostPage(postData) {
 	    idName = $(this).parent().attr('iddata');
 		$('.sendmsg').focus();
 	});
-	
+	//愛心
+	$('.postStreamBox').on('click','.love',function(){
+		$(this).text($(this).text() === '♡' ? '❤' : '♡'); 
+	}).on('mouseenter', '.love', function() {
+		$(this).css({
+			'color': 'red',
+			'cursor': 'pointer'
+		});
+	}).on('mouseleave', '.love', function() {
+		$(this).css({
+			'color': '',
+			'cursor': ''
+		})
+	});
+	//每分鐘更新時間
+	setInterval(settime, 60000);
 	
 	
 }
